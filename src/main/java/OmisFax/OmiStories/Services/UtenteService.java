@@ -1,0 +1,42 @@
+package OmisFax.OmiStories.Services;
+
+import OmisFax.OmiStories.Entities.Utente;
+import OmisFax.OmiStories.Repositories.UtenteRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class UtenteService {
+    @Autowired
+    private UtenteRepository utenteRepository;
+
+    private boolean trovaUsername(String uname) {
+        Utente utente = utenteRepository.findByUsername(uname);
+        return utente != null;
+    }
+
+    public Utente trovaUtente(String username){
+        Utente utente = null;
+        utente = utenteRepository.findByUsername(username);
+        return utente;
+    }
+
+    public boolean autentica(String usernameOrEmail, String password) {
+        Utente utente = null;
+        utente = utenteRepository.findByUsernameAndPassword(usernameOrEmail, password);
+        return utente != null;
+    }
+
+    public boolean registraUtente(Utente utente) {
+        if (trovaUsername(utente.getUsername())) {
+            return false;
+        }
+        try {
+            utenteRepository.save(utente);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+}

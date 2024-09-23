@@ -1,4 +1,4 @@
-package com.progettoingegneria;
+package OmisFax.OmiStories;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
