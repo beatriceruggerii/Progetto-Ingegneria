@@ -39,7 +39,7 @@ public class ProxyController {
         try {
             JsonNode body = objectMapper.readTree(response.getBody());
             String status = body.get("status").asText();
-            if(status.trim().equals("Autorizzato")){
+            if(status.trim().equals("Autorizzato ")){
                 utenteService.upgradePremium(session.getAttribute("loggedUsername").toString());
             }
         } catch (JsonProcessingException e) {

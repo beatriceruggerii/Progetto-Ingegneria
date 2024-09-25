@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(response => response.json())
             .then(data => {
                 // Mostra la risposta del server
-                if (data.status === "Autorizzato") {
+                if (data.status === "Autorizzato ") {
                     alert(`Pagamento riuscito! Totale: €${data.total}, Commissione: €${data.fee}`);
                 } else {
                     alert(`Pagamento fallito: ${data.message}`);
