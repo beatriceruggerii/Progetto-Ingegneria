@@ -39,4 +39,14 @@ public class UtenteService {
             return false;
         }
     }
+
+    public void upgradePremium(String username){
+        System.out.println(username);
+        Utente utente = utenteRepository.findByUsername(username);
+        if(utente != null){
+            utente.toPremium();
+            utenteRepository.save(utente);
+        }
+    }
+
 }
