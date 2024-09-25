@@ -22,7 +22,8 @@ public class LoginController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Impossibile completare il login");
         }
         if (userService.autentica(logUtente.getUsername(), utente.getPassword())) {
-            session.setAttribute("loggedUserId", logUtente);
+            session.setAttribute("loggedUsername", logUtente.getUsername());
+            System.out.println(session.getAttribute("loggedUsername").toString());
             return ResponseEntity.ok("Login successful");
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Impossibile completare il login");

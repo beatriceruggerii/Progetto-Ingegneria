@@ -1,7 +1,5 @@
 document.addEventListener('DOMContentLoaded', function (){
     console.log('start');
-
-
     document.getElementById('registrazione').addEventListener('submit', function(event) {
         console.log('inizio listener.');
         event.preventDefault();
