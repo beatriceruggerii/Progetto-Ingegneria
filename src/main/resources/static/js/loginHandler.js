@@ -9,7 +9,6 @@ document.addEventListener("DOMContentLoaded", function (){
         const user = {
             username: usernameValue,
             password: passwordValue,
-            email: null
         };
         console.log(user);
 
@@ -23,10 +22,17 @@ document.addEventListener("DOMContentLoaded", function (){
             .then(response => {
                 if (response.ok) {
                     // Se la richiesta è andata a buon fine, puoi fare qualcosa, ad esempio reindirizzare l'utente a un'altra pagina
-                    window.location.href = 'homepage.html';
+                    return response.json();
                 } else {
                     $('#credenzialiErrate').modal('show'); // Mostra il modal
                     throw new Error('Errore nella richiesta');
+                }
+            })
+            .then(data=>{
+                if(data.role === 'USERPREMIUM'){
+                    window.location.href = 'premium/Homepage.html';
+                } else if(data.role === 'USER'){
+                    window.location.href = 'user/Homepage.html';
                 }
             })
             .catch(error => {

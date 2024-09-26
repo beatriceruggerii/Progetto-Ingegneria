@@ -13,8 +13,13 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 public class ProxyController {
@@ -39,12 +44,28 @@ public class ProxyController {
         try {
             JsonNode body = objectMapper.readTree(response.getBody());
             String status = body.get("status").asText();
-            if(status.trim().equals("Autorizzato ")){
+            if(status.trim().equals("Autorizzato")){
                 utenteService.upgradePremium(session.getAttribute("loggedUsername").toString());
             }
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
         return ResponseEntity.status(response.getStatusCode()).body(response.getBody());
+    }
+
+    // Gestione delle eccezioni per la validazione direttamente nel controller
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Map<String, Object>> handleValidationExceptions(MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+        for (FieldError error : ex.getBindingResult().getFieldErrors()) {
+            errors.put(error.getField(), error.getDefaultMessage());
+        }
+
+        Map<String, Object> responseBody = new HashMap<>();
+        responseBody.put("status", "400");
+        responseBody.put("message", "Errore di validazione");
+        responseBody.put("errors", errors);
+
+        return ResponseEntity.badRequest().body(responseBody);
     }
 }

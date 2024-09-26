@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="omistories@localhost" uuid="c6aeb345-5abe-482f-916f-d6782d7c2184">
+    <data-source source="LOCAL" name="omistories@localhost" uuid="bfce7e93-7df2-4e84-803a-22ebf7c8f73c">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <imported>true</imported>

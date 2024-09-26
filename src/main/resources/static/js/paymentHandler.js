@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("Premium");
 
     form.addEventListener("submit", function (event) {
-        event.preventDefault(); // Previene il comportamento predefinito del form
+        event.preventDefault(); // Previeni il comportamento predefinito del form
 
         // Crea l'oggetto JSON da inviare
         const paymentData = {
@@ -24,10 +24,21 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(response => response.json())
             .then(data => {
                 // Mostra la risposta del server
-                if (data.status === "Autorizzato ") {
+                if (data.status === "Autorizzato") {
                     alert(`Pagamento riuscito! Totale: €${data.total}, Commissione: €${data.fee}`);
-                } else {
+                }
+                else if (data.status === "Fallito") {
                     alert(`Pagamento fallito: ${data.message}`);
+                }
+                else if (data.status === "400") {
+                    let errorMessage = `${data.message}:\n`;
+                    for (const [field, message] of Object.entries(data.errors)) {
+                        errorMessage += `- ${field}: ${message}\n`;
+                    }
+                    alert(errorMessage);
+                }
+                else {
+                    alert('Server del pagamento Offline');
                 }
             })
             .catch(error => {
