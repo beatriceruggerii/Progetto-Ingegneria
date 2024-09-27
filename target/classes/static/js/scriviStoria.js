@@ -3,17 +3,21 @@ document.addEventListener('DOMContentLoaded',function () {
             event.preventDefault();
 
             var titolo = document.getElementById('titolo').value;
+            var descrizione = document.getElementById('descrizioneIniziale').value;
+            const storia ={
+                titolo: titolo,
+                descrizioneIniziale: descrizione
+            }
 
-            fetch('http://localhost:8080/crea_storia', {
+            fetch('http://localhost:8080/salva_storia', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: titolo
+                body: JSON.stringify(storia)
             }).then(response => {
                 console.log("richiesta inviata");
                 if (response.ok) {
-                    // Se la richiesta è andata a buon fine, puoi fare qualcosa, ad esempio reindirizzare l'utente a un'altra pagina
                     window.location.href = './crea_scenario.html';
                 } else {
                     throw new Error('Errore nella richiesta');
