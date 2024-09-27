@@ -1,9 +1,7 @@
 document.addEventListener("DOMContentLoaded", function (){
     fetch('http://localhost:8080/security')
-        .then(data => {
-            if (response.ok) {
-                window.location.href = './homepage';  // Redirigi alla homepage
-            } else {
+        .then(response => {
+            if (!response.ok) {
                 window.location.href = '/';     // Redirigi alla pagina login
             }
         })

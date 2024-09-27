@@ -12,10 +12,10 @@ public class SecurityController {
     @GetMapping("/security")
     public ResponseEntity<String> logControl(HttpSession session){
         if(session.getAttribute("loggedUsername") == null){
-            return new ResponseEntity<>("unauthorized", HttpStatus.UNAUTHORIZED);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("unauthorized");
         }
         else{
-            return new ResponseEntity<>("logged", HttpStatus.OK);
+            return ResponseEntity.ok("logged");
         }
     }
 }

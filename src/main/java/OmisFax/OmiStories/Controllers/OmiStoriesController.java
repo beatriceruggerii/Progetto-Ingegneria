@@ -13,7 +13,7 @@ public class OmiStoriesController {
     String Register() {
         return "registration";
     }
-    @GetMapping("/Homepage")
+    @GetMapping("/homepage")
     String Homepage() {
         return "Homepage";
     }
