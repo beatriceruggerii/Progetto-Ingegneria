@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded',function () {
-        document.getElementById("nuovaStoria").addEventListener("submit", function (){
+        document.getElementById("nuovaStoria").addEventListener("submit", function (event){
             event.preventDefault();
 
             var titolo = document.getElementById('titolo').value;

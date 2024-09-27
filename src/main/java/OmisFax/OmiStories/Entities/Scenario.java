@@ -29,6 +29,12 @@ public class Scenario {
         this.testo = testo;
     }
 
+    public Scenario(String titolo, String testo){
+        this.storia = null;
+        this.titolo = titolo;
+        this.testo = testo;
+    }
+
     public String getTesto() {
         return testo;
     }

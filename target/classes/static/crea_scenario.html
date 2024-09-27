@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <script src="js/securityHandler.js"></script>
+    <script src="js/crea-scenario.js"></script>
     <title>Componi la tua storia</title>
 </head>
 <body>
@@ -16,20 +17,20 @@
                     <h3>Descrivi lo scenario</h3>
                 </div>
 
-                <form id="nuovaScenario">
+                <form id="nuovoScenario">
                     <div class="card-body">
                         <div class="form-group">
                             <label>Titolo scenario</label>
-                            <input type="text" class="form-control" id="titoloScenario"
+                            <input type="text" class="form-control" name="titolo" id="titolo"
                                    placeholder="Dai un titolo allo scenario" required>
                         </div>
                         <div class="form-group">
                             <label>Descrizione</label>
-                            <input type="text" class="form-control" id="descrizione"
+                            <input type="text" class="form-control" name="testo" id="testo"
                                    placeholder="Descrivi lo scenario" required>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-block">Inizia a scrivere</button>
+                    <button type="submit" class="btn btn-primary btn-block">Crea scenario</button>
                 </form>
             </div>
         </div>
