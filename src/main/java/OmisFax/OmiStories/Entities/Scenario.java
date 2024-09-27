@@ -14,8 +14,6 @@ public class Scenario {
     @ManyToOne //più scenari possono riferirsi ad una storia
     private Storia storia;
     private String testo;
-    @OneToOne //un oggetto si riferisce solo ad uno scenario richiedente, uno scenario può richiedere al max un oggetto
-    private Oggetto controllo; //oggetto necessario per accedere allo scenario
     private int numeroScenario; //numero di ordine di apparizione dello scenario nella storia
 
     // Costruttore predefinito richiesto da JPA
@@ -29,7 +27,6 @@ public class Scenario {
         this.storia = storia;
         this.testo = testo;
         this.numeroScenario = numeroScenario;
-        this.controllo = controllo;
     }
 
     public String getTesto() {
@@ -46,14 +43,6 @@ public class Scenario {
 
     public void setStoria(Storia storia) {
         this.storia = storia;
-    }
-
-    public Oggetto getControllo() {
-        return controllo;
-    }
-
-    public void setControllo(Oggetto controllo) {
-        this.controllo = controllo;
     }
 
     public long getId() {
@@ -78,7 +67,6 @@ public class Scenario {
                 "id=" + id +
                 ", storia=" + storia +
                 ", testo='" + testo + '\'' +
-                ", controllo=" + controllo +
                 ", numeroScenario=" + numeroScenario +
                 '}';
     }
@@ -88,11 +76,11 @@ public class Scenario {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Scenario scenario = (Scenario) o;
-        return id == scenario.id && numeroScenario == scenario.numeroScenario && Objects.equals(storia, scenario.storia) && Objects.equals(testo, scenario.testo) && Objects.equals(controllo, scenario.controllo);
+        return id == scenario.id && numeroScenario == scenario.numeroScenario && Objects.equals(storia, scenario.storia) && Objects.equals(testo, scenario.testo);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, storia, testo, controllo, numeroScenario);
+        return Objects.hash(id, storia, testo, numeroScenario);
     }
 }
