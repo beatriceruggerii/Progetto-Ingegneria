@@ -24,7 +24,7 @@ public class LoginController {
         if (userService.autentica(logUtente.getUsername(), utente.getPassword())) {
             session.setAttribute("loggedUsername", logUtente.getUsername());
             System.out.println(session.getAttribute("loggedUsername").toString());
-            return ResponseEntity.ok("ok");
+            return ResponseEntity.ok("Login successful");
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Impossibile completare il login");
         }

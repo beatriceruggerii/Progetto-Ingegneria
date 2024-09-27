@@ -1,5 +1,7 @@
 package OmisFax.OmiStories.Entities;
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.Objects;
 
@@ -12,21 +14,19 @@ public class Scenario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id; // Campo ID unico generato automaticamente
     @ManyToOne //più scenari possono riferirsi ad una storia
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "fk_storia")
     private Storia storia;
+    private String titolo; //numero di ordine di apparizione dello scenario nella storia
     private String testo;
-    private int numeroScenario; //numero di ordine di apparizione dello scenario nella storia
+
 
     // Costruttore predefinito richiesto da JPA
     public Scenario() {}
-    public Scenario(Storia storia, String testo, int numeroScenario){
+    public Scenario(Storia storia, String titolo, String testo){
         this.storia = storia;
+        this.titolo = titolo;
         this.testo = testo;
-        this.numeroScenario = numeroScenario;
-    }
-    public Scenario(Storia storia, String testo, Oggetto controllo, int numeroScenario) {
-        this.storia = storia;
-        this.testo = testo;
-        this.numeroScenario = numeroScenario;
     }
 
     public String getTesto() {
@@ -53,12 +53,12 @@ public class Scenario {
         this.id = id;
     }
 
-    public int getNumeroScenario() {
-        return numeroScenario;
+    public String getTitolo() {
+        return titolo;
     }
 
-    public void setNumeroScenario(int numeroScenario) {
-        this.numeroScenario = numeroScenario;
+    public void setTitolo(String titolo) {
+        this.titolo = titolo;
     }
 
     @Override
@@ -66,8 +66,8 @@ public class Scenario {
         return "Scenario{" +
                 "id=" + id +
                 ", storia=" + storia +
+                ", titolo='" + titolo + '\'' +
                 ", testo='" + testo + '\'' +
-                ", numeroScenario=" + numeroScenario +
                 '}';
     }
 
@@ -76,11 +76,11 @@ public class Scenario {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Scenario scenario = (Scenario) o;
-        return id == scenario.id && numeroScenario == scenario.numeroScenario && Objects.equals(storia, scenario.storia) && Objects.equals(testo, scenario.testo);
+        return id == scenario.id && Objects.equals(storia, scenario.storia) && Objects.equals(titolo, scenario.titolo) && Objects.equals(testo, scenario.testo);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, storia, testo, numeroScenario);
+        return Objects.hash(id, storia, titolo, testo);
     }
 }
