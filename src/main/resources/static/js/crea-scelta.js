@@ -16,7 +16,7 @@ document.getElementById('nuovaScelta').addEventListener('submit', function(event
             idFiglio: idFiglio
         };
 
-        fetch('http://localhost:8080/crea_scelta', {
+        fetch('http://localhost:8080/salva_scelta', {
             method: 'POST',
             headers: {
                 'Content-Type' : 'application/json'
