@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Crea gli scenari</title>
+</head>
+<body>
+<div class="container">
+    <div class="d-flex flex-row flex-wrap justify-content-center m-4">
+        <!-- Card per Scelta -->
+        <div class="card m-5 rounded-3 d-flex flex-column">
+            <div class="card-header" align="center">
+                <h3>Aggiungi una Scelta</h3>
+            </div>
+            <form id="nuovaScelta">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label>Testo scelta</label>
+                        <input type="text" class="form-control" id="testoScelta"
+                               placeholder="Inserisci il testo della scelta" required>
+                    </div>
+                    <label for="scenarioMadreScelta">Seleziona lo scenario dove parte la scelta</label>
+                    <div class="form-group">
+                        <select class="custom-select" id="scenarioMadreScelta">
+                            <option selected>--Scegli scenario madre--</option>
+                        </select>
+                    </div>
+                    <label for="scenarioFiglioScelta">Seleziona lo scenario a cui porta la scelta</label>
+                    <div class="form-group">
+                        <select class="custom-select" id="scenarioFiglioScelta">
+                            <option selected>--Scegli scenario figlio--</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Crea scelta</button>
+            </form>
+        </div>
+        <!-- Card per Indovinello -->
+        <div class="card m-5 rounded-3 d-flex flex-column">
+            <div class="card-header" align="center">
+                <h3>Aggiungi una Indovinello</h3>
+            </div>
+            <form id="nuovoIndovinello">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label>Testo scelta</label>
+                        <input type="text" class="form-control" id="domanda"
+                               placeholder="Inserisci il testo dell'indovinello" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Testo soluzione</label>
+                        <input type="text" class="form-control" id="soluzione"
+                               placeholder="Inserisci la soluzione" required>
+                    </div>
+                    <label for="scenarioMadreIndovinello">Seleziona lo scenario che richiede l'indovinello</label>
+                    <div class="form-group">
+                        <select class="custom-select" id="scenarioMadreIndovinello">
+                            <option selected>--Scegli scenario madre--</option>
+                        </select>
+                    </div>
+                    <label for="scenarioFiglioIndovinello">Seleziona lo scenario a cui porta l'indovinello</label>
+                    <div class="form-group">
+                        <select class="custom-select" id="scenarioFiglioIndovinello">
+                            <option selected>--Scegli scenario figlio--</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Crea indovinello</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+</body>
+<script src="js/crea-scelta.js"></script>
+</html>
