@@ -10,6 +10,7 @@ public class Oggetto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String nomeOggetto;
 
     @ManyToOne
     private Scenario scenarioMadre;
@@ -17,22 +18,20 @@ public class Oggetto {
     @ManyToOne
     private Scenario scenarioControllore;
 
-    private String nomeOggetto;
-
     public Oggetto() {
     }
 
-    public Oggetto(Scenario scenarioMadre, Scenario scenarioControllore, String nomeOggetto) {
+    public Oggetto(String nomeOggetto, Scenario scenarioMadre, Scenario scenarioControllore) {
+        this.nomeOggetto = nomeOggetto;
         this.scenarioMadre = scenarioMadre;
         this.scenarioControllore = scenarioControllore;
-        this.nomeOggetto = nomeOggetto;
     }
 
-    public Oggetto(Scenario scenarioMadre, Scenario scenarioControllore, String nomeOggetto, Long id) {
+    public Oggetto(Long id, String nomeOggetto, Scenario scenarioMadre, Scenario scenarioControllore) {
+        this.id = id;
+        this.nomeOggetto = nomeOggetto;
         this.scenarioMadre = scenarioMadre;
         this.scenarioControllore = scenarioControllore;
-        this.nomeOggetto = nomeOggetto;
-        this.id = id;
     }
 
     public Scenario getScenarioMadre() {

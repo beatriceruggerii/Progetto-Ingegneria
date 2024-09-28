@@ -6,6 +6,8 @@ import OmisFax.OmiStories.Repositories.ScenarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ScenarioService {
     @Autowired
@@ -22,5 +24,13 @@ public class ScenarioService {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public Scenario findByTitoloAndStoria(String titolo, Storia storia) {
+        return scenarioRepository.findByTitoloAndStoria(titolo, storia);
+    }
+
+    public List<Scenario> findByStoria(Storia storia) {
+        return scenarioRepository.findByStoria(storia);
     }
 }
