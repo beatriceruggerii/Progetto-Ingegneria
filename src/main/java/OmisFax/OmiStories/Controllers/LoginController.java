@@ -23,6 +23,7 @@ public class LoginController {
         }
         if (userService.autentica(logUtente.getUsername(), utente.getPassword())) {
             session.setAttribute("loggedUsername", logUtente.getUsername());
+            session.setAttribute("isPremium", logUtente.isPremium());
             System.out.println(session.getAttribute("loggedUsername").toString());
             return ResponseEntity.ok("Login successful");
         } else {
