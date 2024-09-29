@@ -11,7 +11,7 @@
 </head>
 <body>
 <div class="container">
-    <div class="d-flex flex-row flex-wrap justify-content-center m-4">
+    <div class="d-flex flex-row justify-content-center m-4">
         <!-- Card per Scenario -->
         <div class="card m-5 rounded-3 d-flex flex-column">
             <div class="card-header" align="center">
@@ -47,7 +47,7 @@
                     </div>
                     <label for="scenarioMadreScelta">Seleziona lo scenario dove parte la scelta</label>
                     <div class="form-group">
-                        <select class="custom-select elenco-scenari"  id="scenarioMadreScelta">
+                        <select class="custom-select elenco-scenari" id="scenarioMadreScelta">
                             <option selected>--Scegli scenario madre--</option>
                         </select>
                     </div>
@@ -64,7 +64,7 @@
         <!-- Card per Indovinello -->
         <div class="card m-5 rounded-3 d-flex flex-column">
             <div class="card-header" align="center">
-                <h3>Aggiungi una Indovinello</h3>
+                <h3>Aggiungi un Indovinello</h3>
             </div>
             <form id="nuovoIndovinello">
                 <div class="card-body">
@@ -93,6 +93,13 @@
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">Crea indovinello</button>
             </form>
+        </div>
+
+        <!-- Card per Oggetto -->
+        <div class="card m-5 rounded-3 d-flex flex-column">
+            <div class="card-header" align="center">
+                <h3>Aggiungi un Oggetto</h3>
+            </div>
             <form id="nuovoOggetto">
                 <div class="card-body">
                     <div class="form-group">
@@ -102,13 +109,15 @@
                     </div>
                     <label for="scenarioMadreIndovinello">Seleziona lo scenario in cui è ottenibile l'oggetto</label>
                     <div class="form-group">
-                        <select class="custom-select elenco-scenari" id="scenarioMadreOggetto" name="scenarioMadreOggetto">
+                        <select class="custom-select elenco-scenari" id="scenarioMadreOggetto"
+                                name="scenarioMadreOggetto">
                             <option selected>--Scegli scenario--</option>
                         </select>
                     </div>
                     <label for="scenarioFiglioIndovinello">Seleziona lo scenario in cui è richiesto l'oggetto</label>
                     <div class="form-group">
-                        <select class="custom-select elenco-scenari" id="scenarioControllore" name="scenarioControlloreOggetto">
+                        <select class="custom-select elenco-scenari" id="scenarioControllore"
+                                name="scenarioControlloreOggetto">
                             <option selected>--Scegli scenario--</option>
                         </select>
                     </div>
