@@ -9,6 +9,5 @@ import java.util.List;
 public interface ScenarioRepository extends JpaRepository<Scenario,Long> {
     List<Scenario> findByStoriaOrderById(Storia storia);
     Scenario findByTitoloAndStoria(String titolo, Storia storia);
-
-
+    List<Scenario> findByStoria(Storia storia);
 }

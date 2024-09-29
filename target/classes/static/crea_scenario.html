@@ -5,10 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <title>Crea gli scenari</title>
+    <script src="js/securityHandler.js"></script>
+    <script src="js/crea-scenario.js"></script>
+    <script src="js/crea-oggetto.js"></script>
 </head>
 <body>
 <div class="container">
     <div class="d-flex flex-row flex-wrap justify-content-center m-4">
+        <!-- Card per Scenario -->
+        <div class="card m-5 rounded-3 d-flex flex-column">
+            <div class="card-header" align="center">
+                <h3>Descrivi lo scenario</h3>
+            </div>
+            <form id="nuovoScenario">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label>Titolo scenario</label>
+                        <input type="text" class="form-control" name="titolo" id="titolo"
+                               placeholder="Dai un titolo allo scenario" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Descrizione</label>
+                        <input type="text" class="form-control" name="testo" id="testo"
+                               placeholder="Descrivi lo scenario" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Crea scenario</button>
+            </form>
+        </div>
         <!-- Card per Scelta -->
         <div class="card m-5 rounded-3 d-flex flex-column">
             <div class="card-header" align="center">
@@ -23,13 +47,13 @@
                     </div>
                     <label for="scenarioMadreScelta">Seleziona lo scenario dove parte la scelta</label>
                     <div class="form-group">
-                        <select class="custom-select" id="scenarioMadreScelta">
+                        <select class="custom-select elenco-scenari"  id="scenarioMadreScelta">
                             <option selected>--Scegli scenario madre--</option>
                         </select>
                     </div>
                     <label for="scenarioFiglioScelta">Seleziona lo scenario a cui porta la scelta</label>
                     <div class="form-group">
-                        <select class="custom-select" id="scenarioFiglioScelta">
+                        <select class="custom-select elenco-scenari" id="scenarioFiglioScelta">
                             <option selected>--Scegli scenario figlio--</option>
                         </select>
                     </div>
@@ -56,22 +80,47 @@
                     </div>
                     <label for="scenarioMadreIndovinello">Seleziona lo scenario che richiede l'indovinello</label>
                     <div class="form-group">
-                        <select class="custom-select" id="scenarioMadreIndovinello">
+                        <select class="custom-select elenco-scenari" id="scenarioMadreIndovinello">
                             <option selected>--Scegli scenario madre--</option>
                         </select>
                     </div>
                     <label for="scenarioFiglioIndovinello">Seleziona lo scenario a cui porta l'indovinello</label>
                     <div class="form-group">
-                        <select class="custom-select" id="scenarioFiglioIndovinello">
+                        <select class="custom-select elenco-scenari" id="scenarioFiglioIndovinello">
                             <option selected>--Scegli scenario figlio--</option>
                         </select>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">Crea indovinello</button>
             </form>
+            <form id="nuovoOggetto">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label>Nome dell'oggetto</label>
+                        <input type="text" class="form-control" id="nomeOggetto" name="nomeOggetto"
+                               placeholder="Inserisci il nome del nuovo oggetto" required>
+                    </div>
+                    <label for="scenarioMadreIndovinello">Seleziona lo scenario in cui è ottenibile l'oggetto</label>
+                    <div class="form-group">
+                        <select class="custom-select elenco-scenari" id="scenarioMadreOggetto" name="scenarioMadreOggetto">
+                            <option selected>--Scegli scenario--</option>
+                        </select>
+                    </div>
+                    <label for="scenarioFiglioIndovinello">Seleziona lo scenario in cui è richiesto l'oggetto</label>
+                    <div class="form-group">
+                        <select class="custom-select elenco-scenari" id="scenarioControllore" name="scenarioControlloreOggetto">
+                            <option selected>--Scegli scenario--</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Aggiungi oggetto</button>
+            </form>
         </div>
     </div>
 </div>
-<script src="js/crea-scelta.js"></script>
+
+
 </body>
+<script src="js/fetch-scenari.js"></script>
+<script src="js/crea-scelta.js"></script>
 </html>
