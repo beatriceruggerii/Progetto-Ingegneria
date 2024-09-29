@@ -12,11 +12,11 @@ fetch('http://localhost:8080/fetch_scenari')
             let elements = document.getElementsByClassName("elenco-scenari");
 
             for (let scenario of scenari) {
-                console.log(scenario.titolo);
+                //console.log(scenario.titolo);
                 let option = document.createElement('option');
                 option.textContent = scenario.titolo;
-                let objScenario = JSON.stringify(scenario);
-                option.value = objScenario;
+                option.value = scenario.id;
+                console.log("Valore aggiunto all'opzione: "+ option.value);
                 for (let i = 0; i < elements.length; i++) {
                     elements[i].appendChild(option.cloneNode(true));  // Cloniamo l'opzione
                 }

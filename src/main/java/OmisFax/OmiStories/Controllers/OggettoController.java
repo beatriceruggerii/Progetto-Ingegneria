@@ -20,19 +20,28 @@ import java.util.Map;
 public class OggettoController {
     private final OggettoService oggettoService;
     private final ScenarioService scenarioService;
-    private final ScenarioRepository scenarioRepository;
 
     @Autowired
-    public OggettoController(OggettoService oggettoService, ScenarioService scenarioService, ScenarioRepository scenarioRepository) {
+    public OggettoController(OggettoService oggettoService, ScenarioService scenarioService) {
         this.oggettoService = oggettoService;
         this.scenarioService = scenarioService;
-        this.scenarioRepository = scenarioRepository;
     }
 
+
+    //TODO: è necessario un builder?
     @PostMapping("/salva_oggetto")
-    public ResponseEntity<String> salvaScenario(@RequestBody Oggetto oggetto, HttpSession session) {
+    public ResponseEntity<String> salvaScenario(@RequestBody Map<String, String> payload, HttpSession session) {
         System.out.println("----\n richiesta di salvataggio oggeetto ricevuta");
         Storia storia = (Storia) session.getAttribute("storiaCorrente");
+        String nomeOggetto = payload.get("nomeOggetto");
+        long idMadre = Long.parseLong(payload.get("scenarioMadreOggetto"));
+        long idControllore = Long.parseLong(payload.get("scenarioControlloreOggetto"));
+
+        Scenario scenarioMadre = scenarioService.findById(idMadre);
+        Scenario scenarioControllore = scenarioService.findById(idControllore);
+
+
+        Oggetto oggetto = new Oggetto(nomeOggetto, scenarioMadre,scenarioControllore);
 
         if (oggettoService.salvaOggetto(oggetto)) {
             System.out.println("Oggetto salvato " + oggetto.toString());
@@ -43,38 +52,6 @@ public class OggettoController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Impossibile salvare l'oggetto.");
         }
     }
-
-    //FIXME: non salva gli scenari con l'oggetto
-
-    /*
-    @PostMapping("/salva_oggetto")
-    public ResponseEntity<String> salvaScenario(@RequestBody Map<String, String> payload, HttpSession session) {
-        System.out.println("richiesta ricevuta");
-        Oggetto oggetto;
-        Storia storia = (Storia) session.getAttribute("storiaCorrente");
-
-        String titoloScenarioMadre = payload.get("scenarioMadreOggetto");
-        Scenario scenarioMadre = scenarioRepository.findByTitoloAndStoria(titoloScenarioMadre, storia);
-
-        String titoloScenarioControllore = payload.get("scenarioControlloreOggetto");
-        Scenario scenarioControllore = scenarioRepository.findByTitoloAndStoria(titoloScenarioControllore, storia);
-
-        if (scenarioMadre == null || scenarioControllore == null) {
-            System.out.println("Oggetto non salvato: non esistono scenari corrispondenti ad almeno uno di quelli specificato.");
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Impossibile salvare l'oggetto, non esistono scenari corrispondenti.");
-        }
-
-        oggetto = new Oggetto(payload.get("nomeOggetto"), scenarioMadre, scenarioControllore);
-        if (oggettoService.salvaOggetto(oggetto)) {
-            System.out.println("Oggetto salvato " + oggetto.getNomeOggetto());
-            session.setAttribute("storiaCorrente", storia);
-            return ResponseEntity.ok("Oggetto salvato con successo: " + oggetto.getNomeOggetto());
-        } else {
-            System.out.println("Oggetto non salvato");
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Impossibile salvare l'oggetto.");
-        }
-    }
-    */
 
 }
 

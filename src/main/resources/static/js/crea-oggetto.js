@@ -6,8 +6,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // converto FormData in un oggetto scenario che contiene tutti i valori del form
         const oggetto = {};
+        console.log("Oggetto da salvare: ")
         formData.forEach((value, key) => {
             oggetto[key] = value;
+            console.log(key +": " + value);
         });
 
         fetch('http://localhost:8080/salva_oggetto', {

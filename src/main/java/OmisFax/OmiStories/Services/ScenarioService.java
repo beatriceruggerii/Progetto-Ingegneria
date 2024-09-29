@@ -33,4 +33,8 @@ public class ScenarioService {
     public List<Scenario> findByStoria(Storia storia) {
         return scenarioRepository.findByStoria(storia);
     }
+
+    public Scenario findById(long id) {
+        return scenarioRepository.findById(id);
+    }
 }
