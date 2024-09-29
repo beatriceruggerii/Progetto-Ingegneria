@@ -13,7 +13,7 @@
 <div class="container">
     <div class="d-flex flex-row justify-content-center m-4">
         <!-- Card per Scenario -->
-        <div class="card m-5 rounded-3 d-flex flex-column">
+        <div class="card m-1 rounded-3 d-flex flex-column">
             <div class="card-header" align="center">
                 <h3>Descrivi lo scenario</h3>
             </div>
@@ -34,7 +34,7 @@
             </form>
         </div>
         <!-- Card per Scelta -->
-        <div class="card m-5 rounded-3 d-flex flex-column">
+        <div class="card m-1 rounded-3 d-flex flex-column">
             <div class="card-header" align="center">
                 <h3>Aggiungi una Scelta</h3>
             </div>
@@ -42,18 +42,18 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label>Testo scelta</label>
-                        <input type="text" class="form-control" id="testoScelta"
+                        <input type="text" class="form-control" id="testoScelta" name="testoScelta"
                                placeholder="Inserisci il testo della scelta" required>
                     </div>
                     <label for="scenarioMadreScelta">Seleziona lo scenario dove parte la scelta</label>
                     <div class="form-group">
-                        <select class="custom-select elenco-scenari" id="scenarioMadreScelta">
+                        <select class="custom-select elenco-scenari" id="scenarioMadreScelta" name="idMadreScelta">
                             <option selected>--Scegli scenario madre--</option>
                         </select>
                     </div>
                     <label for="scenarioFiglioScelta">Seleziona lo scenario a cui porta la scelta</label>
                     <div class="form-group">
-                        <select class="custom-select elenco-scenari" id="scenarioFiglioScelta">
+                        <select class="custom-select elenco-scenari" id="scenarioFiglioScelta" name="idFiglioScelta">
                             <option selected>--Scegli scenario figlio--</option>
                         </select>
                     </div>
@@ -62,31 +62,31 @@
             </form>
         </div>
         <!-- Card per Indovinello -->
-        <div class="card m-5 rounded-3 d-flex flex-column">
+        <div class="card m-1 rounded-3 d-flex flex-column">
             <div class="card-header" align="center">
                 <h3>Aggiungi un Indovinello</h3>
             </div>
             <form id="nuovoIndovinello">
                 <div class="card-body">
                     <div class="form-group">
-                        <label>Testo scelta</label>
-                        <input type="text" class="form-control" id="domanda"
+                        <label>Testo indovinello</label>
+                        <input type="text" class="form-control" id="testoIndovinello" name="testoIndovinello"
                                placeholder="Inserisci il testo dell'indovinello" required>
                     </div>
                     <div class="form-group">
                         <label>Testo soluzione</label>
-                        <input type="text" class="form-control" id="soluzione"
+                        <input type="text" class="form-control" id="testoSoluzione" name="testoSoluzione"
                                placeholder="Inserisci la soluzione" required>
                     </div>
                     <label for="scenarioMadreIndovinello">Seleziona lo scenario che richiede l'indovinello</label>
                     <div class="form-group">
-                        <select class="custom-select elenco-scenari" id="scenarioMadreIndovinello">
+                        <select class="custom-select elenco-scenari" id="scenarioMadreIndovinello" name="scenarioMadreIndovinello" >
                             <option selected>--Scegli scenario madre--</option>
                         </select>
                     </div>
                     <label for="scenarioFiglioIndovinello">Seleziona lo scenario a cui porta l'indovinello</label>
                     <div class="form-group">
-                        <select class="custom-select elenco-scenari" id="scenarioFiglioIndovinello">
+                        <select class="custom-select elenco-scenari" id="scenarioFiglioIndovinello" name="scenarioFiglioIndovinello">
                             <option selected>--Scegli scenario figlio--</option>
                         </select>
                     </div>
@@ -96,7 +96,7 @@
         </div>
 
         <!-- Card per Oggetto -->
-        <div class="card m-5 rounded-3 d-flex flex-column">
+        <div class="card m-1 rounded-3 d-flex flex-column">
             <div class="card-header" align="center">
                 <h3>Aggiungi un Oggetto</h3>
             </div>
@@ -132,4 +132,5 @@
 </body>
 <script src="js/fetch-scenari.js"></script>
 <script src="js/crea-scelta.js"></script>
+<script src="js/crea-indovinello.js"></script>
 </html>

@@ -13,6 +13,7 @@ public class SceltaService {
 
     public boolean registraScelta(Scelta scelta) {
         try {
+            System.out.println("fin qui tutto bene");
             sceltaRepository.save(scelta);
             return true;
         } catch (Exception e) {
