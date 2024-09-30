@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function (){
             .then(response => {
                 if (response.ok) {
                     // Se la richiesta è andata a buon fine, puoi fare qualcosa, ad esempio reindirizzare l'utente a un'altra pagina
-                    window.location.href = 'Homepage.html';
+                    window.location.href = 'homepage.html';
                 } else {
                     $('#credenzialiErrate').modal('show'); // Mostra il modal
                     throw new Error('Errore nella richiesta');

@@ -12,6 +12,12 @@ import java.util.Map;
 @RestController
 public class SessionController {
 
+    @GetMapping("/logout")
+    public ResponseEntity<String> logout(HttpSession session) {
+        session.invalidate();
+        return ResponseEntity.ok("Logout successful");
+    }
+
     @GetMapping("/session_data")
     public ResponseEntity<Map<String, Object>> getSessionData(HttpSession session) {
         System.out.println("richiesta dati ricevuta");

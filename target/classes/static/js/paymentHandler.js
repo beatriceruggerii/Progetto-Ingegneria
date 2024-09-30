@@ -24,8 +24,11 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(response => response.json())
             .then(data => {
                 // Mostra la risposta del server
+                console.log(data); // Aggiungi questa linea per controllare cosa restituisce il server
                 if (data.status === "Autorizzato") {
                     alert(`Pagamento riuscito! Totale: €${data.total}, Commissione: €${data.fee}`);
+                    console.log('Pagamento autorizzato. Reindirizzando alla homepage...');
+                    window.location.replace("../homepage.html"); // Alternativa a href
                 }
                 else if (data.status === "Fallito") {
                     alert(`Pagamento fallito: ${data.message}`);

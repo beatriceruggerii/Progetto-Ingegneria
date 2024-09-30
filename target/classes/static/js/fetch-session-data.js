@@ -9,9 +9,20 @@ fetch('/session_data') // endpoint che ritorna i dati in sessione
         console.log(data);
 
         // Popola la pagina con i dati ricevuti
-        document.getElementById('username').textContent = data.username;
-        document.getElementById('isPremium').textContent = data.isPremium ? "Premium" : "Base";
-        if (document.getElementById('storyTitle')) {
+        if(document.getElementById("username") !=null) {
+            document.getElementById('username').textContent = data.username;
+        }
+        
+        if (document.getElementById("toPremium") != null) {
+            document.getElementById("toPremium").style.display = data.isPremium ? "none" : "inline";
+        }
+
+        if (document.getElementById("isPremium") != null) {
+            document.getElementById('isPremium').textContent = data.isPremium ? "Premium" : "Base";
+        }
+
+        if (document.getElementById('storyTitle') != null) {
             document.getElementById('storyTitle').textContent = data.storyTitle || "Titolo non disponibile";
-        }    })
+        }
+    })
     .catch(error => console.error('Errore nel recupero dei dati di sessione:', error));
