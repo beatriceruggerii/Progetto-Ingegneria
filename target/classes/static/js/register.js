@@ -1,21 +1,18 @@
-document.addEventListener('DOMContentLoaded', function (){
+document.addEventListener('DOMContentLoaded', function () {
     console.log('start');
-    document.getElementById('registrazione').addEventListener('submit', function(event) {
+    document.getElementById('registrazione').addEventListener('submit', function (event) {
         console.log('inizio listener.');
         event.preventDefault();
 
-        const usernameValue = document.getElementById('uname').value;
-        const passwordValue = document.getElementById('pword').value;
-        const confermaPassword = document.getElementById('cpword').value;
-        console.log(usernameValue);
-        console.log(passwordValue);
-        console.log(confermaPassword);
+        const formData = new FormData(event.target);
+        //debug
+        console.log("check premium: "+ formData.get("premium") );
 
-        if (passwordValue === confermaPassword) {
-            const user = {
-                username: usernameValue,
-                password: passwordValue
-            };
+        // converto FormData in un oggetto user che contiene tutti i valori del form
+        const user = {};
+        if (formData.get("pword") === formData.get("cpword")) {
+            user["username"] = formData.get("uname");
+            user["password"] = formData.get("pword");
 
             fetch('http://localhost:8080/register', {
                 method: 'POST',
@@ -28,7 +25,12 @@ document.addEventListener('DOMContentLoaded', function (){
                     if (response.ok) {
                         //openModal('registrazioneAvvenuta');
                         console.log('registrazione avvenuta.');
-                        window.location.href = '../index.html';
+                        if(formData.get("premium") === "premium") {
+                            //reindirizzo alla pagina di pagamento
+                            window.location.href = '../PassaPremium.html';
+                        } else{
+                            window.location.href = '../homepage.html';
+                        }
                     } else {
                         //openModal('utenteEsistente');
                         console.log('utente esistente.')

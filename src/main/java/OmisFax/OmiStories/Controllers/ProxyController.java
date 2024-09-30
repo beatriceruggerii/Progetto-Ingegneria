@@ -46,6 +46,7 @@ public class ProxyController {
             String status = body.get("status").asText();
             if(status.trim().equals("Autorizzato")){
                 utenteService.upgradePremium(session.getAttribute("loggedUsername").toString());
+                session.setAttribute("isPremium", true);
             }
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);

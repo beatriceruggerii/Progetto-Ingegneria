@@ -30,10 +30,6 @@ public class ScenarioService {
         return scenarioRepository.findByTitoloAndStoria(titolo, storia);
     }
 
-    public Scenario findById(long id){
-        return scenarioRepository.findById(id);
-    }
-
     public List<Scenario> findByStoria(Storia storia) {
         return scenarioRepository.findByStoria(storia);
     }

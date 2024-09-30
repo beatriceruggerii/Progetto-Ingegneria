@@ -1,0 +1,51 @@
+body {
+    background-color: #f8f9fe;
+}
+
+.custom-card {
+    max-width: 400px;
+    margin: 20px auto;
+}
+
+.custom-input {
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.btn-custom {
+    background-color: #ff6600 !important;
+    color: white !important;
+}
+
+.btn-custom:hover {
+    background-color: #ff944d !important;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.custom-title {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    color: #6c757d;
+}
+
+textarea.form-control {
+    height: 200px; /* Imposta un'altezza specifica */
+    resize: vertical; /* Consente all'utente di ridimensionare solo in verticale */
+}
+
+.custom-tab {
+    color: #ff6600; /* Colore del testo arancione */
+}
+
+.custom-tab:hover {
+    color: #ff944d !important;
+}
+
