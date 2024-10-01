@@ -42,13 +42,17 @@ public class StoryController {
         Storia storia = new Storia(titolo, autore);
         Scenario scenarioIniziale = new Scenario(storia, "Scenario Iniziale", descrizioneIniziale);
 
+        if(storiaService.getStoria(titolo) != null){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Esiste già una storia con questo titolo.");
+        }
+
         if (storiaService.salvaStoria(storia) && scenarioService.salvaScenario(scenarioIniziale)) {
             System.out.println("Storia salvata");
             session.setAttribute("storiaCorrente", storia);
             return ResponseEntity.ok("Storia salvata con successo");
         } else {
             System.out.println("Storia non salvata");
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Errore: storia già esistente");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("C'è stato un errore con il salvataggio della tua storia, ritenta.");
         }
     }
 

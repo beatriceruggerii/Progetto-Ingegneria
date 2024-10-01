@@ -33,6 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         }
                     } else {
                         //openModal('utenteEsistente');
+                        $('#utenteEsistente').modal('show');
                         console.log('utente esistente.')
                     }
                 })
@@ -41,6 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
         } else {
             //openModal('passwordMismatch');
+            $('#passwordMismatch').modal('show');
             console.log('le password non combaciano');
         }
     });

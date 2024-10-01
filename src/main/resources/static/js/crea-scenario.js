@@ -21,7 +21,10 @@ document.addEventListener("DOMContentLoaded", function () {
             if (response.ok) {
                 window.location.href = './crea_scenario.html';
             } else {
-                throw new Error('Errore nella richiesta');
+                return response.text().then(errorMessage => {
+                    document.getElementById("errorMessage").textContent = errorMessage;
+                    $('#errorModal').modal('show'); // Mostra il modal
+                });
             }
         })
             .catch(error => {

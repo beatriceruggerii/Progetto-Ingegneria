@@ -23,4 +23,8 @@ public class StoriaService {
         }
     }
 
+    public Storia getStoria(String titolo){
+        return storiaRepository.findStoriaByTitolo(titolo);
+    }
+
 }

@@ -1,10 +1,10 @@
-document.addEventListener('DOMContentLoaded',function () {
-        document.getElementById("nuovaStoria").addEventListener("submit", function (event){
+document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById("nuovaStoria").addEventListener("submit", function (event) {
             event.preventDefault();
 
             var titolo = document.getElementById('titolo').value;
             var descrizione = document.getElementById('descrizioneIniziale').value;
-            const storia ={
+            const storia = {
                 titolo: titolo,
                 descrizioneIniziale: descrizione
             }
@@ -20,12 +20,14 @@ document.addEventListener('DOMContentLoaded',function () {
                 if (response.ok) {
                     window.location.href = './crea_scenario.html';
                 } else {
-                    throw new Error('Errore nella richiesta');
+                    return response.text().then(errorMessage => {
+                        document.getElementById("errorMessage").textContent = errorMessage;
+                        $('#errorModal').modal('show'); // Mostra il modal
+                    });
                 }
-            })
-                .catch(error => {
-                    console.log('Si è verificato un errore:', error);
-                });
+            }).catch(error => {
+                console.log('Si è verificato un errore:', error);
+            });
         })
     }
 );
