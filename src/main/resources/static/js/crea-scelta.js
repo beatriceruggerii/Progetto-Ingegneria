@@ -24,7 +24,7 @@ document.getElementById('nuovaScelta').addEventListener('submit', function(event
             body: JSON.stringify(scelta)
         }).then(response => {
             if(response.ok){
-                alert('Scelta creata e salvata');
+                window.location.href = './crea_scenario.html';
             } else{
                 alert('Scelta non registrata');
             }

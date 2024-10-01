@@ -26,7 +26,7 @@ document.getElementById('nuovoIndovinello').addEventListener('submit', function(
             body: JSON.stringify(scelta)
         }).then(response => {
             if(response.ok){
-                alert('Indovinello creato e salvato');
+                window.location.href = './crea_scenario.html';
             } else{
                 alert('Indovinello non registrato');
             }
