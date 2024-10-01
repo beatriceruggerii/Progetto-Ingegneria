@@ -12,7 +12,7 @@ fetch('/session_data') // endpoint che ritorna i dati in sessione
         if(document.getElementById("username") !=null) {
             document.getElementById('username').textContent = data.username;
         }
-        
+
         if (document.getElementById("toPremium") != null) {
             document.getElementById("toPremium").style.display = data.isPremium ? "none" : "inline";
         }
