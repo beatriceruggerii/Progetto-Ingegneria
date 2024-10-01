@@ -21,6 +21,22 @@ fetch('http://localhost:8080/fetch_scenari')
                     elements[i].appendChild(option.cloneNode(true));  // Cloniamo l'opzione
                 }
             }
+            const areaScenari = document.getElementById("areaScenari");
+            // Costruisco il contenuto HTML con gli scenari ricevuti
+            let html = '';
+            scenari.forEach(scenario => {
+                html += `
+                        <div class="card mt-3">
+                            <div class="card-header">
+                                <h4>${scenario.titolo}</h4>
+                            </div>
+                            <div class="card-body">
+                                <p>${scenario.testo}</p>
+                            </div>
+                        </div>`;
+            });
+
+            areaScenari.innerHTML = html;
         }
     })
     .catch(error => {
