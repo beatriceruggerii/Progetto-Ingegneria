@@ -1,3 +1,6 @@
+$(document).ready(function () {
+    $('#passwordMismatch').modal('show');
+});
 document.addEventListener("DOMContentLoaded", function (){
 
     document.getElementById('login').addEventListener('submit', function(event) {

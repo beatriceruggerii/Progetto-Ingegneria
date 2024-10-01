@@ -23,7 +23,6 @@ document.addEventListener('DOMContentLoaded', function () {
             })
                 .then(response => {
                     if (response.ok) {
-                        //openModal('registrazioneAvvenuta');
                         console.log('registrazione avvenuta.');
                         if(formData.get("premium") === "premium") {
                             //reindirizzo alla pagina di pagamento
@@ -31,8 +30,8 @@ document.addEventListener('DOMContentLoaded', function () {
                         } else{
                             window.location.href = '../homepage.html';
                         }
-                    } else {
-                        //openModal('utenteEsistente');
+                    } else{
+                        $('#utenteEsistente').modal('show');
                         console.log('utente esistente.')
                     }
                 })
@@ -40,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     console.error('Si è verificato un errore:', error);
                 });
         } else {
-            //openModal('passwordMismatch');
+            $('#passwordMismatch').modal('show');
             console.log('le password non combaciano');
         }
     });

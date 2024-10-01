@@ -26,7 +26,7 @@ public class RegisterController {
             session.setAttribute("isPremium", utente.isPremium());
             return ResponseEntity.ok("Registrazione avvenuta con successo");
         } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Impossibile completare la registrazione");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Impossibile completare la registrazione");
         }
     }
 }
