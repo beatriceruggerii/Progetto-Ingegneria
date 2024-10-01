@@ -31,8 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         } else{
                             window.location.href = '../homepage.html';
                         }
-                    } else {
-                        //openModal('utenteEsistente');
+                    } else{
                         $('#utenteEsistente').modal('show');
                         console.log('utente esistente.')
                     }
@@ -41,7 +40,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     console.error('Si è verificato un errore:', error);
                 });
         } else {
-            //openModal('passwordMismatch');
             $('#passwordMismatch').modal('show');
             console.log('le password non combaciano');
         }
