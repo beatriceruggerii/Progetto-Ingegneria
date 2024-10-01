@@ -54,12 +54,12 @@ public class ScenarioController {
         Map<String, Object> responseData = new HashMap<>();
         List<Scenario> listaScenari = new ArrayList<>();
         listaScenari = scenarioService.findByStoria(storia);
-        if(listaScenari.isEmpty()){
+        if (listaScenari.isEmpty()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
         //debud
-        System.out.println("scenari trovati: "+ listaScenari.size());
-        for(int i = 0; i<listaScenari.size(); i++){
+        System.out.println("scenari trovati: " + listaScenari.size());
+        for (int i = 0; i < listaScenari.size(); i++) {
             System.out.println(listaScenari.get(i).toString());
         }
         responseData.put("listaScenari", listaScenari);

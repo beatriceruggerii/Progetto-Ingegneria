@@ -32,4 +32,4 @@ document.getElementById('nuovaScelta').addEventListener('submit', function(event
             console.log('errore', error);
         });
     }
-})
+});

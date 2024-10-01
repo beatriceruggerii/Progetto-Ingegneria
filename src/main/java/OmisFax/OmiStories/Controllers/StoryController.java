@@ -57,7 +57,7 @@ public class StoryController {
     }
 
     @PostMapping("/salva_scelta")
-    public ResponseEntity<String> salvaScelta(@RequestBody Map<String, String> infoScelta) {
+    public ResponseEntity<String> salvaScelta(@RequestBody Map<String, String> infoScelta, HttpSession session) {
         System.out.println("Richiesta ricevuta");
 
         String testoScelta = infoScelta.get("testo");
@@ -76,7 +76,8 @@ public class StoryController {
         if (!scenarioMadre.equals(scenarioFiglio)) {
             System.out.println("ok");
             if (sceltaService.registraScelta(scelta)) {
-                System.out.println("salvando");
+                System.out.println("scelta salvata");
+                session.setAttribute("sceltaCorrente", scelta);
                 return ResponseEntity.ok("Scelta salvata");
             }
         } else {
@@ -89,7 +90,7 @@ public class StoryController {
     }
 
     @PostMapping("/salva_indovinello")
-    public ResponseEntity<String> salvaIndovinello(@RequestBody Map<String, String> infoIndovinello) {
+    public ResponseEntity<String> salvaIndovinello(@RequestBody Map<String, String> infoIndovinello, HttpSession session) {
         System.out.println("Richiesta ricevuta");
 
         String testoIndovinello = infoIndovinello.get("testo");
