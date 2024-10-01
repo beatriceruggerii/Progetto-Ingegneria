@@ -6,6 +6,9 @@ import org.hibernate.annotations.OnDeleteAction;
 import java.util.Objects;
 
 @Entity
+@Table(name = "scenario", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"fk_storia", "titolo"})
+})
 public class Scenario {
     /* classe che può essere usata singolarmente per creare uno scenario finale base
        o estesa con collegamenti o indovinelli tramite scenarioDecorator

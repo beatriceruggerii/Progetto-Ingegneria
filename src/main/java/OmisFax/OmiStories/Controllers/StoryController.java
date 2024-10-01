@@ -19,18 +19,15 @@ import java.util.Map;
 public class StoryController {
     private final StoriaService storiaService;
     private final UtenteService utenteService;
-    private final SceltaService sceltaService;
     private final ScenarioService scenarioService;
-    private final IndovinelloService indovinelloService;
 
     @Autowired
-    public StoryController(StoriaService storiaService, UtenteService utenteService, SceltaService sceltaService, ScenarioService scenarioService, IndovinelloService indovinelloService) {
+    public StoryController(StoriaService storiaService, UtenteService utenteService, ScenarioService scenarioService) {
         this.storiaService = storiaService;
         this.utenteService = utenteService;
-        this.sceltaService = sceltaService;
         this.scenarioService = scenarioService;
-        this.indovinelloService = indovinelloService;
     }
+
 
     @PostMapping("/salva_storia")
     public ResponseEntity<String> salvaStoria(@RequestBody Map<String, String> payload, HttpSession session) {
@@ -56,70 +53,8 @@ public class StoryController {
         }
     }
 
-    @PostMapping("/salva_scelta")
-    public ResponseEntity<String> salvaScelta(@RequestBody Map<String, String> infoScelta, HttpSession session) {
-        System.out.println("Richiesta ricevuta");
 
-        String testoScelta = infoScelta.get("testo");
-        long idMadre = Long.parseLong(infoScelta.get("idMadre"));
-        long idFiglio = Long.parseLong(infoScelta.get("idFiglio"));
 
-        Scenario scenarioMadre = scenarioService.findById(idMadre);
-        Scenario scenarioFiglio = scenarioService.findById(idFiglio);
 
-        Scelta scelta = new Scelta(testoScelta, scenarioMadre, scenarioFiglio);
-
-        if (scenarioMadre == null || scenarioFiglio == null) {
-            System.out.println("sono null");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Errore: scenario madre o figlio mancante");
-        }
-        if (!scenarioMadre.equals(scenarioFiglio)) {
-            System.out.println("ok");
-            if (sceltaService.registraScelta(scelta)) {
-                System.out.println("scelta salvata");
-                session.setAttribute("sceltaCorrente", scelta);
-                return ResponseEntity.ok("Scelta salvata");
-            }
-        } else {
-            System.out.println("madre = figlio");
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Errore: madre e figlio sono lo stesso");
-        }
-
-        System.out.println("errore generico");
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Something went wrong");
-    }
-
-    @PostMapping("/salva_indovinello")
-    public ResponseEntity<String> salvaIndovinello(@RequestBody Map<String, String> infoIndovinello, HttpSession session) {
-        System.out.println("Richiesta ricevuta");
-
-        String testoIndovinello = infoIndovinello.get("testo");
-        String testoSoluzione = infoIndovinello.get("soluzione");
-        long idMadre = Long.parseLong(infoIndovinello.get("idMadre"));
-        long idFiglio = Long.parseLong(infoIndovinello.get("idFiglio"));
-
-        Scenario scenarioMadre = scenarioService.findById(idMadre);
-        Scenario scenarioFiglio = scenarioService.findById(idFiglio);
-
-        Indovinello indovinello = new Indovinello(testoIndovinello, scenarioMadre, scenarioFiglio, testoSoluzione);
-
-        if (scenarioMadre == null || scenarioFiglio == null) {
-            System.out.println("sono null");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Errore: scenario madre o figlio mancante");
-        }
-        if (!scenarioMadre.equals(scenarioFiglio)) {
-            System.out.println("ok");
-            if (indovinelloService.registraIndovinello(indovinello)) {
-                System.out.println("salvando");
-                return ResponseEntity.ok("Indovinello salvato");
-            }
-        } else {
-            System.out.println("madre = figlio");
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Errore: madre e figlio sono lo stesso");
-        }
-
-        System.out.println("errore generico");
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Something went wrong");
-    }
 
 }

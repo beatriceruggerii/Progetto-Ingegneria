@@ -1,11 +1,11 @@
 package OmisFax.OmiStories.Services;
 
-import OmisFax.OmiStories.Entities.Indovinello;
-import OmisFax.OmiStories.Entities.Scelta;
-import OmisFax.OmiStories.Entities.Scenario;
+import OmisFax.OmiStories.Entities.*;
 import OmisFax.OmiStories.Repositories.IndovinelloRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class IndovinelloService {
@@ -21,6 +21,11 @@ public class IndovinelloService {
             return false;
         }
     }
+
+    public List<Indovinello> findByStoria(Storia storia){
+        return indovinelloRepository.findALlByStoria(storia);
+    }
+
 
 
 }

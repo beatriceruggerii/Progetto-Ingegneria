@@ -40,7 +40,7 @@ public class ScenarioController {
             return ResponseEntity.ok("Scenario salvato con successo");
         } else {
             System.out.println("Scenario non salvato");
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Impossibile salvare lo scenario.");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Impossibile salvare lo scenario, prova a cambiare titolo.");
         }
     }
 
