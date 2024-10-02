@@ -15,7 +15,7 @@ public interface SceltaRepository extends JpaRepository<Scelta, Long> {
 
     @Query("SELECT sc FROM Scelta sc " +
             "JOIN sc.scenarioMadre sce " +
-            "WHERE sce.storia = :storia")
+            "WHERE sce.storia = :storia AND TYPE(sc) = Scelta")
     List<Scelta> findScelteByStoria(@Param("storia") Storia Storia);
 
 }

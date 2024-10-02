@@ -5,11 +5,8 @@ document.getElementById('nuovaScelta').addEventListener('submit', function(event
     const idMadre = document.getElementById('scenarioMadreScelta').value;
     const idFiglio = document.getElementById('scenarioFiglioScelta').value;
 
-    if(idMadre === "--Scegli scenario madre--" || idFiglio === "--Scegli scenario figlio--"){
-        console.log("Scenario non selezionato");
-        alert("Scenario non selezionato");
-    }
-    else{
+
+    if(validateScenari(idMadre,idFiglio)){
         const scelta = {
             testo: testo,
             idMadre: idMadre,
@@ -26,10 +23,23 @@ document.getElementById('nuovaScelta').addEventListener('submit', function(event
             if(response.ok){
                 window.location.href = './crea_scenario.html';
             } else{
-                alert('Scelta non registrata');
+                //alert('Scelta non registrata');
+                return response.text().then(errorMessage => {
+                    document.getElementById("errorMessage").textContent = errorMessage;
+                    $('#errorModal').modal('show'); // Mostra il modal
+                });
             }
         }).catch(error => {
             console.log('errore', error);
         });
     }
 });
+
+function validateScenari(idMadre, idFiglio){
+    if(idMadre === "" || idFiglio === ""){
+        console.log("Scenario non selezionato");
+        alert("Seleziona entrambi gli scenari prima di continuare.");
+        return false;
+    }
+    return true;
+}

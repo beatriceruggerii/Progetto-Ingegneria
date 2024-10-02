@@ -26,15 +26,15 @@ public class ScenarioService {
         }
     }
 
-    public Scenario findByTitoloAndStoria(String titolo, Storia storia) {
-        return scenarioRepository.findByTitoloAndStoria(titolo, storia);
-    }
-
     public List<Scenario> findByStoria(Storia storia) {
         return scenarioRepository.findByStoria(storia);
     }
 
     public Scenario findById(long id) {
         return scenarioRepository.findById(id);
+    }
+
+    public Scenario findByTitoloAndStoria(String titolo, Storia storia){
+        return scenarioRepository.findByTitoloAndStoria(titolo, storia);
     }
 }
