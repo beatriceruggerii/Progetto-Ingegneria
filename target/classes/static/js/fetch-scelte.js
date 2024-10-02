@@ -18,7 +18,7 @@ fetch('http://localhost:8080/fetch_scelte')
                 html +=
                     "<li class=\"list-group-item\">\n" +
                     "<strong>" + scelta.descrizione +"</strong>\n" +
-                    "<p> Da <b>`+scelta.scenarioMadre.titolo+`</b> a <b>`+scelta.scenarioFiglio.titolo+` </b></p>"+
+                    "<p> Da <b>" + scelta.scenarioMadre.titolo +"</b> a <b> "+  scelta.scenarioFiglio.titolo +" </b></p>"+
                     "</li>";
             });
             areaScelte.innerHTML = html;

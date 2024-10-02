@@ -20,15 +20,6 @@ fetch('http://localhost:8080/fetch_oggetti')
                         "            <strong>" + oggetto.nomeOggetto +"</strong>\n" +
                         "                            <p> Acquisibile in <b>" + oggetto.scenarioMadre.titolo + "</b>, per accedere a <b>" + oggetto.scenarioControllore.titolo + "</b> </p>\n" +
                         "        </li>";
-                    /*
-                    elenco.innerHTML += "<div class=\"card-header\">\n" +
-                        "                            <h4>" + oggetto.nomeOggetto + "</h4>\n" +
-                        "                        </div>\n" +
-                        "                        <div class=\"card-body\"> \n" +
-                        "                            <p> Acquisibile in <b>" + oggetto.scenarioMadre.titolo + "</b>, per accedere a <b>" + oggetto.scenarioControllore.titolo + "</b> </p>\n" +
-                        "                        </div>\n";
-
-                     */
                 }
             }
         }
