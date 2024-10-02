@@ -15,7 +15,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(NullPointerException.class)
     public ResponseEntity<String> handleNullPointerException(NullPointerException ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Un errore interno si è verificato.");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Un errore interno si è verificato."+ ex.getMessage());
     }
 
 

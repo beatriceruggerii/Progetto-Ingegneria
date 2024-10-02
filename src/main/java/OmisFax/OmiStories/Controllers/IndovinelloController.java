@@ -1,5 +1,6 @@
 package OmisFax.OmiStories.Controllers;
 
+import OmisFax.OmiStories.DTOs.IndovinelloDTO;
 import OmisFax.OmiStories.Entities.Indovinello;
 import OmisFax.OmiStories.Entities.Oggetto;
 import OmisFax.OmiStories.Entities.Scenario;
@@ -32,10 +33,9 @@ public class IndovinelloController {
     }
 
     @PostMapping("/salva_indovinello")
-    public ResponseEntity<String> salvaIndovinello(@RequestBody Map<String, String> infoIndovinello, HttpSession session) {
+    public ResponseEntity<String> salvaIndovinello(@RequestBody IndovinelloDTO infoIndovinello, HttpSession session) {
         System.out.println("Richiesta ricevuta");
         return indovinelloService.responseSalvaIndovinello(infoIndovinello, session);
-
     }
 
     @GetMapping("/fetch_indovinelli")
@@ -43,7 +43,5 @@ public class IndovinelloController {
         System.out.println("richiesta di fetch indovinelli ricevuta");
         return indovinelloService.responseFetchIndovinelli(session);
     }
-
-
 
 }

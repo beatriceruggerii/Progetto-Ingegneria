@@ -1,5 +1,6 @@
 package OmisFax.OmiStories.Controllers;
 
+import OmisFax.OmiStories.DTOs.SceltaDTO;
 import OmisFax.OmiStories.Entities.Scelta;
 import OmisFax.OmiStories.Entities.Scenario;
 import OmisFax.OmiStories.Entities.Storia;
@@ -31,7 +32,7 @@ public class SceltaController {
     }
 
     @PostMapping("/salva_scelta")
-    public ResponseEntity<String> salvaScelta(@RequestBody Map<String, String> infoScelta, HttpSession session) {
+    public ResponseEntity<String> salvaScelta(@RequestBody SceltaDTO infoScelta, HttpSession session) {
         System.out.println("Richiesta ricevuta");
         return sceltaService.responseSalvaScelta(infoScelta, session);
 

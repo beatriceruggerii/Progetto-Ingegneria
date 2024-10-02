@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ScenarioFactory {
+    @Autowired
     private final ScenarioRepository scenarioRepository;
 
     @Autowired
@@ -15,6 +16,9 @@ public class ScenarioFactory {
         this.scenarioRepository = scenarioRepository;
     }
 
+    public Scenario createScenarioIniziale(Storia storia, String testo){
+        return new Scenario(storia, "Scenario Iniziale", testo);
+    }
 
     public Scenario createScenario(Storia storia, String titolo, String testo){
         return new Scenario(storia, titolo, testo);

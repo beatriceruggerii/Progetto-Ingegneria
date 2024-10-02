@@ -10,14 +10,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class OggettoFactory {
-
-    private final ScenarioFactory scenarioFactory;
-
+    @Autowired
     private ScenarioService scenarioService;
 
     @Autowired
-    public OggettoFactory(ScenarioFactory scenarioFactory, ScenarioService scenarioService) {
-        this.scenarioFactory = scenarioFactory;
+    public OggettoFactory(ScenarioService scenarioService) {
         this.scenarioService = scenarioService;
     }
 
@@ -26,8 +23,8 @@ public class OggettoFactory {
             throw new IllegalArgumentException("Errore: Lo scenario di partenza e quello di destinazione non possono essere uguali!");
         }
 
-        Scenario scenarioMadre = scenarioFactory.createScenarioById(idMadre);
-        Scenario scenarioControllore = scenarioFactory.createScenarioById(idControllore);
+        Scenario scenarioMadre = scenarioService.findById(idMadre);
+        Scenario scenarioControllore = scenarioService.findById(idControllore);
                 
         if (scenarioControllore.equals(scenarioService.findByTitoloAndStoria("Scenario Iniziale", storia))) {
             throw new IllegalArgumentException("Errore: Lo scenario di partenza non può richiedere oggetti di accesso!");

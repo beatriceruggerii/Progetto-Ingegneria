@@ -9,9 +9,9 @@ document.getElementById('nuovoIndovinello').addEventListener('submit', function 
     if (validateScenari(idMadre, idFiglio)) {
         const scelta = {
             testo: testo,
+            soluzione: soluzione,
             idMadre: idMadre,
-            idFiglio: idFiglio,
-            soluzione: soluzione
+            idFiglio: idFiglio
         };
 
         fetch('http://localhost:8080/salva_indovinello', {

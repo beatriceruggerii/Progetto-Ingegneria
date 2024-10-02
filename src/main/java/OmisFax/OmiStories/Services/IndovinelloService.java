@@ -1,5 +1,6 @@
 package OmisFax.OmiStories.Services;
 
+import OmisFax.OmiStories.DTOs.IndovinelloDTO;
 import OmisFax.OmiStories.Entities.*;
 import OmisFax.OmiStories.Repositories.IndovinelloRepository;
 import jakarta.servlet.http.HttpSession;
@@ -21,11 +22,11 @@ public class IndovinelloService {
     @Autowired
     private ScenarioService scenarioService;
 
-    public ResponseEntity<String> responseSalvaIndovinello(Map<String, String> infoIndovinello, HttpSession session) {
-        String testoIndovinello = infoIndovinello.get("testo");
-        String testoSoluzione = infoIndovinello.get("soluzione");
-        long idMadre = Long.parseLong(infoIndovinello.get("idMadre"));
-        long idFiglio = Long.parseLong(infoIndovinello.get("idFiglio"));
+    public ResponseEntity<String> responseSalvaIndovinello(IndovinelloDTO infoIndovinello, HttpSession session) {
+        String testoIndovinello = infoIndovinello.getTesto();
+        String testoSoluzione = infoIndovinello.getSoluzione();
+        long idMadre = infoIndovinello.getIdMadre();
+        long idFiglio = infoIndovinello.getIdFiglio();
 
         Scenario scenarioMadre = scenarioService.findById(idMadre);
         Scenario scenarioFiglio = scenarioService.findById(idFiglio);

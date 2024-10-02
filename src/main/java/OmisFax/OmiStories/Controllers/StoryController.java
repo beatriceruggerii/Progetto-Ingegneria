@@ -1,4 +1,5 @@
 package OmisFax.OmiStories.Controllers;
+import OmisFax.OmiStories.DTOs.StoriaDTO;
 import OmisFax.OmiStories.Entities.*;
 import OmisFax.OmiStories.Services.SceltaService;
 import OmisFax.OmiStories.Services.ScenarioService;
@@ -30,31 +31,10 @@ public class StoryController {
 
 
     @PostMapping("/salva_storia")
-    public ResponseEntity<String> salvaStoria(@RequestBody Map<String, String> payload, HttpSession session) {
+    public ResponseEntity<String> salvaStoria(@RequestBody StoriaDTO payload, HttpSession session) {
         System.out.println("richiesta ricevuta");
-        String titolo = payload.get("titolo");
-        String descrizioneIniziale = payload.get("descrizioneIniziale");
-        String username = (String) session.getAttribute("loggedUsername");
-        Utente autore = utenteService.trovaUtente(username);
-        Storia storia = new Storia(titolo, autore);
-        Scenario scenarioIniziale = new Scenario(storia, "Scenario Iniziale", descrizioneIniziale);
-
-        if(storiaService.getStoria(titolo) != null){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Esiste già una storia con questo titolo.");
-        }
-
-        if (storiaService.salvaStoria(storia) && scenarioService.salvaScenario(scenarioIniziale)) {
-            System.out.println("Storia salvata");
-            session.setAttribute("storiaCorrente", storia);
-            return ResponseEntity.ok("Storia salvata con successo");
-        } else {
-            System.out.println("Storia non salvata");
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("C'è stato un errore con il salvataggio della tua storia, ritenta.");
-        }
+        return storiaService.salvaStoria(payload, session);
     }
-
-
-
 
 
 }

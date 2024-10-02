@@ -1,5 +1,6 @@
 package OmisFax.OmiStories.Services;
 
+import OmisFax.OmiStories.DTOs.SceltaDTO;
 import OmisFax.OmiStories.Entities.Scelta;
 import OmisFax.OmiStories.Entities.Scenario;
 import OmisFax.OmiStories.Entities.Storia;
@@ -23,10 +24,10 @@ public class SceltaService {
     @Autowired
     private ScenarioService scenarioService;
 
-    public ResponseEntity<String> responseSalvaScelta(Map<String, String> infoScelta, HttpSession session){
-        String testoScelta = infoScelta.get("testo");
-        long idMadre = Long.parseLong(infoScelta.get("idMadre"));
-        long idFiglio = Long.parseLong(infoScelta.get("idFiglio"));
+    public ResponseEntity<String> responseSalvaScelta(SceltaDTO infoScelta, HttpSession session){
+        String testoScelta = infoScelta.getTesto();
+        long idMadre = infoScelta.getIdMadre();
+        long idFiglio = infoScelta.getIdFiglio();
 
         Scenario scenarioMadre = scenarioService.findById(idMadre);
         Scenario scenarioFiglio = scenarioService.findById(idFiglio);
