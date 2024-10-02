@@ -16,5 +16,5 @@ public interface OggettoRepository extends JpaRepository<Oggetto, Long> {
     Oggetto findOggettoByScenarioMadre(Scenario s);
 
     @Query("SELECT o FROM Oggetto o WHERE o.scenarioMadre.storia = :storia")
-    List<Oggetto> findALlByStoria(@Param("storia") Storia storia);
+    List<Oggetto> findAllByStoria(@Param("storia") Storia storia);
 }

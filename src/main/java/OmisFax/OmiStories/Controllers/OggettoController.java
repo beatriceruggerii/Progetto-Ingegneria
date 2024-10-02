@@ -34,8 +34,6 @@ public class OggettoController {
     }
 
 
-    //TODO: è necessario un builder?
-    //TODO: gestione eccezioni in responseentities
     @PostMapping("/salva_oggetto")
     public ResponseEntity<String> salvaOggetto(@RequestBody OggettoDTO payload, HttpSession session) {
         System.out.println("----\n richiesta di salvataggio oggeetto ricevuta");
@@ -48,24 +46,7 @@ public class OggettoController {
     public ResponseEntity<Map<String, Object>> fetchOggetti(HttpSession session) {
         System.out.println("richiesta di fetch oggetti ricevuta");
         Storia storia = (Storia) session.getAttribute("storiaCorrente");
-        if (storia == null) {
-            System.out.println("storia non trovata");
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-        }
-        Map<String, Object> responseData = new HashMap<>();
-        List<Oggetto> listaOggetti = new ArrayList<>();
-        listaOggetti = oggettoService.findByStoria(storia);
-        if (listaOggetti.isEmpty()) {
-            System.out.println("nessun oggetto trovato");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-        //debug
-        System.out.println("oggetti trovati: " + listaOggetti.size());
-        for (int i = 0; i < listaOggetti.size(); i++) {
-            System.out.println(listaOggetti.get(i).toString());
-        }
-        responseData.put("listaOggetti", listaOggetti);
-        return ResponseEntity.ok(responseData);
+        return oggettoService.fetchOggetti(storia);
     }
 
 
