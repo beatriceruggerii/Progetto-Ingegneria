@@ -23,62 +23,22 @@ import java.util.Map;
 public class SceltaController {
 
     private final SceltaService sceltaService;
-    private final ScenarioService scenarioService;
 
 
     @Autowired
-    public SceltaController(SceltaService sceltaService, ScenarioService scenarioService) {
+    public SceltaController(SceltaService sceltaService) {
         this.sceltaService = sceltaService;
-        this.scenarioService = scenarioService;
     }
 
     @PostMapping("/salva_scelta")
     public ResponseEntity<String> salvaScelta(@RequestBody Map<String, String> infoScelta, HttpSession session) {
         System.out.println("Richiesta ricevuta");
+        return sceltaService.responseSalvaScelta(infoScelta, session);
 
-        String testoScelta = infoScelta.get("testo");
-        long idMadre = Long.parseLong(infoScelta.get("idMadre"));
-        long idFiglio = Long.parseLong(infoScelta.get("idFiglio"));
-
-        Scenario scenarioMadre = scenarioService.findById(idMadre);
-        Scenario scenarioFiglio = scenarioService.findById(idFiglio);
-
-        Scelta scelta = new Scelta(testoScelta, scenarioMadre, scenarioFiglio);
-
-        if (scenarioMadre == null || scenarioFiglio == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Errore: scenario madre o figlio mancante");
-        }
-        if (idFiglio!=idMadre) {
-            if (sceltaService.registraScelta(scelta)) {
-                System.out.println("scelta salvata");
-                session.setAttribute("sceltaCorrente", scelta);
-                return ResponseEntity.ok("Scelta salvata");
-            }
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Errore: Lo scenario di partenza e quello di destinazione non possono combaciare!");
-        }
-        System.out.println("errore generico");
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Something went wrong");
     }
     @GetMapping("/fetch_scelte")
     public ResponseEntity<Map<String, Object>> fetchScelte(HttpSession session) {
         System.out.println("richiesta di fetch scelte ricevuta");
-        Storia storia = (Storia) session.getAttribute("storiaCorrente");
-        if (storia == null) {
-            System.out.println("Storia non trovata");
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-        }
-        Map<String, Object> responseData = new HashMap<>();
-        List<Scelta> listaScelte = sceltaService.listaScelte(storia);
-        if(listaScelte.isEmpty()){
-            System.out.println("Scelte non trovate");
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-        }
-        System.out.println("scelte trovate: "+ listaScelte.size());
-        for(int i = 0; i<listaScelte.size(); i++){
-            System.out.println(listaScelte.get(i).toString());
-        }
-        responseData.put("listaScelte", listaScelte);
-        return ResponseEntity.ok(responseData);
+        return sceltaService.responseFetchScelte(session);
     }
 }
