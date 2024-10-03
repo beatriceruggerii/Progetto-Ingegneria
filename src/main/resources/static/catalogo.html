@@ -8,6 +8,7 @@
     <link href="css/style.css" rel="stylesheet">
     <script src="js/securityHandler.js"></script>
     <script src="js/fetch-storie.js"></script>
+    <script src="js/filtro-ricerca.js"></script>
 </head>
 <body>
 <!-- Navbar -->
@@ -46,6 +47,24 @@
 <div class="custom-title text-center mt-4">
     <h1>Catalogo Storie</h1>
     <p class="subtitle">Cerca la storia che vuoi giocare!</p>
+</div>
+
+<div class="d-flex justify-content-center align-items-center">
+    <div class="card shadow-lg" style="width: 30rem;">
+        <div class="card-body">
+            <h5 class="card-title text-center mb-4">Cerca una Storia</h5>
+            <form id="searchForm" class="mb-3">
+                <!-- Barra di ricerca per il titolo -->
+                <div class="mb-3">
+                    <input type="text" id="cercaTitolo" class="form-control" placeholder="Cerca per titolo...">
+                </div>
+                <!-- Bottone per applicare i filtri -->
+                <div class="text-end">
+                    <button type="submit" class="btn btn-primary">Applica Filtri</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 <!-- Catalogo -->
