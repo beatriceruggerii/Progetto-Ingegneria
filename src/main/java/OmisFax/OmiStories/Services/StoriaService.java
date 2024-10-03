@@ -1,6 +1,7 @@
 package OmisFax.OmiStories.Services;
 
 import OmisFax.OmiStories.DTOs.StoriaDTO;
+import OmisFax.OmiStories.Entities.Scelta;
 import OmisFax.OmiStories.Entities.Scenario;
 import OmisFax.OmiStories.Entities.Storia;
 import OmisFax.OmiStories.Entities.Utente;
@@ -11,6 +12,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class StoriaService {
@@ -53,6 +59,34 @@ public class StoriaService {
             System.out.println("Storia non salvata");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("C'è stato un errore con il salvataggio della tua storia, ritenta.");
         }
+    }
+
+    public ResponseEntity<Map<String, Object>> responseFetchStorie(HttpSession session) {
+        Map<String, Object> responseData = new HashMap<>();
+        List<Storia> listaStorie = listaStorie();
+        if(listaStorie.isEmpty()){
+            System.out.println("Storie non trovate");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+
+        System.out.println("storie trovate: "+ listaStorie.size());
+        for(int i = 0; i<listaStorie.size(); i++){
+            System.out.println(listaStorie.get(i).toString());
+        }
+
+        List<StoriaDTO> storiaDTOS = new ArrayList<>();
+        for(Storia storia : listaStorie){
+            String descrizioneIniziale = scenarioService.findByTitoloAndStoria("Scenario Iniziale", storia).getTesto();
+            StoriaDTO storiaDTO = new StoriaDTO(storia.getTitolo(), descrizioneIniziale);
+            storiaDTOS.add(storiaDTO);
+        }
+
+        responseData.put("storiaDTOS", storiaDTOS);
+        return ResponseEntity.ok(responseData);
+    }
+
+    public List<Storia> listaStorie(){
+        return storiaRepository.findAll();
     }
 
     /*

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -19,14 +20,9 @@ import java.util.Map;
 @Controller
 public class StoryController {
     private final StoriaService storiaService;
-    private final UtenteService utenteService;
-    private final ScenarioService scenarioService;
-
     @Autowired
-    public StoryController(StoriaService storiaService, UtenteService utenteService, ScenarioService scenarioService) {
+    public StoryController(StoriaService storiaService) {
         this.storiaService = storiaService;
-        this.utenteService = utenteService;
-        this.scenarioService = scenarioService;
     }
 
 
@@ -34,6 +30,12 @@ public class StoryController {
     public ResponseEntity<String> salvaStoria(@RequestBody StoriaDTO payload, HttpSession session) {
         System.out.println("richiesta ricevuta");
         return storiaService.salvaStoria(payload, session);
+    }
+
+    @GetMapping("/fetch_storie")
+    public ResponseEntity<Map<String, Object>> fetchStorie(HttpSession session) {
+        System.out.println("richiesta di fetch storie ricevuta");
+        return storiaService.responseFetchStorie(session);
     }
 
 

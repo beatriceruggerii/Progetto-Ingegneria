@@ -9,5 +9,6 @@ import java.util.List;
 public interface StoriaRepository extends JpaRepository<Storia, String> {
     Storia findStoriaByTitolo(String titolo);
     List<Storia> findByAutore(Utente u);
+    List<Storia> findAll();
 
 }
