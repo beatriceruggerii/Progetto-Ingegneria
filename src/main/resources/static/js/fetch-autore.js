@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (data && data.listaAutori) {
                     const autori = data.listaAutori;
 
-                    // Per caricare gli scenari nelle select (crea_scenario.html)
+                    // Per caricare gli autori nelle select
                     let elements = document.getElementsByClassName("elenco-autoi");
                     if (elements != null) {
                         for (let autore of autori) {

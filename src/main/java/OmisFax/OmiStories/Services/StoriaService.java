@@ -90,6 +90,28 @@ public class StoriaService {
         return storiaRepository.findAll();
     }
 
+
+    public ResponseEntity<Map<String, Object>> responseFiltroAutore(String username, HttpSession session) {
+        Map<String, Object> responseData = new HashMap<>();
+        List<Storia> listaStorie = (List<Storia>)session.getAttribute("listaStorie");
+        if(listaStorie.isEmpty()){
+            System.out.println("Storie non trovate");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+
+        List<Storia> listaFiltrataStoria = new ArrayList<>();
+
+        for(Storia storia : listaStorie){
+            if(storia.getAutore().getUsername() == username){
+                listaFiltrataStoria.add(storia);
+            }
+        }
+
+        responseData.put("listaFiltrataStoria", listaFiltrataStoria);
+        return ResponseEntity.ok(responseData);
+
+    }
+
     /*
     public boolean salvaStoria(Storia storia){
         if (storiaRepository.findStoriaByTitolo(storia.getTitolo()) != null) {

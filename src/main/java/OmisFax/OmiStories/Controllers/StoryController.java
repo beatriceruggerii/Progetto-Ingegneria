@@ -38,5 +38,11 @@ public class StoryController {
         return storiaService.responseFetchStorie(session);
     }
 
+    @GetMapping("/filtro-autore")
+    public ResponseEntity<Map<String, Object>> filtroAutore(@RequestBody String username, HttpSession session) {
+        System.out.println("richiesta di filtro Autore");
+        return storiaService.responseFiltroAutore(username, session);
+    }
+
 
 }
