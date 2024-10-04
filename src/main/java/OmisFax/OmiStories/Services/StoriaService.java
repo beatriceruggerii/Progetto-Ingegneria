@@ -64,6 +64,7 @@ public class StoriaService {
     public ResponseEntity<Map<String, Object>> responseFetchStorie(HttpSession session) {
         Map<String, Object> responseData = new HashMap<>();
         List<Storia> listaStorie = listaStorie();
+        session.setAttribute("listaStorie", listaStorie);
         if(listaStorie.isEmpty()){
             System.out.println("Storie non trovate");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
