@@ -1,5 +1,6 @@
 package OmisFax.OmiStories.Services;
 
+import OmisFax.OmiStories.DTOs.StoriaCompletaDTO;
 import OmisFax.OmiStories.DTOs.StoriaDTO;
 import OmisFax.OmiStories.Entities.Scelta;
 import OmisFax.OmiStories.Entities.Scenario;
@@ -75,14 +76,15 @@ public class StoriaService {
             System.out.println(listaStorie.get(i).toString());
         }
 
-        List<StoriaDTO> storiaDTOS = new ArrayList<>();
+        List<StoriaCompletaDTO> storiaCompletaDTOS = new ArrayList<>();
         for(Storia storia : listaStorie){
             String descrizioneIniziale = scenarioService.findByTitoloAndStoria("Scenario Iniziale", storia).getTesto();
             StoriaDTO storiaDTO = new StoriaDTO(storia.getTitolo(), descrizioneIniziale);
-            storiaDTOS.add(storiaDTO);
+            StoriaCompletaDTO storiaCompletaDTO = new StoriaCompletaDTO(storiaDTO, storia.getAutore().getUsername());
+            storiaCompletaDTOS.add(storiaCompletaDTO);
         }
 
-        responseData.put("storiaDTOS", storiaDTOS);
+        responseData.put("storiaCompletaDTOS", storiaCompletaDTOS);
         return ResponseEntity.ok(responseData);
     }
 

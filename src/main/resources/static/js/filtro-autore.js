@@ -4,15 +4,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
     searchForm.addEventListener('submit', function (event) {
         event.preventDefault();
-        console.log("Richiesta di filtro per autore");
 
-        if (window.storiaDTOS && window.storiaDTOS.length > 0) {
-            const searchValue = searchInput.value.toLowerCase();
-            const filteredStories = window.storiaDTOS.filter(storiaDTO => storiaDTO.username.toLowerCase().includes(searchValue)
-            );
-            mostraStorie(filteredStories);  // Visualizza le storie filtrate
-        } else {
-            console.log("Nessuna storia disponibile o fetch non completato.");
-        }
+        fetch('http://localhost:8080/login')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Errore nella richiesta');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log("Dati ricevuti:", data);
+                const listaFiltrataAutore = data.listaFiltrataAutore;
+                if(listaFiltrataAutore.length > 0 ){
+                    mostraStorie(listaFiltrataAutore);
+                }else {
+                    console.log("Nessuna storia disponibile o fetch non completato.");
+                }
+            });
     });
 });

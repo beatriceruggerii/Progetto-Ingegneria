@@ -8,8 +8,8 @@
     <link href="css/style.css" rel="stylesheet">
     <script src="js/securityHandler.js"></script>
     <script src="js/fetch-storie.js"></script>
-    <script src="js/fetch-autore.js"></script>
     <script src="js/filtro-ricerca.js"></script>
+    <script src="js/filtro-autore.js"></script>
 </head>
 <body>
 <!-- Navbar -->
@@ -76,10 +76,10 @@
             <div class="card shadow-lg" style="width: 100%;">
                 <div class="card-body">
                     <h5 class="card-title text-center mb-4">Filtra per Autore</h5>
-                    <form id="filterForm">
+                    <form id="searchFormAutore">
                         <!-- Select per gli autori -->
                         <div class="mb-3">
-                            <select id="elencoAutori" class="form-select elenco-autoi">
+                            <select id="cercaAutore" class="form-select elenco-autoi">
                                 <option selected disabled>Seleziona un autore...</option>
                             </select>
                         </div>
