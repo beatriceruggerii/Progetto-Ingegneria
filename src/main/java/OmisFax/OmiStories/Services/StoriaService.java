@@ -103,6 +103,8 @@ public class StoriaService {
 
         username = username.replace("\"", "").trim();
 
+        System.out.println(username);
+
         List<StoriaCompletaDTO> listaFiltrataStoria = new ArrayList<>();
 
         for(Storia storia : listaStorie){

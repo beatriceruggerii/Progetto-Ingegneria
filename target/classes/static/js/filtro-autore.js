@@ -22,8 +22,11 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .then(data => {
                 console.log("Dati ricevuti:", data);
-                const listaFiltrataAutore = data.listaFiltrataAutore;
+                const listaFiltrataAutore = data.listaFiltrataStoria;
                 mostraStorie(listaFiltrataAutore);
+            })
+            .catch(error => {
+            console.error('Errore:', error);
             });
     });
 });
