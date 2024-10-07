@@ -101,6 +101,8 @@ public class StoriaService {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
 
+        username = username.replace("\"", "").trim();
+
         List<StoriaCompletaDTO> listaFiltrataStoria = new ArrayList<>();
 
         for(Storia storia : listaStorie){
@@ -116,6 +118,37 @@ public class StoriaService {
         responseData.put("listaFiltrataStoria", listaFiltrataStoria);
         return ResponseEntity.ok(responseData);
 
+    }
+
+    public ResponseEntity<Map<String, Object>> responseFiltroTitolo(String titolo, HttpSession session){
+        Map<String, Object> responseData = new HashMap<>();
+        List<Storia> listaStorie = (List<Storia>) session.getAttribute("listaStorie");
+
+        if(listaStorie == null || listaStorie.isEmpty()){
+            System.out.println("Storie non trovate");
+            return  ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+
+        // Rimuove le virgolette e spazi bianchi dal titolo cercato
+        titolo = titolo.replace("\"", "").trim();
+
+        System.out.println(titolo);
+
+        List<StoriaCompletaDTO> listaFiltrataStoria = new ArrayList<>();
+
+        for(Storia storia : listaStorie){
+            if (storia.getTitolo().toLowerCase().contains(titolo.toLowerCase())) {
+                String descrizioneIniziale = scenarioService.findByTitoloAndStoria("Scenario Iniziale", storia).getTesto();
+
+                StoriaDTO storiaDTO = new StoriaDTO(storia.getTitolo(), descrizioneIniziale);
+                StoriaCompletaDTO storiaCompletaDTO = new StoriaCompletaDTO(storiaDTO, storia.getAutore().getUsername());
+
+                listaFiltrataStoria.add(storiaCompletaDTO);
+            }
+        }
+
+        responseData.put("listaFiltrataStoria", listaFiltrataStoria);
+        return ResponseEntity.ok(responseData);
     }
 
     /*

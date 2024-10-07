@@ -25,6 +25,11 @@ fetch('http://localhost:8080/fetch_storie')
 
 function mostraStorie(storieCompletaDTOS){
 
+    if (!Array.isArray(storieCompletaDTOS)) {
+        console.error("storieCompletaDTOS non è un array valido:", storieCompletaDTOS);
+        return;
+    }
+
     //inserimento delle storie nel catalogo (catalogo.html)
     let catalogo = document.getElementById("catalogo");
 

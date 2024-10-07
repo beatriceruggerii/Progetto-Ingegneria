@@ -38,11 +38,18 @@ public class StoryController {
         return storiaService.responseFetchStorie(session);
     }
 
-    @GetMapping("/filtro-autore")
+    @PostMapping("/filtro-autore")
     public ResponseEntity<Map<String, Object>> filtroAutore(@RequestBody String username, HttpSession session) {
         System.out.println("richiesta di filtro Autore");
         return storiaService.responseFiltroAutore(username, session);
     }
+
+    @PostMapping("/filtro-titolo")
+    public ResponseEntity<Map<String, Object>> filtroRicerca(@RequestBody String titolo, HttpSession session){
+        System.out.println("richiesta di filtro Titolo");
+        return storiaService.responseFiltroTitolo(titolo, session);
+    }
+
 
 
 }
