@@ -101,11 +101,15 @@ public class StoriaService {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
 
-        List<Storia> listaFiltrataStoria = new ArrayList<>();
+        List<StoriaCompletaDTO> listaFiltrataStoria = new ArrayList<>();
 
         for(Storia storia : listaStorie){
-            if(storia.getAutore().getUsername() == username){
-                listaFiltrataStoria.add(storia);
+            if(storia.getAutore().getUsername().equals(username)){
+                String descrizioneIniziale = scenarioService.findByTitoloAndStoria("Scenario Iniziale", storia).getTesto();
+
+                StoriaDTO storiaDTO = new StoriaDTO(storia.getTitolo(), descrizioneIniziale);
+                StoriaCompletaDTO storiaCompletaDTO = new StoriaCompletaDTO(storiaDTO, username);
+                listaFiltrataStoria.add(storiaCompletaDTO);
             }
         }
 

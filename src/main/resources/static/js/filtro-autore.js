@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
     searchForm.addEventListener('submit', function (event) {
         event.preventDefault();
 
-        fetch('http://localhost:8080/login')
+        fetch('http://localhost:8080/filtro-autore')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Errore nella richiesta');
