@@ -8,39 +8,13 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <script src="js/securityHandler.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
 </head>
 <body>
+
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-        <a class="navbar-brand" href="homepage.html">Omistories</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="#about">Cos'è Omistories</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="crea_storia.html">Scrivi Storia</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="catalogo.html">Catalogo Storie</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="LeMiePartite">Le mie partite</a>
-                </li>
-                <li id="toPremium" class="nav-item">
-                    <a style="color: #ff6600" class="nav-link" href="PassaPremium.html">Passa a Premium</a>
-                </li>
-                <li class="nav-item">
-                    <a id="logout" class="nav-link" href="#">Logout</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+<div id="navbar"></div>
 
 <!-- Title -->
 <div class="custom-title text-center mt-4">
@@ -70,7 +44,14 @@
 </div>
 
 <!-- Js -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script>
+    $(function () {
+        $("#navbar").load("navbar.html");
+    });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
 <script src="js/fetch-session-data.js"></script>
 <script src="js/logout.js"></script>
 </body>

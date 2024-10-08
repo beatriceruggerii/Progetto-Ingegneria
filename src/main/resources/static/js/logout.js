@@ -1,4 +1,4 @@
-document.getElementById("logout").addEventListener("click", function (event){
+$(document).on("click", "#logout", function(event) {
     event.preventDefault();
 
     fetch("/logout")
@@ -13,4 +13,4 @@ document.getElementById("logout").addEventListener("click", function (event){
         .catch(error => {
             console.error('Errore durante il logout:', error);
         });
-})
+});
