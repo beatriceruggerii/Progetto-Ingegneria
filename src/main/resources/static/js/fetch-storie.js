@@ -46,9 +46,7 @@ function mostraStorie(storieCompletaDTOS){
             "<p class=\"text-muted text-start\">Autore:"+ autore +"</p>"+
             "</div>"+
             "<div class=\"col-md-4 text-end\">"+
-            "<form onsubmit=\"redirectGiocaStoria("+ storiaDTO.titolo + ") \">"+
-            "<input type=\"hidden\" name=\"titoloStoria\" value=\"" + storiaDTO.titolo + "\">"+
-            "<input type=\"submit\" class=\"btn btn-custom bs-tooltip-end\" value=\"Gioca\">"+
+            "<button onclick=\"redirectGiocaStoria('" + encodeURIComponent(storiaDTO.titolo) + "')\" class=\"btn btn-custom bs-tooltip-end\">Gioca</button>" +
             "</form>"+
             "</div>"+
             "</li>";
@@ -58,5 +56,5 @@ function mostraStorie(storieCompletaDTOS){
 
 function redirectGiocaStoria(titolo) {
     // Passa il titolo come parametro nella URL della nuova pagina
-    window.location.href = "gioca.html?titolo=" + titolo;
+    window.location.href = "gioca.html?titoloStoria=" + titolo;
 }
