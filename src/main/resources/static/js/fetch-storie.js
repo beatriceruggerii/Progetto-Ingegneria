@@ -46,9 +46,17 @@ function mostraStorie(storieCompletaDTOS){
             "<p class=\"text-muted text-start\">Autore:"+ autore +"</p>"+
             "</div>"+
             "<div class=\"col-md-4 text-end\">"+
+            "<form onsubmit=\"redirectGiocaStoria("+ storiaDTO.titolo + ") \">"+
+            "<input type=\"hidden\" name=\"titoloStoria\" value=\"" + storiaDTO.titolo + "\">"+
             "<input type=\"submit\" class=\"btn btn-custom bs-tooltip-end\" value=\"Gioca\">"+
+            "</form>"+
             "</div>"+
             "</li>";
     });
     catalogo.innerHTML = html;
+}
+
+function redirectGiocaStoria(titolo) {
+    // Passa il titolo come parametro nella URL della nuova pagina
+    window.location.href = "gioca.html?titolo=" + titolo;
 }
