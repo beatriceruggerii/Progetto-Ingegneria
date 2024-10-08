@@ -95,7 +95,8 @@ public class StoriaService {
 
     public ResponseEntity<Map<String, Object>> responseFiltroAutore(String username, HttpSession session) {
         Map<String, Object> responseData = new HashMap<>();
-        List<Storia> listaStorie = (List<Storia>)session.getAttribute("listaStorie");
+        List<Storia> listaStorie = listaStorie();
+
         if(listaStorie.isEmpty()){
             System.out.println("Storie non trovate");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
@@ -124,7 +125,7 @@ public class StoriaService {
 
     public ResponseEntity<Map<String, Object>> responseFiltroTitolo(String titolo, HttpSession session){
         Map<String, Object> responseData = new HashMap<>();
-        List<Storia> listaStorie = (List<Storia>) session.getAttribute("listaStorie");
+        List<Storia> listaStorie = listaStorie();
 
         if(listaStorie == null || listaStorie.isEmpty()){
             System.out.println("Storie non trovate");
