@@ -44,6 +44,12 @@ public class StoriaController {
         return storiaService.responseFiltroTitolo(titolo, session);
     }
 
+    @GetMapping("/fetch_storie_utente")
+    public ResponseEntity<Map<String, Object>> fetchStorieUtente(HttpSession session) {
+        System.out.println("richiesta delle storie dell'autore");
+        return storiaService.responseStorieAutore(session);
+    }
+
 
 
 }

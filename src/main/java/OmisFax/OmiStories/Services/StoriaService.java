@@ -7,6 +7,7 @@ import OmisFax.OmiStories.Entities.Scenario;
 import OmisFax.OmiStories.Entities.Storia;
 import OmisFax.OmiStories.Entities.Utente;
 import OmisFax.OmiStories.Repositories.StoriaRepository;
+import OmisFax.OmiStories.Repositories.UtenteRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,8 @@ import java.util.Map;
 public class StoriaService {
     @Autowired
     private StoriaRepository storiaRepository;
+    @Autowired
+    private UtenteRepository utenteRepository;
 
     @Autowired
     private StoriaFactory storiaFactory;
@@ -169,6 +172,29 @@ public class StoriaService {
     }
 
      */
+    public ResponseEntity<Map<String, Object>> responseStorieAutore(HttpSession session) {
+        Map<String, Object> responseData = new HashMap<>();
+        String username = (String)session.getAttribute("loggedUsername");
+        Utente user = utenteRepository.findByUsername(username);
+
+        System.out.println("Utente: " + user.getUsername());
+        List<Storia> listaStorieUtente = storiaRepository.findByAutore(user);
+        List<StoriaCompletaDTO> listaStorieUtenteDTOs = new ArrayList<>();
+
+        for (Storia storia : listaStorieUtente) {
+            System.out.println("Storia: " + storia.getTitolo());
+            String descrizioneIniziale = scenarioService.findByTitoloAndStoria("Scenario Iniziale", storia).getTesto();
+
+            StoriaDTO storiaDTO = new StoriaDTO(storia.getTitolo(), descrizioneIniziale);
+            StoriaCompletaDTO storiaCompletaDTO = new StoriaCompletaDTO(storiaDTO, username);
+            listaStorieUtenteDTOs.add(storiaCompletaDTO);
+        }
+
+        responseData.put("listaStorieUtenteDTOs", listaStorieUtenteDTOs);
+
+        return ResponseEntity.ok(responseData);
+
+    }
 
     public Storia getStoria(String titolo){
         return storiaRepository.findStoriaByTitolo(titolo);
