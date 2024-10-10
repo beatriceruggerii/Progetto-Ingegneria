@@ -1,6 +1,8 @@
 package OmisFax.OmiStories.DTOs;
 
 public class SceltaDTO {
+    private long id; //inserimento di id necessario per la modifica
+
     private String testo;
     private long idMadre;
     private long idFiglio;
@@ -12,6 +14,27 @@ public class SceltaDTO {
         this.testo = testo;
         this.idMadre = idMadre;
         this.idFiglio = idFiglio;
+    }
+
+    public SceltaDTO(long id, String testo) {
+        this.id = id;
+        this.testo = testo;
+    }
+
+    public SceltaDTO(long id, String testo, long idMadre, long idFiglio) {
+        this.id = id;
+        this.testo = testo;
+        this.idMadre = idMadre;
+        this.idFiglio = idFiglio;
+    }
+
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getTesto() {

@@ -1,6 +1,7 @@
 package OmisFax.OmiStories.DTOs;
 
 public class IndovinelloDTO {
+    private long id; //inserimento di id necessario per la modifica
 
     private String testo;
     private String soluzione;
@@ -10,11 +11,38 @@ public class IndovinelloDTO {
     public IndovinelloDTO() {
     }
 
+    public IndovinelloDTO(long id, String testo, String soluzione, long idMadre, long idFiglio) {
+        this.id = id;
+        this.testo = testo;
+        this.soluzione = soluzione;
+        this.idMadre = idMadre;
+        this.idFiglio = idFiglio;
+    }
+
+    public IndovinelloDTO(long id, String testo, String soluzione) {
+        this.id = id;
+        this.testo = testo;
+        this.soluzione = soluzione;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public IndovinelloDTO(String testo, String soluzione, long idMadre, long idFiglio) {
         this.testo = testo;
         this.soluzione = soluzione;
         this.idMadre = idMadre;
         this.idFiglio = idFiglio;
+    }
+
+    public IndovinelloDTO(String testo, String soluzione){
+        this.testo = testo;
+        this.soluzione = soluzione;
     }
 
     public String getTesto() {
@@ -49,3 +77,4 @@ public class IndovinelloDTO {
         this.idFiglio = idFiglio;
     }
 }
+

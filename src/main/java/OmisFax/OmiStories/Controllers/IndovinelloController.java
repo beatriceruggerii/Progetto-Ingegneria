@@ -13,9 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,6 +40,15 @@ public class IndovinelloController {
     public ResponseEntity<Map<String, Object>> fetchIndovinelli(HttpSession session) {
         System.out.println("richiesta di fetch indovinelli ricevuta");
         return indovinelloService.responseFetchIndovinelli(session);
+    }
+
+    @PutMapping("/modifica_indovinello/{idIndovinello}")
+    public ResponseEntity<String> modificaIndovinello(@PathVariable Long idIndovinello, @RequestBody IndovinelloDTO nuovoIndovinello) {
+        boolean successo = indovinelloService.modificaIndovinello(idIndovinello, nuovoIndovinello);
+        if (!successo) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Modifica fallita: Indovinello non trovato.");
+        }
+        return ResponseEntity.ok("Modifica avvenuta con successo.");
     }
 
 }

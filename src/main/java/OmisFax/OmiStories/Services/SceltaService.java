@@ -84,4 +84,13 @@ public class SceltaService {
     public List<Scelta> listaScelte(Storia storia){
         return sceltaRepository.findScelteByStoria(storia);
     }
+
+    public boolean modificaScelta(SceltaDTO nuovaScelta) {
+        Scelta sceltaEsistente = sceltaRepository.findById(nuovaScelta.getId());
+        if (sceltaEsistente == null) {
+            return false;
+        }
+        sceltaEsistente.setDescrizione(nuovaScelta.getTesto());
+        return registraScelta(sceltaEsistente);
+    }
 }

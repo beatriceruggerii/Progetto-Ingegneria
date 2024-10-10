@@ -11,9 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,5 +39,14 @@ public class SceltaController {
     public ResponseEntity<Map<String, Object>> fetchScelte(HttpSession session) {
         System.out.println("richiesta di fetch scelte ricevuta");
         return sceltaService.responseFetchScelte(session);
+    }
+
+    @PutMapping("/modifica_scelta/{idScelta}")
+    public ResponseEntity<String> modificaIndovinello(@PathVariable Long idScelta, @RequestBody SceltaDTO nuovaScelta) {
+        boolean successo = sceltaService.modificaScelta(nuovaScelta);
+        if (!successo) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Modifica fallita: Scelta non trovata.");
+        }
+        return ResponseEntity.ok("Modifica avvenuta con successo.");
     }
 }

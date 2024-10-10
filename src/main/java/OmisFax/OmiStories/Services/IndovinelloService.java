@@ -86,6 +86,16 @@ public class IndovinelloService {
     public List<Indovinello> findByStoria(Storia storia){
         return indovinelloRepository.findALlByStoria(storia);
     }
+    public boolean modificaIndovinello(Long idIndovinello, IndovinelloDTO nuovoIndovinello) {
+        Indovinello indovinelloEsistente = indovinelloRepository.findById(nuovoIndovinello.getId());
+        if (indovinelloEsistente == null) {
+            return false;
+        }
+        indovinelloEsistente.setDescrizione(nuovoIndovinello.getTesto());
+        indovinelloEsistente.setRispostaCorretta(nuovoIndovinello.getSoluzione());
+        return registraIndovinello(indovinelloEsistente);
+    }
+
 
 
 

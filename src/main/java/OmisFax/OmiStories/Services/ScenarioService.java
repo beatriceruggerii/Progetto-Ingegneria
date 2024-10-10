@@ -86,5 +86,16 @@ public class ScenarioService {
     public Scenario findByTitoloAndStoria(String titolo, Storia storia){
         return scenarioRepository.findByTitoloAndStoria(titolo, storia);
     }
+
+    public boolean modificaScenario(Long idScenario, ScenarioDTO nuovoScenario) {
+        System.out.println("-------");
+        System.out.println("Modifica dello scenario in corso");
+        Scenario scenarioEsistente = scenarioRepository.findById(nuovoScenario.getId());
+        if (scenarioEsistente == null) {
+            return false;
+        }
+        scenarioEsistente.setTesto(nuovoScenario.getTesto());
+        return salvaScenario(scenarioEsistente);
+    }
 }
 
