@@ -2,10 +2,7 @@ package OmisFax.OmiStories.Services;
 
 import OmisFax.OmiStories.DTOs.StoriaCompletaDTO;
 import OmisFax.OmiStories.DTOs.StoriaDTO;
-import OmisFax.OmiStories.Entities.Scelta;
-import OmisFax.OmiStories.Entities.Scenario;
-import OmisFax.OmiStories.Entities.Storia;
-import OmisFax.OmiStories.Entities.Utente;
+import OmisFax.OmiStories.Entities.*;
 import OmisFax.OmiStories.Repositories.StoriaRepository;
 import OmisFax.OmiStories.Repositories.UtenteRepository;
 import jakarta.servlet.http.HttpSession;
@@ -35,6 +32,15 @@ public class StoriaService {
 
     @Autowired
     private ScenarioService scenarioService;
+
+    @Autowired
+    private SceltaService sceltaService;
+
+    @Autowired
+    private OggettoService oggettoService;
+
+    @Autowired
+    private IndovinelloService indovinelloService;
 
     public ResponseEntity<String> salvaStoria(StoriaDTO payload, HttpSession session) {
         String titolo = payload.getTitolo();
@@ -157,21 +163,6 @@ public class StoriaService {
         return ResponseEntity.ok(responseData);
     }
 
-    /*
-    public boolean salvaStoria(Storia storia){
-        if (storiaRepository.findStoriaByTitolo(storia.getTitolo()) != null) {
-            return false;
-        }
-        try {
-            storiaRepository.save(storia);
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-     */
     public ResponseEntity<Map<String, Object>> responseStorieAutore(HttpSession session) {
         Map<String, Object> responseData = new HashMap<>();
         String username = (String)session.getAttribute("loggedUsername");
@@ -200,4 +191,31 @@ public class StoriaService {
         return storiaRepository.findStoriaByTitolo(titolo);
     }
 
+    public ResponseEntity<Map<String, Object>> responseDatiStoria(String titolo, HttpSession session) {
+        //recupero tutti i dati relativi a quella storia
+        Map<String, Object> responseData = new HashMap<>();
+
+        //oggetto storia
+        Storia storia = storiaRepository.findStoriaByTitolo(titolo);
+        responseData.put("storia",storia);
+
+        //scenari
+        List<Scenario> scenari = scenarioService.findByStoria(storia);
+        responseData.put("scenari", scenari);
+
+        //scelte
+        List<Scelta> scelte = sceltaService.findByStoria(storia);
+        responseData.put("scelte", scelte);
+
+        //indovinelli
+        List<Indovinello> indovinelli = indovinelloService.findByStoria(storia);
+        responseData.put("indovinelli", indovinelli);
+
+        //oggetti
+        List<Oggetto> oggetti = oggettoService.findByStoria(storia);
+        responseData.put("oggetti", oggetti);
+
+        return ResponseEntity.ok(responseData);
+
+    }
 }

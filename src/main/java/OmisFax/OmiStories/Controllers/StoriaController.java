@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -48,6 +49,12 @@ public class StoriaController {
     public ResponseEntity<Map<String, Object>> fetchStorieUtente(HttpSession session) {
         System.out.println("richiesta delle storie dell'autore");
         return storiaService.responseStorieAutore(session);
+    }
+
+    @GetMapping("/fetch_dati_storia/{titolo}")
+    public ResponseEntity<Map<String, Object>> fetchDatiStoria(@PathVariable String titolo, HttpSession session) {
+        System.out.println("richiesta dei dati della storia ricevuti");
+        return storiaService.responseDatiStoria(titolo, session);
     }
 
 

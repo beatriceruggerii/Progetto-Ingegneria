@@ -31,8 +31,6 @@ public class OggettoService {
         long idMadre = payload.getScenarioMadreOggetto();
         long idControllore = payload.getScenarioControlloreOggetto();
 
-        //DEBUG
-        System.out.println("MADRE: " + idMadre + " CONTROLLORE: " + idControllore);
 
         Oggetto oggetto = oggettoFactory.createOggetto(nomeOggetto, idMadre, idControllore, storia);
         try {
@@ -62,6 +60,10 @@ public class OggettoService {
         }
         responseData.put("listaOggetti", listaOggetti);
         return ResponseEntity.ok(responseData);
+    }
+
+    public List<Oggetto> findByStoria(Storia storia){
+        return oggettoRepository.findAllByStoria(storia);
     }
 
 

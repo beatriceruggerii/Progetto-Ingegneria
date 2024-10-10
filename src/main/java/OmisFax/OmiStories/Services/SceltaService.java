@@ -57,7 +57,7 @@ public class SceltaService {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
         Map<String, Object> responseData = new HashMap<>();
-        List<Scelta> listaScelte = listaScelte(storia);
+        List<Scelta> listaScelte = findByStoria(storia);
         if(listaScelte.isEmpty()){
             System.out.println("Scelte non trovate");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
@@ -72,7 +72,6 @@ public class SceltaService {
 
     public boolean registraScelta(Scelta scelta) {
         try {
-            System.out.println("fin qui tutto bene");
             sceltaRepository.save(scelta);
             return true;
         } catch (Exception e) {
@@ -81,7 +80,7 @@ public class SceltaService {
         }
     }
 
-    public List<Scelta> listaScelte(Storia storia){
+    public List<Scelta> findByStoria(Storia storia){
         return sceltaRepository.findScelteByStoria(storia);
     }
 
