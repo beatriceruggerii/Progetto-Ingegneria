@@ -1,3 +1,5 @@
+package OmisFax.OmiStories.Controllers;
+
 import static org.mockito.Mockito.*;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -7,7 +9,6 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import jakarta.servlet.http.HttpSession;
-import OmisFax.OmiStories.Controllers.LoginController;
 import OmisFax.OmiStories.Entities.Utente;
 
 public class LoginControllerTest {
