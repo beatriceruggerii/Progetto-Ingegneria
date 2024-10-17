@@ -48,7 +48,4 @@ public class OggettoController {
         Storia storia = (Storia) session.getAttribute("storiaCorrente");
         return oggettoService.fetchOggetti(storia);
     }
-
-
 }
-
