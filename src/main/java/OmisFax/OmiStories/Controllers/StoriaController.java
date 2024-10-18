@@ -51,11 +51,21 @@ public class StoriaController {
         return storiaService.responseStorieAutore(session);
     }
 
+
+    //TODO: metodo che ritorna troppi dati inutili?
     @GetMapping("/fetch_dati_storia/{titolo}")
     public ResponseEntity<Map<String, Object>> fetchDatiStoria(@PathVariable String titolo, HttpSession session) {
         System.out.println("richiesta dei dati della storia ricevuti");
         return storiaService.responseDatiStoria(titolo, session);
     }
+
+    @GetMapping("/fetch_scenario_iniziale/{titolo}")
+    public ResponseEntity<Map<String, Object>> fetchScenarioIniziale(@PathVariable String titolo, HttpSession session) {
+        System.out.println("richiesta scenario Iniziale ricevutw");
+        return storiaService.responseScenarioIniziale(titolo, session);
+    }
+
+
 
 
 

@@ -1,8 +1,10 @@
 package OmisFax.OmiStories.Services;
 
 import OmisFax.OmiStories.DTOs.ScenarioDTO;
+import OmisFax.OmiStories.Entities.Scelta;
 import OmisFax.OmiStories.Entities.Scenario;
 import OmisFax.OmiStories.Entities.Storia;
+import OmisFax.OmiStories.Repositories.SceltaRepository;
 import OmisFax.OmiStories.Repositories.ScenarioRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,9 @@ public class ScenarioService {
 
     @Autowired
     private ScenarioFactory scenarioFactory;
+
+    @Autowired
+    private SceltaRepository sceltaRepository;
 
     public ResponseEntity<String> salvaScenario(ScenarioDTO scenariodto, HttpSession session) {
         System.out.println("richiesta ricevuta");
@@ -96,6 +101,22 @@ public class ScenarioService {
         }
         scenarioEsistente.setTesto(nuovoScenario.getTesto());
         return salvaScenario(scenarioEsistente);
+    }
+
+    public ResponseEntity<Map<String, Object>> fetchScenaroFiglio(Long idScelta, HttpSession session) {
+        HashMap<String,Object> responseData = new HashMap<>();
+        Scelta scelta = sceltaRepository.findById(Long.parseLong(String.valueOf(idScelta)));
+        Scenario scenario = scelta.getScenarioFiglio();
+        responseData.put("scenarioFiglio",scenario);
+        return ResponseEntity.ok(responseData);
+    }
+
+    public ResponseEntity<Map<String, Object>> fetchScenario(Long idScenario) {
+        long id = idScenario;
+        Scenario scenario = scenarioRepository.findById(id);
+        HashMap<String,Object> responseData = new HashMap<>();
+        responseData.put("scenario",scenario);
+        return ResponseEntity.ok(responseData);
     }
 }
 

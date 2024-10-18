@@ -218,4 +218,12 @@ public class StoriaService {
         return ResponseEntity.ok(responseData);
 
     }
+
+    public ResponseEntity<Map<String, Object>> responseScenarioIniziale(String titolo, HttpSession session) {
+        Map<String, Object> responseData = new HashMap<>();
+        Storia storia = storiaRepository.findStoriaByTitolo(titolo);
+        Scenario scenario = scenarioService.findByTitoloAndStoria(titolo,storia);
+        responseData.put("scenario", scenario);
+        return ResponseEntity.ok(responseData);
+    }
 }

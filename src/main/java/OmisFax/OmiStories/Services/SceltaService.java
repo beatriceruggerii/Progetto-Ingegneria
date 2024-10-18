@@ -92,4 +92,12 @@ public class SceltaService {
         sceltaEsistente.setDescrizione(nuovaScelta.getTesto());
         return registraScelta(sceltaEsistente);
     }
+
+    public ResponseEntity<Map<String, Object>> responseFetchScelteScenario(Long idScenario, HttpSession session) {
+        Scenario scenario = scenarioService.findById(idScenario);
+        List<Scelta> scelte = sceltaRepository.findByScenarioMadre(scenario);
+        Map<String, Object> responseData = new HashMap<>();
+        responseData.put("scelte", scelte);
+        return ResponseEntity.ok(responseData);
+    }
 }

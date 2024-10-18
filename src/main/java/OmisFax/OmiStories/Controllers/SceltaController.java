@@ -35,11 +35,6 @@ public class SceltaController {
         return sceltaService.responseSalvaScelta(infoScelta, session);
 
     }
-    @GetMapping("/fetch_scelte")
-    public ResponseEntity<Map<String, Object>> fetchScelte(HttpSession session) {
-        System.out.println("richiesta di fetch scelte ricevuta");
-        return sceltaService.responseFetchScelte(session);
-    }
 
     @PutMapping("/modifica_scelta/{idScelta}")
     public ResponseEntity<String> modificaIndovinello(@PathVariable Long idScelta, @RequestBody SceltaDTO nuovaScelta) {
@@ -49,4 +44,20 @@ public class SceltaController {
         }
         return ResponseEntity.ok("Modifica avvenuta con successo.");
     }
+
+    //todo: crea scelteController con mapping "scelte/"
+    @GetMapping("/fetch_scelte")
+    public ResponseEntity<Map<String, Object>> fetchScelte(HttpSession session) {
+        System.out.println("richiesta di fetch scelte ricevuta");
+        return sceltaService.responseFetchScelte(session);
+    }
+
+    //ritorna tutte le scelte che hanno scenario iniziale con idScenario passato nel path
+    @GetMapping("/fetch_scelte/{idScenario}")
+    public ResponseEntity<Map<String, Object>> fetchScelteScenario(@PathVariable Long idScenario, HttpSession session) {
+        System.out.println("richiesta di fetch scelte dello scenarioricevuta");
+        return sceltaService.responseFetchScelteScenario(idScenario,session);
+    }
+
+
 }
