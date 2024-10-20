@@ -116,6 +116,7 @@ public class ScenarioService {
         Scenario scenario = scenarioRepository.findById(id);
         HashMap<String,Object> responseData = new HashMap<>();
         responseData.put("scenario",scenario);
+        System.out.println("Scenario ottenuto: " + scenario.toString());
         return ResponseEntity.ok(responseData);
     }
 }

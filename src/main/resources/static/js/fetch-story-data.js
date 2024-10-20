@@ -3,11 +3,12 @@ document.addEventListener("DOMContentLoaded", function (event) {
         const urlParams = new URLSearchParams(window.location.search);
         const titoloStoria = decodeURIComponent(urlParams.get('titoloStoria'));
         //durante la partita l'idscenario è mostrato nel path
-        const idScenario = decodeURIComponent(urlParams.get('idScenario'));
+        const idScenario = decodeURIComponent(urlParams.get('idScenario')); //se lo scenario non è specificato, ritorna la STRINGA 'null'
 
     if (titoloStoria) {
         document.getElementById("titoloStoria").textContent = titoloStoria;
-        if (idScenario) {
+        if (idScenario !== null && idScenario !== '' && idScenario !== 'null') {
+            console.log("idscenario: " + idScenario); //debug
             fetch(`scenario/${idScenario}`)
                 .then(response => {
                     if (!response.ok) {
@@ -18,11 +19,15 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     }
                     return response.json();
                 }).then(data => {
+                //debug
+                console.log("scenario ricevuto");
+                console.log(data);
                 showData(data);
             })
                 .catch(error => console.error("Errore:", error));
 
         } else { //se non c'è l'id allora la partita è in fase iniziale
+            console.log("Partita da inziare"); //debug
             fetch(`fetch_scenario_iniziale/${titoloStoria}`)
                 .then(response => {
                     if (!response.ok) {
@@ -31,8 +36,11 @@ document.addEventListener("DOMContentLoaded", function (event) {
                             $('#errorModal').modal('show'); // Mostra il modal
                         });
                     }
+                    //debug
+                    console.log("scenario ricevuto");
                     return response.json();
                 }).then(data => {
+                console.log(data);
                 showData(data);
             })
                 .catch(error => console.error("Errore:", error));
@@ -67,8 +75,6 @@ function fetchScelte(idScenario){
                     $('#errorModal').modal('show'); // Mostra il modal
                 });
             }
-            //debug
-            console.log(response.json());
             return response.json();
         }).then(data => {
             //debug
@@ -91,7 +97,9 @@ function fetchScelte(idScenario){
             // Aggiungo un listener per il click
             sceltaButton.addEventListener("click", () => {
                 const scenarioFiglioId = scelta.scenarioFiglio.id;
-                window.location.href = `/gioca/${scenarioFiglioId}`;
+                const titoloStoria = scelta.scenarioFiglio.storia.titolo;
+                window.location.href = "gioca.html?titoloStoria=" + encodeURIComponent(titoloStoria) + "&idScenario=" + encodeURIComponent(scenarioFiglioId) ;
+
             });
 
             listItem.appendChild(sceltaButton);

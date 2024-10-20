@@ -222,8 +222,9 @@ public class StoriaService {
     public ResponseEntity<Map<String, Object>> responseScenarioIniziale(String titolo, HttpSession session) {
         Map<String, Object> responseData = new HashMap<>();
         Storia storia = storiaRepository.findStoriaByTitolo(titolo);
-        Scenario scenario = scenarioService.findByTitoloAndStoria(titolo,storia);
+        Scenario scenario = scenarioService.findByTitoloAndStoria("Scenario Iniziale",storia);
         responseData.put("scenario", scenario);
+        System.out.println("Scenario trovato: " + scenario.toString());
         return ResponseEntity.ok(responseData);
     }
 }
