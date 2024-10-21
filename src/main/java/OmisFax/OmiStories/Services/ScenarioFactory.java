@@ -17,18 +17,24 @@ public class ScenarioFactory {
     }
 
     public Scenario createScenarioIniziale(Storia storia, String testo){
-        return new Scenario(storia, "Scenario Iniziale", testo);
+        return createScenario(storia, "Scenario Iniziale", testo, true);
     }
 
     public Scenario createScenario(Storia storia, String titolo, String testo){
-        return new Scenario(storia, titolo, testo);
+        return createScenario(storia, titolo, testo, false);
     }
 
-    public Scenario createScenarioById(long id) {
-        Scenario scenario = scenarioRepository.findById(id);
-        if (scenario == null) {
-            throw new IllegalArgumentException("Scenario con id " + id + " non trovato");
+    public Scenario createScenario(Storia storia, String titolo, String testo, boolean iniziale) {
+        // Se lo scenario è "iniziale", verifica che non esista già uno scenario iniziale per la storia
+        if (iniziale) {
+            Scenario scenarioInizialeEsistente = scenarioRepository.findByStoriaAndInizialeTrue(storia);
+            if (scenarioInizialeEsistente != null) {
+                throw new RuntimeException("Esiste già uno scenario iniziale per questa storia");
+            }
         }
-        return scenario;
+
+        // Crea e restituisci il nuovo Scenario
+        return new Scenario(storia, titolo, testo, iniziale);
     }
+
 }

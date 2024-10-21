@@ -12,5 +12,6 @@ public interface ScenarioRepository extends JpaRepository<Scenario,Long> {
     Scenario findById(long id);
     List<Scenario> findByStoria(Storia storia);
     Scenario findByTitoloAndStoria(String titolo, Storia storia);
+    Scenario findByStoriaAndInizialeTrue(Storia storia);
 
 }

@@ -58,11 +58,12 @@ function mostraStorie(storieCompletaDTOS){
 
 function redirectGiocaStoria(titolo) {
     // Passa il titolo come parametro nella URL della nuova pagina
+    salvaPartita(decodeURIComponent(titolo));
     window.location.href = "gioca.html?titoloStoria=" + titolo;
-    salvaPartita(titolo);
 }
 
 function salvaPartita(titoloStoria) {
+    console.log("Salvataggio partita"); //debug
     console.log(titoloStoria); //debug
 
     fetch('http://localhost:8080/partita/salva', {

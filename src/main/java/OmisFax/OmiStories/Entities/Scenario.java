@@ -10,9 +10,6 @@ import java.util.Objects;
         @UniqueConstraint(columnNames = {"fk_storia", "titolo"})
 })
 public class Scenario {
-    /* classe che può essere usata singolarmente per creare uno scenario finale base
-       o estesa con collegamenti o indovinelli tramite scenarioDecorator
-     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id; // Campo ID unico generato automaticamente
@@ -23,13 +20,24 @@ public class Scenario {
     private String titolo; //numero di ordine di apparizione dello scenario nella storia
     private String testo;
 
+    private boolean iniziale;
+
 
     // Costruttore predefinito richiesto da JPA
     public Scenario() {}
+
+    public Scenario(Storia storia, String titolo, String testo, boolean iniziale) {
+        this.storia = storia;
+        this.titolo = titolo;
+        this.testo = testo;
+        this.iniziale = iniziale;
+    }
+
     public Scenario(Storia storia, String titolo, String testo){
         this.storia = storia;
         this.titolo = titolo;
         this.testo = testo;
+        this.iniziale = false;
     }
 
     public Scenario(String titolo, String testo){
@@ -70,6 +78,14 @@ public class Scenario {
         this.titolo = titolo;
     }
 
+    public boolean isIniziale() {
+        return iniziale;
+    }
+
+    public void setIniziale(boolean iniziale) {
+        this.iniziale = iniziale;
+    }
+
     @Override
     public String toString() {
         return "Scenario{" +
@@ -77,6 +93,7 @@ public class Scenario {
                 ", storia=" + storia +
                 ", titolo='" + titolo + '\'' +
                 ", testo='" + testo + '\'' +
+                ", iniziale=" + iniziale +
                 '}';
     }
 
@@ -85,11 +102,11 @@ public class Scenario {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Scenario scenario = (Scenario) o;
-        return id == scenario.id && Objects.equals(storia, scenario.storia) && Objects.equals(titolo, scenario.titolo) && Objects.equals(testo, scenario.testo);
+        return id == scenario.id && iniziale == scenario.iniziale && Objects.equals(storia, scenario.storia) && Objects.equals(titolo, scenario.titolo) && Objects.equals(testo, scenario.testo);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, storia, titolo, testo);
+        return Objects.hash(id, storia, titolo, testo, iniziale);
     }
 }

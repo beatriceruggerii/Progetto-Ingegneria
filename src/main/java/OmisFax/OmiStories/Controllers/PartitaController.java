@@ -22,6 +22,7 @@ public class PartitaController {
         try {
             // Recupera l'username dalla sessione
             String username = (String) session.getAttribute("loggedUsername");
+            System.out.println("Salvataggio partita: " + username + " storia: " + titoloStoria);
             if (username == null) {
                 System.out.println("Utente non trovato"+username);
                 throw new RuntimeException("Utente non loggato");

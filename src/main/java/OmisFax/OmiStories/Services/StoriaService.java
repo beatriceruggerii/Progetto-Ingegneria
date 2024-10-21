@@ -3,6 +3,7 @@ package OmisFax.OmiStories.Services;
 import OmisFax.OmiStories.DTOs.StoriaCompletaDTO;
 import OmisFax.OmiStories.DTOs.StoriaDTO;
 import OmisFax.OmiStories.Entities.*;
+import OmisFax.OmiStories.Repositories.ScenarioRepository;
 import OmisFax.OmiStories.Repositories.StoriaRepository;
 import OmisFax.OmiStories.Repositories.UtenteRepository;
 import jakarta.servlet.http.HttpSession;
@@ -23,6 +24,9 @@ public class StoriaService {
     private StoriaRepository storiaRepository;
     @Autowired
     private UtenteRepository utenteRepository;
+
+    @Autowired
+    private ScenarioRepository scenarioRepository;
 
     @Autowired
     private StoriaFactory storiaFactory;
@@ -87,7 +91,7 @@ public class StoriaService {
 
         List<StoriaCompletaDTO> storiaCompletaDTOS = new ArrayList<>();
         for(Storia storia : listaStorie){
-            String descrizioneIniziale = scenarioService.findByTitoloAndStoria("Scenario Iniziale", storia).getTesto();
+            String descrizioneIniziale = scenarioRepository.findByStoriaAndInizialeTrue(storia).getTesto();
             StoriaDTO storiaDTO = new StoriaDTO(storia.getTitolo(), descrizioneIniziale);
             StoriaCompletaDTO storiaCompletaDTO = new StoriaCompletaDTO(storiaDTO, storia.getAutore().getUsername());
             storiaCompletaDTOS.add(storiaCompletaDTO);
@@ -119,7 +123,7 @@ public class StoriaService {
 
         for(Storia storia : listaStorie){
             if(storia.getAutore().getUsername().equals(username)){
-                String descrizioneIniziale = scenarioService.findByTitoloAndStoria("Scenario Iniziale", storia).getTesto();
+                String descrizioneIniziale = scenarioRepository.findByStoriaAndInizialeTrue(storia).getTesto();
 
                 StoriaDTO storiaDTO = new StoriaDTO(storia.getTitolo(), descrizioneIniziale);
                 StoriaCompletaDTO storiaCompletaDTO = new StoriaCompletaDTO(storiaDTO, username);
@@ -150,7 +154,7 @@ public class StoriaService {
 
         for(Storia storia : listaStorie){
             if (storia.getTitolo().toLowerCase().contains(titolo.toLowerCase())) {
-                String descrizioneIniziale = scenarioService.findByTitoloAndStoria("Scenario Iniziale", storia).getTesto();
+                String descrizioneIniziale = scenarioRepository.findByStoriaAndInizialeTrue(storia).getTesto();
 
                 StoriaDTO storiaDTO = new StoriaDTO(storia.getTitolo(), descrizioneIniziale);
                 StoriaCompletaDTO storiaCompletaDTO = new StoriaCompletaDTO(storiaDTO, storia.getAutore().getUsername());
@@ -174,7 +178,7 @@ public class StoriaService {
 
         for (Storia storia : listaStorieUtente) {
             System.out.println("Storia: " + storia.getTitolo());
-            String descrizioneIniziale = scenarioService.findByTitoloAndStoria("Scenario Iniziale", storia).getTesto();
+            String descrizioneIniziale = scenarioRepository.findByStoriaAndInizialeTrue(storia).getTesto();
 
             StoriaDTO storiaDTO = new StoriaDTO(storia.getTitolo(), descrizioneIniziale);
             StoriaCompletaDTO storiaCompletaDTO = new StoriaCompletaDTO(storiaDTO, username);
@@ -222,7 +226,7 @@ public class StoriaService {
     public ResponseEntity<Map<String, Object>> responseScenarioIniziale(String titolo, HttpSession session) {
         Map<String, Object> responseData = new HashMap<>();
         Storia storia = storiaRepository.findStoriaByTitolo(titolo);
-        Scenario scenario = scenarioService.findByTitoloAndStoria("Scenario Iniziale",storia);
+        Scenario scenario = scenarioRepository.findByStoriaAndInizialeTrue(storia);
         responseData.put("scenario", scenario);
         System.out.println("Scenario trovato: " + scenario.toString());
         return ResponseEntity.ok(responseData);

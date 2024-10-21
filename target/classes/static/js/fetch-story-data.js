@@ -82,6 +82,12 @@ function fetchScelte(idScenario){
         console.log(data);
         const scelte = data.scelte;
 
+        if(scelte == null || scelte.length === 0){
+            document.getElementById("modal-title").textContent = "Partita terminata.";
+            document.getElementById("successMessage").textContent = "Complimenti! Hai concluso la storia.";
+            $('#successModal').modal('show'); // Mostra il modal
+        }
+
         const scelteContainer = document.getElementById("scelteContainer");
         if (!scelteContainer) return;
 

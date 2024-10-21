@@ -1,3 +1,5 @@
+//script eseguito da catalogo.html
+
 fetch('http://localhost:8080/fetch_storie')
     .then(response => {
         if (!response.ok) {
@@ -56,5 +58,26 @@ function mostraStorie(storieCompletaDTOS){
 
 function redirectGiocaStoria(titolo) {
     // Passa il titolo come parametro nella URL della nuova pagina
+    salvaPartita(decodeURIComponent(titolo));
     window.location.href = "gioca.html?titoloStoria=" + titolo;
+}
+
+function salvaPartita(titoloStoria) {
+    console.log("Salvataggio partita"); //debug
+    console.log(titoloStoria); //debug
+
+    fetch('http://localhost:8080/partita/salva', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(titoloStoria)
+    }).then(response => {
+        if (!response.ok) {
+            throw new Error('Errore durante il salvataggio della partita');
+        }
+        console.log("Partita salvata con successo");
+    }).catch(error => {
+        console.error('Errore:', error);
+    });
 }
