@@ -33,5 +33,10 @@ public class InventarioController {
 
         return ResponseEntity.ok(inventario);
     }
+
+    @GetMapping("/{idPartita}")
+    public ResponseEntity<Map<String,Object>> getInventario(){
+        //TODO
+    }
 }
 
