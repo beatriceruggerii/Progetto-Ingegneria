@@ -5,6 +5,7 @@ import OmisFax.OmiStories.Entities.Oggetto;
 import OmisFax.OmiStories.Entities.Scenario;
 import OmisFax.OmiStories.Entities.Storia;
 import OmisFax.OmiStories.Repositories.OggettoRepository;
+import OmisFax.OmiStories.Repositories.ScenarioRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,11 @@ public class OggettoService {
 
     @Autowired
     private OggettoFactory oggettoFactory;
+
+    @Autowired
+    private ScenarioRepository scenarioRepository;
+
+
 
 
     public ResponseEntity<String> salvaOggetto(OggettoDTO payload, Storia storia) {
@@ -67,4 +73,11 @@ public class OggettoService {
     }
 
 
+    public Map<String, Object> getOggetti(long idScenario) {
+        Scenario scenario = scenarioRepository.findById(idScenario);
+        List<Oggetto> oggetti = oggettoRepository.findByScenarioMadre(scenario);
+        Map<String, Object> responseData = new HashMap<>();
+        responseData.put("oggetti", oggetti);
+        return responseData;
+    }
 }

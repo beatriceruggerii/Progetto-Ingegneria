@@ -1,5 +1,6 @@
 package OmisFax.OmiStories.Controllers;
 
+import OmisFax.OmiStories.Entities.Partita;
 import OmisFax.OmiStories.Services.PartitaService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,9 @@ public class PartitaController {
                 System.out.println("Utente non trovato"+username);
                 throw new RuntimeException("Utente non loggato");
             }
-            partitaService.salvaPartita(titoloStoria, username);
+            Partita partita = partitaService.salvaPartita(titoloStoria, username);
+            session.setAttribute("idPartitaInCorso",partita.getId());
+            System.out.println("(partita controller) idPartita in corso: " + session.getAttribute("idPartitaInCorso"));
             return ResponseEntity.ok("Partita salvata con successo");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Errore durante il salvataggio della partita");

@@ -12,8 +12,8 @@ import java.util.List;
 
 public interface OggettoRepository extends JpaRepository<Oggetto, Long> {
     Oggetto findOggettoById(Long id);
-    Oggetto findOggettoByScenarioControllore(Scenario s);
-    Oggetto findOggettoByScenarioMadre(Scenario s);
+    List<Oggetto> findByScenarioControllore(Scenario s);
+    List<Oggetto> findByScenarioMadre(Scenario s);
 
     @Query("SELECT o FROM Oggetto o WHERE o.scenarioMadre.storia = :storia")
     List<Oggetto> findAllByStoria(@Param("storia") Storia storia);
