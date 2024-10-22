@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -34,9 +36,13 @@ public class InventarioController {
         return ResponseEntity.ok(inventario);
     }
 
-    @GetMapping("/{idPartita}")
-    public ResponseEntity<Map<String,Object>> getInventario(){
-        //TODO
+    @GetMapping("/")
+    public ResponseEntity<Map<String,Object>> getInventario(HttpSession session){
+        long idPartita = (long) session.getAttribute("idPartitaInCorso");
+        List<Inventario> inventario = inventarioService.getInventarioPartita(idPartita);
+        HashMap<String, Object> responseData = new HashMap<>();
+        responseData.put("inventario", inventario);
+        return ResponseEntity.ok(responseData);
     }
 }
 

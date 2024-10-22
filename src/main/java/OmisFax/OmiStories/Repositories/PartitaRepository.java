@@ -13,4 +13,6 @@ public interface PartitaRepository extends JpaRepository<Partita, Long> {
     List<Partita> findByGiocatoreAndStoria(Utente giocatore, Storia storia);
     List<Partita> findByGiocatoreUsername(String username);
 
+    Partita findById(long id);
+
 }

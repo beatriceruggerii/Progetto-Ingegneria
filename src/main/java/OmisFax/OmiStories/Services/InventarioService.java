@@ -9,6 +9,8 @@ import OmisFax.OmiStories.Repositories.PartitaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class InventarioService {
 
@@ -42,6 +44,12 @@ public class InventarioService {
 
         // Salva l'istanza di Inventario nel database
         return inventarioRepository.save(inventario);
+    }
+
+
+    public List<Inventario> getInventarioPartita(long idPartita){
+        Partita partita = partitaRepository.findById(idPartita);
+        return inventarioRepository.findAllByPartita(partita);
     }
 }
 
