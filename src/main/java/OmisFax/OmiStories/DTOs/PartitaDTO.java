@@ -5,12 +5,29 @@ public class PartitaDTO {
     private ScenarioDTO scenarioCorrente;
     private String giocatore; // Nome dell'utente che sta giocando
 
+    private long idPartita;
+
     public PartitaDTO() {}
 
     public PartitaDTO(StoriaDTO storiaDTO, ScenarioDTO scenarioCorrente, String giocatore) {
         this.storiaDTO = storiaDTO;
         this.scenarioCorrente = scenarioCorrente;
         this.giocatore = giocatore;
+    }
+
+    public PartitaDTO(StoriaDTO storiaDTO, ScenarioDTO scenarioCorrente, String giocatore, long idPartita) {
+        this.storiaDTO = storiaDTO;
+        this.scenarioCorrente = scenarioCorrente;
+        this.giocatore = giocatore;
+        this.idPartita = idPartita;
+    }
+
+    public long getIdPartita() {
+        return idPartita;
+    }
+
+    public void setIdPartita(long idPartita) {
+        this.idPartita = idPartita;
     }
 
     public StoriaDTO getStoriaDTO() {

@@ -8,23 +8,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
         if (titoloStoria) {
             document.getElementById("titoloStoria").textContent = titoloStoria;
             if (idScenario !== null && idScenario !== '' && idScenario !== 'null') {
+                // è stato specificato uno scenario a cui accedere
                 console.log("idscenario: " + idScenario); //debug
-                fetch(`scenario/${idScenario}`)
-                    .then(response => {
-                        if (!response.ok) {
-                            return response.text().then(errorMessage => {
-                                document.getElementById("errorMessage").textContent = errorMessage;
-                                $('#errorModal').modal('show'); // Mostra il modal
-                            });
-                        }
-                        return response.json();
-                    }).then(data => {
-                    //debug
-                    console.log("scenario ricevuto");
-                    console.log(data);
-                    showData(data);
-                })
-                    .catch(error => console.error("Errore:", error));
+                fetchScenario(idScenario);
 
             } else { //se non c'è l'id allora la partita è in fase iniziale
                 console.log("Partita da inziare"); //debug
@@ -48,6 +34,58 @@ document.addEventListener("DOMContentLoaded", function (event) {
         }
     }
 )
+
+function fetchScenario(idScenario){
+    fetch(`scenario/${idScenario}`)
+        .then(response => {
+            if (!response.ok) {
+                return response.text().then(errorMessage => {
+                    document.getElementById("errorMessage").textContent = errorMessage;
+                    $('#errorModal').modal('show'); // Mostra il modal
+                });
+            }
+            return response.json();
+        }).then(data => {
+        //debug
+        console.log("scenario ricevuto");
+        console.log(data);
+        showData(data);
+
+    })
+        .catch(error => console.error("Errore:", error));
+}
+
+//funzione che controlla l'esisitenza di oggetti richiesti per accedere allo scenario
+function checkOggetti(idScenario, titoloStoria) {
+    fetch(`oggetti/controllori/${idScenario}`)
+        .then(response => {
+            if (!response.ok) {
+                return response.text().then(errorMessage => {
+                    document.getElementById("errorMessage").textContent = errorMessage;
+                    $('#errorModal').modal('show'); // Mostra il modal
+                });
+            }
+            return response.json();
+        }).then(data => {
+        console.log("Oggetti controllori: ");
+        console.log(data);
+
+        //controllo se lo scenario va bloccato
+        if (Array.isArray(data.oggettiMancanti) && data.oggettiMancanti.length > 0){
+            let oggettiNecessari = "";
+            data.oggettiMancanti.forEach(oggetto =>{
+                oggettiNecessari = oggettiNecessari + oggetto.nomeOggetto + " ";
+            })
+            document.getElementById("modal-title").textContent = "Non puoi accedere a questo scenario";
+            document.getElementById("successMessage").textContent = "Non hai gli oggetti necessari: " + oggettiNecessari;
+            $('#successModal').modal('show'); // Mostra il modal
+        } else{
+            // è possibile accedere qallo scenario
+            window.location.href = "gioca.html?titoloStoria=" + encodeURIComponent(titoloStoria) + "&idScenario=" + encodeURIComponent(idScenario);
+
+        }
+    });
+}
 
 function showData(data) {
     //recupero dei dati
@@ -104,8 +142,7 @@ function fetchScelte(idScenario) {
             sceltaButton.addEventListener("click", () => {
                 const scenarioFiglioId = scelta.scenarioFiglio.id;
                 const titoloStoria = scelta.scenarioFiglio.storia.titolo;
-                window.location.href = "gioca.html?titoloStoria=" + encodeURIComponent(titoloStoria) + "&idScenario=" + encodeURIComponent(scenarioFiglioId);
-
+                checkOggetti(scenarioFiglioId, titoloStoria);
             });
 
             listItem.appendChild(sceltaButton);
@@ -146,6 +183,8 @@ function fetchOggettiRaccoglibili(idScenario) {
             oggettoButton.textContent = "Raccogli"
             oggettoButton.classList.add('btn', 'btn-link');
 
+            listItem.id = "oggetto" + oggetto.id;
+
             // Aggiungo un listener per il click
             oggettoButton.addEventListener("click", () => {
                 raccogliOggetto(oggetto)
@@ -161,6 +200,40 @@ function fetchOggettiRaccoglibili(idScenario) {
 
 }
 
+function fetchInventario() {
+    fetch(`inventario/`)
+        .then(response => {
+            if (!response.ok) {
+                return response.text().then(errorMessage => {
+                    document.getElementById("errorMessage").textContent = errorMessage;
+                    $('#errorModal').modal('show'); // Mostra il modal
+                });
+            }
+            return response.json();
+        }).then(data => {
+        console.log("Oggetti trovati: ");
+        console.log(data);
+
+        const inventario = data.inventario;
+
+        const inventarioContainer = document.getElementById("inventario");
+
+        inventario.forEach(elemento => {
+            const listItem = document.createElement("li");
+            listItem.classList.add("list-group-item");
+
+            const oggettoLabel = document.createElement("p");
+            oggettoLabel.textContent = elemento.oggetto.nomeOggetto;
+
+            listItem.appendChild(oggettoLabel);
+            inventarioContainer.appendChild(listItem);
+        });
+
+    })
+        .catch(error => console.error("Errore:", error));
+
+}
+
 
 function raccogliOggetto(oggetto) {
     fetch('http://localhost:8080/inventario/aggiungi', {
@@ -168,8 +241,26 @@ function raccogliOggetto(oggetto) {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ idOggetto: oggetto.id })
+        body: JSON.stringify({idOggetto: oggetto.id})
+    }).then(response => {
+        if (response.ok) {
+            console.log("Oggetto aggiunto correttamente!");
+            //rimuovo l'elemento raccolto dagli oggetti disponibli
+            const elemento = document.getElementById("oggetto" + oggetto.id);
+            if (elemento) {
+                console.log("Elemento trovato: ", elemento);
+                elemento.remove();
+            } else {
+                console.log("Elemento con ID: '" + "oggetto" + oggetto.id + "' non trovato");
+            }
+            fetchInventario();
+
+        } else {
+            console.error("Errore durante l'aggiunta dell'oggetto");
+        }
     })
-    console.log("id oggetto da salvare:  " + JSON.stringify({ idOggetto: oggetto.id }));
+        .catch(error => {
+            console.error("Errore di rete: ", error);
+        });
 }
 

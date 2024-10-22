@@ -49,6 +49,7 @@ function mostraPartite(partiteDTOs) {
             "</div>" +
             "<div class=\"col-md-4 text-end\">" +
             "<button onclick='redirectGiocaStoria(\"" + encodeURIComponent(titolo) + "\")' class=\"btn btn-custom\">Continua</button>" +
+            "<button onclick='eliminaPartita(" + partitaDTO.idPartita + ")' class=\"btn btn-custom\">Elimina partita</button>" +
             "</div>" +
             "</li>";
 
@@ -62,4 +63,8 @@ function redirectGiocaStoria(titolo) {
     salvaPartita(titolo);
     window.location.href = "gioca.html?titoloStoria=" + titolo;
 
+}
+
+function eliminaPartita(idPartita){
+    //TODO: metodo DELETE
 }

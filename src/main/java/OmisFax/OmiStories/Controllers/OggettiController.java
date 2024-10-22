@@ -21,8 +21,15 @@ public class OggettiController {
     private OggettoService oggettoService;
 
     @GetMapping("/{idScenario}")
-    public ResponseEntity<Map<String, Object>>getOggetti(@PathVariable long idScenario, HttpSession session) {
+    public ResponseEntity<Map<String, Object>> getOggetti(@PathVariable long idScenario, HttpSession session) {
         Map<String, Object> oggetti = oggettoService.getOggetti(idScenario);
+        return new ResponseEntity<>(oggetti, HttpStatus.OK);
+    }
+
+    @GetMapping("/controllori/{idScenario}")
+    public ResponseEntity<Map<String, Object>> getOggettiContollori(@PathVariable long idScenario, HttpSession session) {
+        long idPartita = (long) session.getAttribute("idPartitaInCorso");
+        Map<String, Object> oggetti = oggettoService.getOggettiControllori(idScenario, idPartita);
         return new ResponseEntity<>(oggetti, HttpStatus.OK);
     }
 }

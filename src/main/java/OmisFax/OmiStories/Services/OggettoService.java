@@ -1,10 +1,10 @@
 package OmisFax.OmiStories.Services;
 
 import OmisFax.OmiStories.DTOs.OggettoDTO;
-import OmisFax.OmiStories.Entities.Oggetto;
-import OmisFax.OmiStories.Entities.Scenario;
-import OmisFax.OmiStories.Entities.Storia;
+import OmisFax.OmiStories.Entities.*;
+import OmisFax.OmiStories.Repositories.InventarioRepository;
 import OmisFax.OmiStories.Repositories.OggettoRepository;
+import OmisFax.OmiStories.Repositories.PartitaRepository;
 import OmisFax.OmiStories.Repositories.ScenarioRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +28,12 @@ public class OggettoService {
 
     @Autowired
     private ScenarioRepository scenarioRepository;
+
+    @Autowired
+    private InventarioRepository inventarioRepository;
+
+    @Autowired
+    private PartitaRepository partitaRepository;
 
 
 
@@ -78,6 +84,38 @@ public class OggettoService {
         List<Oggetto> oggetti = oggettoRepository.findByScenarioMadre(scenario);
         Map<String, Object> responseData = new HashMap<>();
         responseData.put("oggetti", oggetti);
+        return responseData;
+    }
+
+    public Map<String, Object> getOggettiControllori(long idScenario, long idPartita) {
+        Scenario scenario = scenarioRepository.findById(idScenario);
+        List<Oggetto> oggettiNecessari = oggettoRepository.findByScenarioControllore(scenario);
+
+        //controllo che l'oggetto sia presente nell'inventario della partita
+        Partita partita = partitaRepository.findById(idPartita);
+        List<Inventario> inventario = inventarioRepository.findAllByPartita(partita);
+
+        // Creo una lista per gli oggetti mancanti nell'inventario
+        List<Oggetto> oggettiMancanti = new ArrayList<>();
+
+        for (Oggetto oggetto : oggettiNecessari) {
+            boolean presenteNellInventario = false;
+            for (Inventario itemInventario : inventario) {
+                if (itemInventario.getOggetto().equals(oggetto)) {
+                    presenteNellInventario = true;
+                    break;
+                }
+            }
+            // Se l'oggetto non è presente nell'inventario, lo aggiungo agli oggetti mancanti
+            if (!presenteNellInventario) {
+                oggettiMancanti.add(oggetto);
+            }
+        }
+
+        // Creo la risposta con gli oggetti necessari e quelli mancanti
+        Map<String, Object> responseData = new HashMap<>();
+        responseData.put("oggettiNecessari", oggettiNecessari);
+        responseData.put("oggettiMancanti", oggettiMancanti);
         return responseData;
     }
 }
