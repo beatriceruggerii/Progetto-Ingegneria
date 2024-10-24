@@ -80,7 +80,7 @@ public class OggettoService {
 
 
     public Map<String, Object> getOggetti(long idScenario) {
-        Scenario scenario = scenarioRepository.findById(idScenario);
+        Scenario scenario = scenarioRepository.findById(idScenario).get();
         List<Oggetto> oggetti = oggettoRepository.findByScenarioMadre(scenario);
         Map<String, Object> responseData = new HashMap<>();
         responseData.put("oggetti", oggetti);
@@ -88,7 +88,7 @@ public class OggettoService {
     }
 
     public Map<String, Object> getOggettiControllori(long idScenario, long idPartita) {
-        Scenario scenario = scenarioRepository.findById(idScenario);
+        Scenario scenario = scenarioRepository.findById(idScenario).get();
         List<Oggetto> oggettiNecessari = oggettoRepository.findByScenarioControllore(scenario);
 
         //controllo che l'oggetto sia presente nell'inventario della partita

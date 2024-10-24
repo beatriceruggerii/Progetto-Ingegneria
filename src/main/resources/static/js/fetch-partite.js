@@ -49,7 +49,7 @@ function mostraPartite(partiteDTOs) {
             "</div>" +
             "<div class=\"col-md-4 text-end\">" +
             "<button onclick='redirectGiocaStoria(\"" + encodeURIComponent(titolo) + "\")' class=\"btn btn-custom\">Continua</button>" +
-            "<button onclick='eliminaPartita(" + partitaDTO.idPartita + ")' class=\"btn btn-custom\">Elimina partita</button>" +
+            "<button onclick='eliminaPartita(" + partitaDTO.idPartita + ")' class=\"btn m-3 btn-custom\">Elimina partita</button>" +
             "</div>" +
             "</li>";
 
@@ -65,6 +65,27 @@ function redirectGiocaStoria(titolo) {
 
 }
 
-function eliminaPartita(idPartita){
-    //TODO: metodo DELETE
+function eliminaPartita(idPartita) {
+    if (confirm("Sei sicuro di voler eliminare questa partita?")) {
+        fetch(`http://localhost:8080/partite/${idPartita}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Errore durante l\'eliminazione della partita');
+                }
+                console.log("Partita eliminata con successo:", idPartita);
+                return fetch('http://localhost:8080/partite/'); // Ricarica la lista delle partite
+            })
+            .then(response => response.json())
+            .then(data => {
+                mostraPartite(data); // Aggiorna la lista delle partite mostrate
+            })
+            .catch(error => {
+                console.error("Errore durante l'eliminazione:", error);
+            });
+    }
 }

@@ -17,6 +17,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 }).
             then(data => {
                 document.getElementById("titoloStoria").textContent = data.storia.titolo;
+                console.log("Dati ricevuti sulla storia: ");
+                console.log(data);
                 mostraFormModifica(data);
             })
                 .catch(error => console.error("Errore:", error));
@@ -30,13 +32,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
 function mostraFormModifica(data) {
     let titolo = data.storia.titolo;
     document.getElementById("titoloStoria").textContent = titolo;
-
-    //per evitare errori, qualsiasi null viene sostituito da stringhe vuote
-    for(dato of data){
-        if (!dato== null){
-            dato ="";
-        }
-    }
 
     let scenari = data.scenari;
     let scelte = data.scelte;

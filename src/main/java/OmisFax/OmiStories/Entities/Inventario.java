@@ -9,7 +9,7 @@ public class Inventario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
+    @ManyToOne()
     private Partita partita;
     @ManyToOne
     private Oggetto oggetto;

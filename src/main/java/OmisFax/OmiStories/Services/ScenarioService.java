@@ -13,10 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class ScenarioService {
@@ -85,22 +82,33 @@ public class ScenarioService {
     }
 
     public Scenario findById(long id) {
-        return scenarioRepository.findById(id);
+        Optional<Scenario> scenarioOptional = scenarioRepository.findById(id);
+        if(scenarioOptional.isPresent()){
+            return scenarioOptional.get();
+        } else{
+            return null;
+        }
     }
 
     public Scenario findByTitoloAndStoria(String titolo, Storia storia){
         return scenarioRepository.findByTitoloAndStoria(titolo, storia);
     }
 
-    public boolean modificaScenario(Long idScenario, ScenarioDTO nuovoScenario) {
+    public boolean modificaScenario(long idScenario, ScenarioDTO nuovoScenario) {
         System.out.println("-------");
-        System.out.println("Modifica dello scenario in corso");
-        Scenario scenarioEsistente = scenarioRepository.findById(nuovoScenario.getId());
-        if (scenarioEsistente == null) {
+        System.out.println("Modifica dello scenario in corso: " + idScenario);
+        Optional<Scenario> scenarioEsistente = scenarioRepository.findById(idScenario);
+
+        if (scenarioEsistente.isPresent()) {
+            Scenario scenario = scenarioEsistente.get();  // Recupera lo scenario se presente
+            System.out.println("Scenario trovato: " + scenario.toString());
+            scenario.setTesto(nuovoScenario.getTesto());
+            scenarioRepository.save(scenario);
+            return true;
+        } else {
+            System.out.println("Lo scenario con id " + idScenario + " non esiste.");
             return false;
         }
-        scenarioEsistente.setTesto(nuovoScenario.getTesto());
-        return salvaScenario(scenarioEsistente);
     }
 
     public ResponseEntity<Map<String, Object>> fetchScenaroFiglio(Long idScelta, HttpSession session) {
@@ -113,7 +121,7 @@ public class ScenarioService {
 
     public ResponseEntity<Map<String, Object>> fetchScenario(Long idScenario) {
         long id = idScenario;
-        Scenario scenario = scenarioRepository.findById(id);
+        Scenario scenario = findById(id);
         HashMap<String,Object> responseData = new HashMap<>();
         responseData.put("scenario",scenario);
         System.out.println("Scenario ottenuto: " + scenario.toString());

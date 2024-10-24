@@ -8,6 +8,8 @@ spring:
     url: jdbc:postgresql://localhost:5332/omistories
     username: user
     password: password
+
+
   jpa:
     hibernate:
       ddl-auto: update
@@ -17,3 +19,7 @@ spring:
         format_sql: true
         use_second_level_cache: false  # Disabilita la cache di secondo livello
     show-sql: true
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:schema.sql

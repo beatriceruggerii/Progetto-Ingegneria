@@ -72,4 +72,7 @@ public class PartitaService {
         return partiteDTOs;
     }
 
+    public void deleteById(long idPartita) {
+        partitaRepository.deleteById(idPartita);
+    }
 }
