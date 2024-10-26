@@ -142,6 +142,7 @@ function fetchScelte(idScenario) {
             sceltaButton.addEventListener("click", () => {
                 const scenarioFiglioId = scelta.scenarioFiglio.id;
                 const titoloStoria = scelta.scenarioFiglio.storia.titolo;
+                aggiornaPartita(scenarioFiglioId);
                 checkOggetti(scenarioFiglioId, titoloStoria);
             });
 
