@@ -10,7 +10,10 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface SceltaRepository extends JpaRepository<Scelta, Long> {
-    List<Scelta> findByScenarioMadre(Scenario s);
+    @Query("SELECT sc FROM Scelta sc " +
+            "WHERE sc.scenarioMadre = :scenarioMadre AND TYPE(sc) = Scelta")
+    List<Scelta> findByScenarioMadre(@Param("scenarioMadre") Scenario scenarioMadre);
+
     List<Scelta> findByScenarioFiglio(Scenario s);
 
     Scelta findById(long id);

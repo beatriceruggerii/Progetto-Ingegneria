@@ -84,7 +84,7 @@ public class IndovinelloService {
     }
 
     public List<Indovinello> findByStoria(Storia storia){
-        return indovinelloRepository.findALlByStoria(storia);
+        return indovinelloRepository.findByStoria(storia);
     }
     public boolean modificaIndovinello(Long idIndovinello, IndovinelloDTO nuovoIndovinello) {
         Indovinello indovinelloEsistente = indovinelloRepository.findById(nuovoIndovinello.getId());
@@ -94,6 +94,11 @@ public class IndovinelloService {
         indovinelloEsistente.setDescrizione(nuovoIndovinello.getTesto());
         indovinelloEsistente.setRispostaCorretta(nuovoIndovinello.getSoluzione());
         return registraIndovinello(indovinelloEsistente);
+    }
+
+    public List<Indovinello> findByScenarioMadre(long idScenario){
+        Scenario scenario = scenarioService.findById(idScenario);
+        return indovinelloRepository.findByScenarioMadre(scenario);
     }
 
 

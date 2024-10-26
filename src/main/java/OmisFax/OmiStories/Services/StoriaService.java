@@ -47,8 +47,8 @@ public class StoriaService {
     private IndovinelloService indovinelloService;
 
     public ResponseEntity<String> salvaStoria(StoriaDTO payload, HttpSession session) {
-        String titolo = payload.getTitolo();
-        String descrizioneIniziale = payload.getDescrizioneIniziale();
+        String titolo = payload.getTitolo().trim();
+        String descrizioneIniziale = payload.getDescrizioneIniziale().trim();
         String username = (String) session.getAttribute("loggedUsername");
 
         System.out.println("---------\n" +

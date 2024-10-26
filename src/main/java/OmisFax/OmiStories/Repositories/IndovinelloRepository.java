@@ -14,5 +14,8 @@ public interface IndovinelloRepository extends JpaRepository<Indovinello, Long> 
     Indovinello findById(long id);
 
     @Query("SELECT i FROM Indovinello i WHERE  i.scenarioMadre.storia = :storia AND i.rispostaCorretta IS NOT NULL")
-    List<Indovinello> findALlByStoria(@Param("storia") Storia storia);
+    List<Indovinello> findByStoria(@Param("storia") Storia storia);
+
+    @Query("SELECT i FROM Indovinello i WHERE  i.scenarioMadre= :scenario AND i.rispostaCorretta IS NOT NULL")
+    List<Indovinello> findByScenarioMadre(@Param("scenario") Scenario scenario);
 }

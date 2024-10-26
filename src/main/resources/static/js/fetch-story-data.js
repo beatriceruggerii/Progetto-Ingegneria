@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     }
 )
 
-function fetchScenario(idScenario){
+function fetchScenario(idScenario) {
     fetch(`scenario/${idScenario}`)
         .then(response => {
             if (!response.ok) {
@@ -71,15 +71,15 @@ function checkOggetti(idScenario, titoloStoria) {
         console.log(data);
 
         //controllo se lo scenario va bloccato
-        if (Array.isArray(data.oggettiMancanti) && data.oggettiMancanti.length > 0){
+        if (Array.isArray(data.oggettiMancanti) && data.oggettiMancanti.length > 0) {
             let oggettiNecessari = "";
-            data.oggettiMancanti.forEach(oggetto =>{
+            data.oggettiMancanti.forEach(oggetto => {
                 oggettiNecessari = oggettiNecessari + oggetto.nomeOggetto + " ";
             })
             document.getElementById("modal-title").textContent = "Non puoi accedere a questo scenario";
             document.getElementById("successMessage").textContent = "Non hai gli oggetti necessari: " + oggettiNecessari;
             $('#successModal').modal('show'); // Mostra il modal
-        } else{
+        } else {
             // è possibile accedere qallo scenario
             window.location.href = "gioca.html?titoloStoria=" + encodeURIComponent(titoloStoria) + "&idScenario=" + encodeURIComponent(idScenario);
 
@@ -104,32 +104,33 @@ function showData(data) {
     fetchOggettiRaccoglibili(id);
 }
 
-function fetchScelte(idScenario) {
-    fetch(`fetch_scelte/${idScenario}`)
-        .then(response => {
-            if (!response.ok) {
-                return response.text().then(errorMessage => {
-                    document.getElementById("errorMessage").textContent = errorMessage;
-                    $('#errorModal').modal('show'); // Mostra il modal
-                });
-            }
-            return response.json();
-        }).then(data => {
-        //debug
-        console.log("dati ricevuti da fetch scelte")
-        console.log(data);
+async function fetchScelte(idScenario) {
+    try {
+        const response = await fetch(`fetch_scelte/${idScenario}`);
+        if (!response.ok) {
+            const errorMessage = await response.text();
+            document.getElementById("errorMessage").textContent = errorMessage;
+            $('#errorModal').modal('show');
+            return;
+        }
+
+        const data = await response.json();
+        console.log("dati ricevuti da fetch scelte:", data);
         const scelte = data.scelte;
 
-        if (scelte == null || scelte.length === 0) {
+        const indovinelli = await fetchIndovinelli(idScenario);
+        console.log("indovinelli ricevuti:", indovinelli);
+
+        if ((!scelte || scelte.length === 0) && (!indovinelli || indovinelli.length === 0)) {
             document.getElementById("modal-title").textContent = "Partita terminata.";
             document.getElementById("successMessage").textContent = "Complimenti! Hai concluso la storia.";
-            $('#successModal').modal('show'); // Mostra il modal
+            $('#successModal').modal('show');
+            return;
         }
 
         const scelteContainer = document.getElementById("scelteContainer");
         if (!scelteContainer) return;
 
-        // Aggiungo le scelte al documento
         scelte.forEach(scelta => {
             const listItem = document.createElement("li");
             listItem.classList.add("list-group-item");
@@ -138,7 +139,6 @@ function fetchScelte(idScenario) {
             sceltaButton.textContent = scelta.descrizione;
             sceltaButton.classList.add('btn', 'btn-link');
 
-            // Aggiungo un listener per il click
             sceltaButton.addEventListener("click", () => {
                 const scenarioFiglioId = scelta.scenarioFiglio.id;
                 const titoloStoria = scelta.scenarioFiglio.storia.titolo;
@@ -148,9 +148,69 @@ function fetchScelte(idScenario) {
             listItem.appendChild(sceltaButton);
             scelteContainer.appendChild(listItem);
         });
-    })
-        .catch(error => console.error("Errore:", error));
+    } catch (error) {
+        console.error("Errore:", error);
+    }
+}
 
+async function fetchIndovinelli(idScenario) {
+    try {
+        const response = await fetch(`indovinelli/${idScenario}`);
+        if (!response.ok) {
+            const errorMessage = await response.text();
+            document.getElementById("errorMessage").textContent = errorMessage;
+            $('#errorModal').modal('show');
+            return [];
+        }
+
+        const data = await response.json();
+        console.log("dati ricevuti da fetch indovinelli:", data);
+
+        const indovinelli = data.indovinelli || [];
+        const indovinelliContainer = document.getElementById("indovinelliContainer");
+        if (!indovinelliContainer) return indovinelli;
+
+        indovinelli.forEach(indovinello => {
+            const listItem = document.createElement("li");
+            listItem.classList.add("list-group-item");
+
+            const label = document.createElement("label");
+            label.textContent = indovinello.descrizione;
+
+            const textInput = document.createElement("input");
+            textInput.type = "text";
+            textInput.name = "risposta";
+            textInput.classList.add("form", "form-control");
+
+            const button = document.createElement("input");
+            button.type = "submit";
+            button.classList.add("btn", "btn-primary", "mt-2");
+
+            const indovinelloForm = document.createElement("form");
+            indovinelloForm.addEventListener("submit", (event) => {
+                event.preventDefault();
+
+                const risposta = textInput.value;
+                responseIndovinello(indovinello, risposta);
+            });
+
+            const formDiv = document.createElement("div");
+            formDiv.classList.add("form-group", "custom-input", "mt-3");
+
+            formDiv.appendChild(label);
+            formDiv.appendChild(textInput);
+            formDiv.appendChild(button);
+
+            indovinelloForm.appendChild(formDiv);
+            listItem.appendChild(indovinelloForm);
+            indovinelliContainer.appendChild(listItem);
+        });
+
+        return indovinelli;
+    } catch (error) {
+        console.error("Errore:", error);
+        return [];
+    }
 }
 
 
@@ -197,7 +257,6 @@ function fetchOggettiRaccoglibili(idScenario) {
 
     })
         .catch(error => console.error("Errore:", error));
-
 }
 
 function fetchInventario() {
@@ -262,5 +321,20 @@ function raccogliOggetto(oggetto) {
         .catch(error => {
             console.error("Errore di rete: ", error);
         });
+}
+
+
+function responseIndovinello(indovinello, risposta) {
+    console.log(indovinello); //debug
+
+    if (indovinello.rispostaCorretta.trim().toLowerCase() === risposta.trim().toLowerCase()) {
+        const scenarioFiglioId = indovinello.scenarioFiglio.id;
+        const titoloStoria = indovinello.scenarioFiglio.storia.titolo;
+        checkOggetti(scenarioFiglioId, titoloStoria);
+    } else {
+        document.getElementById("modal-title").textContent = "Risposta Sbagliata :(";
+        document.getElementById("successMessage").textContent = "Riprova";
+        $('#successModal').modal('show'); // Mostra il modal
+    }
 }
 

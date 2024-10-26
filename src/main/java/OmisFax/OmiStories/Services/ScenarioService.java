@@ -30,7 +30,7 @@ public class ScenarioService {
         System.out.println("richiesta ricevuta");
         Storia storia = (Storia) session.getAttribute("storiaCorrente");
 
-        Scenario scenario = scenarioFactory.createScenario(storia, scenariodto.getTitolo(), scenariodto.getTesto());
+        Scenario scenario = scenarioFactory.createScenario(storia, scenariodto.getTitolo().trim(), scenariodto.getTesto().trim());
 
         try {
             scenarioRepository.save(scenario);
@@ -102,7 +102,7 @@ public class ScenarioService {
         if (scenarioEsistente.isPresent()) {
             Scenario scenario = scenarioEsistente.get();  // Recupera lo scenario se presente
             System.out.println("Scenario trovato: " + scenario.toString());
-            scenario.setTesto(nuovoScenario.getTesto());
+            scenario.setTesto(nuovoScenario.getTesto().trim());
             scenarioRepository.save(scenario);
             return true;
         } else {
