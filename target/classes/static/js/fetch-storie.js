@@ -56,28 +56,43 @@ function mostraStorie(storieCompletaDTOS){
     catalogo.innerHTML = html;
 }
 
-function redirectGiocaStoria(titolo) {
-    // Passa il titolo come parametro nella URL della nuova pagina
-    salvaPartita(decodeURIComponent(titolo));
-    window.location.href = "gioca.html?titoloStoria=" + titolo;
+async function redirectGiocaStoria(titolo) {
+    // Chiama salvaPartita e aspetta la sua conclusione
+    const success = await salvaPartita(decodeURIComponent(titolo));
+
+    if (success) {
+        // Reindirizza solo se il salvataggio è andato a buon fine
+        window.location.href = "gioca.html?titoloStoria=" + titolo;
+    }
 }
 
-function salvaPartita(titoloStoria) {
-    console.log("Salvataggio partita"); //debug
-    console.log(titoloStoria); //debug
+async function salvaPartita(titoloStoria) {
+    console.log("Salvataggio partita"); // Debug
+    console.log(titoloStoria); // Debug
 
-    fetch('http://localhost:8080/partita/salva', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(titoloStoria)
-    }).then(response => {
+    try {
+        const response = await fetch('http://localhost:8080/partita/salva', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'text/plain',
+            },
+            body: titoloStoria
+        });
+
         if (!response.ok) {
+            if (response.status === 401) {
+                alert("Hai già iniziato questa partita, verrai reindirizzato alle tue partite");
+                window.location.href = "le-mie-partite.html";
+                return false;
+            }
             throw new Error('Errore durante il salvataggio della partita');
         }
+
         console.log("Partita salvata con successo");
-    }).catch(error => {
+        return true;
+
+    } catch (error) {
         console.error('Errore:', error);
-    });
+        return false;
+    }
 }

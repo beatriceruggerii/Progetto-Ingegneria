@@ -11,10 +11,15 @@ import OmisFax.OmiStories.Repositories.PartitaRepository;
 import OmisFax.OmiStories.Repositories.ScenarioRepository;
 import OmisFax.OmiStories.Repositories.StoriaRepository;
 import OmisFax.OmiStories.Repositories.UtenteRepository;
+import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Part;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -37,7 +42,8 @@ public class PartitaService {
         System.out.println("Giocatore: " + giocatore.toString());
 
         Storia storia = storiaRepository.findStoriaByTitolo(titoloStoria);
-        System.out.println("Storia: " + storia.toString());
+        System.out.println("Giocatore: " + giocatore.getUsername());
+        System.out.println("Storia: " + storia.getTitolo());
 
         Scenario scenarioIniziale = scenarioRepository.findByStoriaAndInizialeTrue(storia);
         System.out.println("Scenario iniziale " + scenarioIniziale.toString());
@@ -47,6 +53,16 @@ public class PartitaService {
         return partita;
     }
 
+    public ResponseEntity<String> aggiornaPartita(Partita partita, long idScenarioFiglio){
+        Scenario ultimoScenario = scenarioRepository.findById(idScenarioFiglio);
+        if(ultimoScenario != null){
+            partita.setUltimoScenario(ultimoScenario);
+            partitaRepository.save(partita);
+            return ResponseEntity.ok().body("Partita Aggiornata");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Storia non aggiornata");
+        }
+    }
     public List<PartitaDTO> trovaPartitePerUtente(String username) {
         List<Partita> partite = partitaRepository.findByGiocatoreUsername(username);
         List<PartitaDTO> partiteDTOs = new ArrayList<>();
