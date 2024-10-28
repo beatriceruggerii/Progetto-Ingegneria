@@ -18,33 +18,33 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Controller
-@RequestMapping("/scelta")
-public class SceltaController {
+@RestController
+@RequestMapping("/scelte")
+public class ScelteController {
 
     private final SceltaService sceltaService;
 
 
     @Autowired
-    public SceltaController(SceltaService sceltaService) {
+    public ScelteController(SceltaService sceltaService) {
         this.sceltaService = sceltaService;
     }
 
-    @PostMapping("/salva")
-    public ResponseEntity<String> salvaScelta(@RequestBody SceltaDTO infoScelta, HttpSession session) {
-        System.out.println("Richiesta ricevuta");
-        return sceltaService.responseSalvaScelta(infoScelta, session);
+    @GetMapping("/")
+    public ResponseEntity<Map<String, Object>> fetchScelte(HttpSession session) {
+        Storia storia = (Storia) session.getAttribute("storiaCorrente");
+        System.out.println("richiesta di fetch scelte ricevuta");
+        return sceltaService.responseFetchScelte(storia);
         //TODO: le responseentities devono essere generate nel controller
-
     }
 
-    @PutMapping("/modifica/{idScelta}")
-    public ResponseEntity<String> modificaIndovinello(@PathVariable Long idScelta, @RequestBody SceltaDTO nuovaScelta) {
-        boolean successo = sceltaService.modificaScelta(nuovaScelta);
-        if (!successo) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Modifica fallita: Scelta non trovata.");
-        }
-        return ResponseEntity.ok("Modifica avvenuta con successo.");
+    //ritorna tutte le scelte che hanno scenario iniziale con idScenario passato nel path
+    @GetMapping("/scelte/{idScenario}")
+    public ResponseEntity<Map<String, Object>> fetchScelteScenario(@PathVariable Long idScenario, HttpSession session) {
+        System.out.println("richiesta di fetch scelte dello scenarioricevuta");
+        return sceltaService.responseFetchScelteScenario(idScenario,session);
+        //TODO: le responseentities devono essere generate nel controller
     }
+
 
 }

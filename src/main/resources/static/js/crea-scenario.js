@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
             scenario[key] = value;
         });
 
-        fetch('http://localhost:8080/salva_scenario', {
+        fetch('http://localhost:8080/scenario/salva', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

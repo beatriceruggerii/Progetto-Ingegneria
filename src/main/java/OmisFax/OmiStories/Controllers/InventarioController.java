@@ -19,7 +19,6 @@ public class InventarioController {
     private InventarioService inventarioService;
 
     @PostMapping("/aggiungi")
-    // @param id: id dell'oggetto passato in post
     public ResponseEntity<Inventario> aggiungiOggettoAInventario(
             @RequestBody Map<String, Long> requestBody, HttpSession session) {
         System.out.println("Richiesta di salva oggetto ricevuta"); //debug

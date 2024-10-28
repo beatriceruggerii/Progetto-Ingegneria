@@ -3,6 +3,7 @@ package OmisFax.OmiStories.Controllers;
 
 import OmisFax.OmiStories.DTOs.PartitaDTO;
 import OmisFax.OmiStories.Entities.Oggetto;
+import OmisFax.OmiStories.Entities.Storia;
 import OmisFax.OmiStories.Services.OggettoService;
 import OmisFax.OmiStories.Services.PartitaService;
 import jakarta.servlet.http.HttpSession;
@@ -31,5 +32,13 @@ public class OggettiController {
         long idPartita = (long) session.getAttribute("idPartitaInCorso");
         Map<String, Object> oggetti = oggettoService.getOggettiControllori(idScenario, idPartita);
         return new ResponseEntity<>(oggetti, HttpStatus.OK);
+    }
+
+    @GetMapping("/")
+    //ritorna gli oggetti creati all'interno di una storia
+    public ResponseEntity<Map<String, Object>> fetchOggettiStoria(HttpSession session) {
+        System.out.println("richiesta di fetch oggetti ricevuta");
+        Storia storia = (Storia) session.getAttribute("storiaCorrente");
+        return oggettoService.fetchOggettiStoria(storia);
     }
 }

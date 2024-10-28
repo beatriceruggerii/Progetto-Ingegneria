@@ -49,8 +49,7 @@ public class IndovinelloService {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Something went wrong");
     }
 
-    public ResponseEntity<Map<String, Object>> responseFetchIndovinelli(HttpSession session) {
-        Storia storia = (Storia) session.getAttribute("storiaCorrente");
+    public ResponseEntity<Map<String, Object>> responseFetchIndovinelli(Storia storia) {
         if (storia == null) {
             System.out.println("storia non trovata");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);

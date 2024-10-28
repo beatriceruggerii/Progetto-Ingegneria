@@ -3,6 +3,7 @@ package OmisFax.OmiStories.Controllers;
 import static org.mockito.Mockito.*;
 
 import OmisFax.OmiStories.DTOs.IndovinelloDTO;
+import OmisFax.OmiStories.Entities.Storia;
 import OmisFax.OmiStories.Services.IndovinelloService;
 import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,6 +21,9 @@ public class IndovinelloControllerTest {
 
     @InjectMocks
     private IndovinelloController indovinelloController;
+
+    @InjectMocks
+    private IndovinelliController indovinelliController;
 
     @Mock
     private IndovinelloService indovinelloService;
@@ -44,11 +48,12 @@ public class IndovinelloControllerTest {
 
     @Test
     void testFetchIndovinelli() {
+        Storia storia = (Storia) session.getAttribute("storiaCorrente");
         Map<String, Object> mockResponse = new HashMap<>();
         mockResponse.put("indovinelli", "lista di indovinelli");
-        when(indovinelloService.responseFetchIndovinelli(session)).thenReturn(new ResponseEntity<>(mockResponse, HttpStatus.OK));
+        when(indovinelloService.responseFetchIndovinelli(storia)).thenReturn(new ResponseEntity<>(mockResponse, HttpStatus.OK));
 
-        ResponseEntity<Map<String, Object>> response = indovinelloController.fetchIndovinelli(session);
+        ResponseEntity<Map<String, Object>> response = indovinelliController.fetchIndovinelli(session);
         assert response.getStatusCode() == HttpStatus.OK;
         assert response.getBody().equals(mockResponse);
     }

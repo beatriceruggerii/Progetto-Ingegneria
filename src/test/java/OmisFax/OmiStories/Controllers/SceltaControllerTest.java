@@ -3,6 +3,7 @@ package OmisFax.OmiStories.Controllers;
 import static org.mockito.Mockito.*;
 
 import OmisFax.OmiStories.DTOs.SceltaDTO;
+import OmisFax.OmiStories.Entities.Storia;
 import OmisFax.OmiStories.Services.SceltaService;
 import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,6 +21,9 @@ public class SceltaControllerTest {
 
     @InjectMocks
     private SceltaController sceltaController;
+
+    @InjectMocks
+    private ScelteController scelteController;
 
     @Mock
     private SceltaService sceltaService;
@@ -46,9 +50,10 @@ public class SceltaControllerTest {
     void testFetchScelte() {
         Map<String, Object> mockResponse = new HashMap<>();
         mockResponse.put("scelte", "lista di scelte");
-        when(sceltaService.responseFetchScelte(session)).thenReturn(new ResponseEntity<>(mockResponse, HttpStatus.OK));
+        Storia storia = (Storia) session.getAttribute("storiaCorrente");
+        when(sceltaService.responseFetchScelte(storia)).thenReturn(new ResponseEntity<>(mockResponse, HttpStatus.OK));
 
-        ResponseEntity<Map<String, Object>> response = sceltaController.fetchScelte(session);
+        ResponseEntity<Map<String, Object>> response = scelteController.fetchScelte(session);
         assert response.getStatusCode() == HttpStatus.OK;
         assert response.getBody().equals(mockResponse);
     }

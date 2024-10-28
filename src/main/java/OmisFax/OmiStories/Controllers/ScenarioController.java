@@ -17,7 +17,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Controller
+@RestController
+@RequestMapping("/scenario")
 public class ScenarioController {
     private final ScenarioService scenarioService;
 
@@ -26,20 +27,20 @@ public class ScenarioController {
         this.scenarioService = scenarioService;
     }
 
+    @GetMapping("/{idScenario}")
+    public ResponseEntity<Map<String, Object>> fetchScenario(@PathVariable Long idScenario) {
+        System.out.println("richiesta di fetch scenario ricevuta");
+        return scenarioService.fetchScenario(idScenario);
+    }
 
-    @PostMapping("/salva_scenario")
+    @PostMapping("/salva")
     public ResponseEntity<String> salvaScenario(@RequestBody ScenarioDTO scenariodto, HttpSession session) {
         System.out.println("richiesta ricevuta");
         return scenarioService.salvaScenario(scenariodto,session);
     }
 
-    @GetMapping("/fetch_scenari")
-    public ResponseEntity<Map<String, Object>> fetchScenari(HttpSession session) {
-        System.out.println("richiesta di fetch scenari ricevuta");
-        return scenarioService.fetchScenari(session);
-    }
 
-    @PutMapping("/modifica_scenario/{idScenario}")
+    @PutMapping("/modifica/{idScenario}")
     public ResponseEntity<String> modificaIndovinello(@PathVariable Long idScenario, @RequestBody ScenarioDTO nuovoScenario) {
         boolean successo = scenarioService.modificaScenario(idScenario, nuovoScenario);
         if (!successo) {
@@ -48,16 +49,15 @@ public class ScenarioController {
         return ResponseEntity.ok("Modifica avvenuta con successo.");
     }
 
+    //FIXME: NON VIENE USATO?
+    /*
     @GetMapping("/fetch_scenario_figlio/{idScelta}")
     public ResponseEntity<Map<String, Object>> fetchScenaroFiglio(@PathVariable Long idScelta, HttpSession session) {
         System.out.println("richiesta di fetch scenaro da scelta ricevuta");
         return scenarioService.fetchScenaroFiglio(idScelta, session);
     }
 
-    @GetMapping("scenario/{idScenario}")
-    public ResponseEntity<Map<String, Object>> fetchScenario(@PathVariable Long idScenario) {
-        System.out.println("richiesta di fetch scenario ricevuta");
-        return scenarioService.fetchScenario(idScenario);
-    }
+     */
+
 
 }

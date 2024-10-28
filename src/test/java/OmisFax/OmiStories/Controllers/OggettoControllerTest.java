@@ -23,6 +23,9 @@ public class OggettoControllerTest {
     @InjectMocks
     private OggettoController oggettoController;
 
+    @InjectMocks
+    private OggettiController oggettiController;
+
     @Mock
     private OggettoService oggettoService;
 
@@ -55,9 +58,9 @@ public class OggettoControllerTest {
         Map<String, Object> mockResponse = new HashMap<>();
         mockResponse.put("oggetti", "lista di oggetti");
         when(session.getAttribute("storiaCorrente")).thenReturn(mockStoria);
-        when(oggettoService.fetchOggetti(mockStoria)).thenReturn(new ResponseEntity<>(mockResponse, HttpStatus.OK));
+        when(oggettoService.fetchOggettiStoria(mockStoria)).thenReturn(new ResponseEntity<>(mockResponse, HttpStatus.OK));
 
-        ResponseEntity<Map<String, Object>> response = oggettoController.fetchOggetti(session);
+        ResponseEntity<Map<String, Object>> response = oggettiController.fetchOggettiStoria(session);
         assert response.getStatusCode() == HttpStatus.OK;
         assert response.getBody().equals(mockResponse);
     }

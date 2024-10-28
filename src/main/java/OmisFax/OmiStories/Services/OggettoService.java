@@ -55,7 +55,7 @@ public class OggettoService {
 
     }
 
-    public ResponseEntity<Map<String, Object>> fetchOggetti(Storia storia) {
+    public ResponseEntity<Map<String, Object>> fetchOggettiStoria(Storia storia) {
 
         if (storia == null) {
             System.out.println("storia non trovata");

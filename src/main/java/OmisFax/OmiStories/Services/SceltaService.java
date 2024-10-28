@@ -50,8 +50,7 @@ public class SceltaService {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Something went wrong");
     }
 
-    public ResponseEntity<Map<String, Object>> responseFetchScelte(HttpSession session) {
-        Storia storia = (Storia) session.getAttribute("storiaCorrente");
+    public ResponseEntity<Map<String, Object>> responseFetchScelte(Storia storia) {
         if (storia == null) {
             System.out.println("Storia non trovata");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);

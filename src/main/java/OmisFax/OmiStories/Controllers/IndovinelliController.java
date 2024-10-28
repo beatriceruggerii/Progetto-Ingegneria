@@ -1,6 +1,7 @@
 package OmisFax.OmiStories.Controllers;
 
 import OmisFax.OmiStories.Entities.Indovinello;
+import OmisFax.OmiStories.Entities.Storia;
 import OmisFax.OmiStories.Services.IndovinelloService;
 import OmisFax.OmiStories.Services.OggettoService;
 import jakarta.servlet.http.HttpSession;
@@ -19,16 +20,24 @@ import java.util.Map;
 @RestController
 @RequestMapping("/indovinelli")
 public class IndovinelliController {
-        @Autowired
-        private IndovinelloService indovinelloService;
+    @Autowired
+    private IndovinelloService indovinelloService;
 
-        @GetMapping("/{idScenario}")
-        public ResponseEntity<Map<String, Object>> getIndovinelli(@PathVariable long idScenario, HttpSession session) {
-            System.out.println("Richiesta di fetch indovinelli ricevuta. Scenario madre: " + idScenario);
-            List<Indovinello> indovinelli = indovinelloService.findByScenarioMadre(idScenario);
-            HashMap<String,Object> responseData = new HashMap<>();
-            responseData.put("indovinelli", indovinelli);
-            System.out.println(responseData.toString()); //debug
-            return new ResponseEntity<>(responseData, HttpStatus.OK);
-        }
+    @GetMapping("/{idScenario}")
+    public ResponseEntity<Map<String, Object>> getIndovinelli(@PathVariable long idScenario, HttpSession session) {
+        System.out.println("Richiesta di fetch indovinelli ricevuta. Scenario madre: " + idScenario);
+        List<Indovinello> indovinelli = indovinelloService.findByScenarioMadre(idScenario);
+        HashMap<String, Object> responseData = new HashMap<>();
+        responseData.put("indovinelli", indovinelli);
+        System.out.println(responseData.toString()); //debug
+        return new ResponseEntity<>(responseData, HttpStatus.OK);
+    }
+
+    @GetMapping("/")
+    //metodo che ritorna tutti gli indovinelli della storia in sessione
+    public ResponseEntity<Map<String, Object>> fetchIndovinelli(HttpSession session) {
+        Storia storia = (Storia) session.getAttribute("storiaCorrente");
+        System.out.println("richiesta di fetch indovinelli ricevuta");
+        return indovinelloService.responseFetchIndovinelli(storia);
+    }
 }

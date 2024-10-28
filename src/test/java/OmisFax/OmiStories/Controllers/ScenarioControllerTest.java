@@ -21,6 +21,9 @@ public class ScenarioControllerTest {
     @InjectMocks
     private ScenarioController scenarioController;
 
+    @InjectMocks
+    private ScenariController scenariController;
+
     @Mock
     private ScenarioService scenarioService;
 
@@ -48,7 +51,7 @@ public class ScenarioControllerTest {
         mockResponse.put("scenari", "lista di scenari");
         when(scenarioService.fetchScenari(session)).thenReturn(new ResponseEntity<>(mockResponse, HttpStatus.OK));
 
-        ResponseEntity<Map<String, Object>> response = scenarioController.fetchScenari(session);
+        ResponseEntity<Map<String, Object>> response = scenariController.fetchScenari(session);
         assert response.getStatusCode() == HttpStatus.OK;
         assert response.getBody().equals(mockResponse);
     }

@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
+@RequestMapping("/indovinello")
 public class IndovinelloController {
 
     private final IndovinelloService indovinelloService;
@@ -30,19 +31,14 @@ public class IndovinelloController {
         this.indovinelloService = indovinelloService;
     }
 
-    @PostMapping("/salva_indovinello")
+    @PostMapping("/salva")
     public ResponseEntity<String> salvaIndovinello(@RequestBody IndovinelloDTO infoIndovinello, HttpSession session) {
         System.out.println("Richiesta ricevuta");
         return indovinelloService.responseSalvaIndovinello(infoIndovinello, session);
     }
 
-    @GetMapping("/fetch_indovinelli")
-    public ResponseEntity<Map<String, Object>> fetchIndovinelli(HttpSession session) {
-        System.out.println("richiesta di fetch indovinelli ricevuta");
-        return indovinelloService.responseFetchIndovinelli(session);
-    }
 
-    @PutMapping("/modifica_indovinello/{idIndovinello}")
+    @PutMapping("/modifica/{idIndovinello}")
     public ResponseEntity<String> modificaIndovinello(@PathVariable Long idIndovinello, @RequestBody IndovinelloDTO nuovoIndovinello) {
         boolean successo = indovinelloService.modificaIndovinello(idIndovinello, nuovoIndovinello);
         if (!successo) {

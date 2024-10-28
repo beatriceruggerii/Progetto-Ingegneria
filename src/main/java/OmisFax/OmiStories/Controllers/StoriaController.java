@@ -59,6 +59,7 @@ public class StoriaController {
         return storiaService.responseDatiStoria(titolo, session);
     }
 
+    //TODO: da spostare in scenario controller?
     @GetMapping("/fetch_scenario_iniziale/{titolo}")
     public ResponseEntity<Map<String, Object>> fetchScenarioIniziale(@PathVariable String titolo, HttpSession session) {
         System.out.println("richiesta scenario Iniziale ricevutw");
