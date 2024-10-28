@@ -4,7 +4,7 @@ fetch('/session_data') // endpoint che ritorna i dati in sessione
     .then(response => response.json())
     .then(data => {
         // debug
-        console.log("utente in sessione: " + data.loggedUsername);
+        console.log("utente in sessione: " + data.username);
         console.log("premium: " + data.isPremium);
         console.log(data);
 
