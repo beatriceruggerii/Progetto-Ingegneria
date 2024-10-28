@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class InventarioService {
@@ -38,6 +39,12 @@ public class InventarioService {
         // Recupera l'oggetto dal database
         Oggetto oggetto = oggettoRepository.findById(idOggetto)
                 .orElseThrow(() -> new IllegalArgumentException("Oggetto non trovato con ID: " + idOggetto));
+
+        Optional<Inventario> inventarioOptional = inventarioRepository.findByPartitaAndOggetto(partita, oggetto);
+
+        if(inventarioOptional.isPresent()){
+            throw new IllegalArgumentException("Hai già raccolto questo oggetto");
+        }
 
         // Crea una nuova istanza di Inventario
         Inventario inventario = new Inventario(partita, oggetto);

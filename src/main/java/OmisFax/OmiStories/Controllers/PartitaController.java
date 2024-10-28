@@ -19,6 +19,17 @@ public class PartitaController {
     @Autowired
     private PartitaRepository partitaRepository;
 
+    @PutMapping("/riprendi/{idPartita}")
+    public ResponseEntity<String> riprendiPartita(@PathVariable long idPartita, HttpSession session){
+            Partita partita = partitaService.getPartita(idPartita);
+            if (partita != null) {
+                session.setAttribute("idPartitaInCorso", idPartita);
+                return ResponseEntity.ok("Partita ripresa con successo");
+            } else{
+                throw new NullPointerException("Non ci sono partite corrispondenti a questa.");
+            }
+    }
+
     @PostMapping("/salva")
     public ResponseEntity<String> salvaPartita(@RequestBody String titoloStoria, HttpSession session) {
         try {
@@ -32,7 +43,7 @@ public class PartitaController {
             titoloStoria = titoloStoria.trim();
             if(partitaRepository.findByGiocatoreUsernameAndStoriaTitolo(username, titoloStoria) == null){
                 Partita partita = partitaService.salvaPartita(titoloStoria, username);
-                session.setAttribute("partitaCorrente", partita);
+                session.setAttribute("idPartitaInCorso", partita.getId());
                 return ResponseEntity.ok("Partita salvata con successo");
             } else {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Hai già avviato questa partita");
@@ -45,12 +56,17 @@ public class PartitaController {
     }
 
     @PutMapping("/aggiorna")
-    public ResponseEntity<String> aggiornaPartita(@RequestBody long idScenarioFiglio, HttpSession session){
-        Partita partitaCorrente = (Partita) session.getAttribute("partitaCorrente");
-        if(partitaCorrente != null){
-           return partitaService.aggiornaPartita(partitaCorrente, idScenarioFiglio);
-        } else {
-            return ResponseEntity.status((HttpStatus.UNAUTHORIZED)).body("partita corrente non recuperata");
+    public ResponseEntity<String> aggiornaPartita(@RequestBody String idScenarioFiglio, HttpSession session){
+        long idScenario = Long.parseLong(idScenarioFiglio);
+        System.out.println("\n \n Richiesta di aggiornamento partita ricevuta: "+ idScenario);
+        long idPartitaCorrente = (long) session.getAttribute("idPartitaInCorso");
+        if(partitaService.aggiornaPartita(idPartitaCorrente, idScenario)){
+            System.out.println("Partita aggiornata con successo, utimo scenario: "+ idScenarioFiglio);
+            return ResponseEntity.ok("Partita aggiornata");
+        }
+        else {
+            System.out.println("NOn è stato possibile aggiornare la partita: "+ idScenarioFiglio);
+            return ResponseEntity.status((HttpStatus.UNAUTHORIZED)).body("partita corrente non recuperata.");
         }
     }
 }

@@ -57,13 +57,27 @@ function mostraStorie(storieCompletaDTOS){
 }
 
 async function redirectGiocaStoria(titolo) {
-    // Chiama salvaPartita e aspetta la sua conclusione
-    const success = await salvaPartita(decodeURIComponent(titolo));
+    // Controllo che l'utente sia premium
+    fetch('/session_data') // endpoint che ritorna i dati in sessione
+        .then(response => response.json())
+        .then(async data => {
+            console.log(data);
+            if (!data.isPremium) {
+                // Mostra modal che blocca
+                console.log("l'utente non è premimum");
+                document.getElementById("errorMessage").textContent = "Passa a premium per poter giocare!";
+                $('#errorModal').modal('show'); // Mostra il modal
+            } else {
+                console.log("l'utente è premimum");
+                // Chiama salvaPartita e aspetta la sua conclusione
+                const success = await salvaPartita(decodeURIComponent(titolo));
 
-    if (success) {
-        // Reindirizza solo se il salvataggio è andato a buon fine
-        window.location.href = "gioca.html?titoloStoria=" + titolo;
-    }
+                if (success) {
+                    // Reindirizza solo se il salvataggio è andato a buon fine
+                    window.location.href = "gioca.html?titoloStoria=" + titolo;
+                }
+            }
+        })
 }
 
 async function salvaPartita(titoloStoria) {

@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PartitaService {
@@ -53,14 +54,16 @@ public class PartitaService {
         return partita;
     }
 
-    public ResponseEntity<String> aggiornaPartita(Partita partita, long idScenarioFiglio){
-        Scenario ultimoScenario = scenarioRepository.findById(idScenarioFiglio);
-        if(ultimoScenario != null){
-            partita.setUltimoScenario(ultimoScenario);
+    public boolean aggiornaPartita(long idPartita, long idScenarioFiglio){
+        Partita partita = partitaRepository.findById(idPartita);
+        Optional<Scenario> ultimoScenarioOptional = scenarioRepository.findById(idScenarioFiglio);
+        if(ultimoScenarioOptional.isPresent()){
+            partita.setUltimoScenario(ultimoScenarioOptional.get());
             partitaRepository.save(partita);
-            return ResponseEntity.ok().body("Partita Aggiornata");
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Storia non aggiornata");
+            return true;
+        }
+        else {
+            return false;
         }
     }
     public List<PartitaDTO> trovaPartitePerUtente(String username) {
@@ -90,5 +93,9 @@ public class PartitaService {
 
     public void deleteById(long idPartita) {
         partitaRepository.deleteById(idPartita);
+    }
+
+    public Partita getPartita(long idPartita) {
+        return partitaRepository.findById(idPartita);
     }
 }
