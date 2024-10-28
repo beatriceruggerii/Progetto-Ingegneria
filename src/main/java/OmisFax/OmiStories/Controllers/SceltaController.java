@@ -33,8 +33,9 @@ public class SceltaController {
     @PostMapping("/salva")
     public ResponseEntity<String> salvaScelta(@RequestBody SceltaDTO infoScelta, HttpSession session) {
         System.out.println("Richiesta ricevuta");
-        sceltaService.responseSalvaScelta(infoScelta, session);
-        return ResponseEntity.ok("Storia salvata con successo");
+        Scelta scelta = sceltaService.responseSalvaScelta(infoScelta);
+        session.setAttribute("sceltaCorrente", scelta);
+        return ResponseEntity.ok("Scelta salvata con successo");
     }
 
     @PutMapping("/modifica/{idScelta}")

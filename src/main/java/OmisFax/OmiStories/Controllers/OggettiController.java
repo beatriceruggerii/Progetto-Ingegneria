@@ -39,6 +39,7 @@ public class OggettiController {
     public ResponseEntity<Map<String, Object>> fetchOggettiStoria(HttpSession session) {
         System.out.println("richiesta di fetch oggetti ricevuta");
         Storia storia = (Storia) session.getAttribute("storiaCorrente");
-        return oggettoService.fetchOggettiStoria(storia);
+        Map<String, Object> responseData = oggettoService.fetchOggettiStoria(storia);
+        return ResponseEntity.ok(responseData);
     }
 }

@@ -1,14 +1,12 @@
 package OmisFax.OmiStories.Services;
 
 import OmisFax.OmiStories.DTOs.IndovinelloDTO;
-import OmisFax.OmiStories.Entities.*;
+import OmisFax.OmiStories.Entities.Indovinello;
+import OmisFax.OmiStories.Entities.Scenario;
+import OmisFax.OmiStories.Entities.Storia;
 import OmisFax.OmiStories.Repositories.IndovinelloRepository;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,7 +20,7 @@ public class IndovinelloService {
     @Autowired
     private ScenarioService scenarioService;
 
-    public ResponseEntity<String> responseSalvaIndovinello(IndovinelloDTO infoIndovinello, HttpSession session) {
+    public String responseSalvaIndovinello(IndovinelloDTO infoIndovinello) {
         String testoIndovinello = infoIndovinello.getTesto();
         String testoSoluzione = infoIndovinello.getSoluzione();
         long idMadre = infoIndovinello.getIdMadre();
@@ -34,25 +32,25 @@ public class IndovinelloService {
         Indovinello indovinello = new Indovinello(testoIndovinello, scenarioMadre, scenarioFiglio, testoSoluzione);
 
         if (scenarioMadre == null || scenarioFiglio == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Errore: scenario madre o figlio mancante");
+            throw new IllegalArgumentException("Scenario madre o figlio mancante");
         }
         if (idFiglio!=idMadre) {
             if (registraIndovinello(indovinello)) {
                 System.out.println("indovinello salvato");
-                return ResponseEntity.ok("Indovinello salvato");
+                return "indovinello salvato con successo";
             }
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Errore: Lo scenario di partenza e quello di destinazione non possono combaciare!");
+            throw new IllegalArgumentException("Lo scenario di partenza e quello di destinazione non possono combaciare!");
         }
 
         System.out.println("errore generico");
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Something went wrong");
+        throw new IllegalArgumentException("Something went wrong");
     }
 
-    public ResponseEntity<Map<String, Object>> responseFetchIndovinelli(Storia storia) {
+    public Map<String, Object> responseFetchIndovinelli(Storia storia) {
         if (storia == null) {
             System.out.println("storia non trovata");
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+            throw new IllegalArgumentException("Storia non trovata.");
         }
         Map<String, Object> responseData = new HashMap<>();
         List<Indovinello> listaIndovinelli = new ArrayList<>();
@@ -60,7 +58,6 @@ public class IndovinelloService {
         if(listaIndovinelli.isEmpty()){
             System.out.println("nessun indovinello trovato");
             responseData.put("errorMessage","Nessun indovinello trovato.");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseData);
         }
         //debug
         System.out.println("Indovinelli trovati: "+ listaIndovinelli.size());
@@ -68,7 +65,7 @@ public class IndovinelloService {
             System.out.println(listaIndovinelli.get(i).toString());
         }
         responseData.put("listaIndovinelli", listaIndovinelli);
-        return ResponseEntity.ok(responseData);
+        return responseData;
     }
 
 

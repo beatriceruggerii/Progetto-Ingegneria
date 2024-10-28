@@ -1,14 +1,10 @@
 package OmisFax.OmiStories.Services;
 
-import OmisFax.OmiStories.Entities.Scelta;
 import OmisFax.OmiStories.Entities.Storia;
 import OmisFax.OmiStories.Entities.Utente;
 import OmisFax.OmiStories.Repositories.StoriaRepository;
 import OmisFax.OmiStories.Repositories.UtenteRepository;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -63,22 +59,21 @@ public class UtenteService {
         }
     }
 
-    public ResponseEntity<Map<String, Object>> responseFetchAutori(HttpSession session) {
+    public Map<String, Object> responseFetchAutori() {
         Map<String, Object> responseData = new HashMap<>();
-        List<Utente> listaAutori = listaAutori(session);
+        List<Utente> listaAutori = listaAutori();
         if(listaAutori.isEmpty()){
             System.out.println("Autori non trovati");
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
         System.out.println("Autori trovati: "+ listaAutori.size());
         for(int i = 0; i<listaAutori.size(); i++){
             System.out.println(listaAutori.get(i).toString());
         }
         responseData.put("listaAutori", listaAutori);
-        return ResponseEntity.ok(responseData);
+        return responseData;
     }
 
-    public List<Utente> listaAutori(HttpSession session){
+    public List<Utente> listaAutori(){
         List<Storia> listaStorie = storiaRepository.findAll();
         List<Utente> listaAutori = new ArrayList<>();
 

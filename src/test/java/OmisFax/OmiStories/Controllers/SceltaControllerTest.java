@@ -56,7 +56,7 @@ public class SceltaControllerTest {
 
         when(scenarioService.findById(1L)).thenReturn(scenarioMadre);
         when(scenarioService.findById(2L)).thenReturn(scenarioFiglio);
-        doNothing().when(sceltaService).responseSalvaScelta(mockSceltaDTO, session);  // Mock del metodo void
+        doNothing().when(sceltaService).responseSalvaScelta(mockSceltaDTO);  // Mock del metodo void
 
         // Chiama il metodo da testare
         sceltaController.salvaScelta(mockSceltaDTO, session);

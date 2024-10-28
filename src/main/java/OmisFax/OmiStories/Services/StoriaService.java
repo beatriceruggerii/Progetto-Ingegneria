@@ -46,50 +46,44 @@ public class StoriaService {
     @Autowired
     private IndovinelloService indovinelloService;
 
-    public ResponseEntity<String> salvaStoria(StoriaDTO payload, HttpSession session) {
+    public Storia salvaStoria(StoriaDTO payload, String username) {
         String titolo = payload.getTitolo().trim();
         String descrizioneIniziale = payload.getDescrizioneIniziale().trim();
-        String username = (String) session.getAttribute("loggedUsername");
 
         System.out.println("---------\n" +
                 "dati ricevuti per il salvataggio della soria:\n" +
-                "titolo: " + titolo +"\n" +
-                "scen iniziale: " +descrizioneIniziale +"\n" +
+                "titolo: " + titolo + "\n" +
+                "scen iniziale: " + descrizioneIniziale + "\n" +
                 "username utente: " + username);
 
-        if(storiaRepository.findStoriaByTitolo(titolo) != null){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Esiste già una storia con questo titolo.");
+        if (storiaRepository.findStoriaByTitolo(titolo) != null) {
+            throw new IllegalArgumentException("Esiste già una storia con questo titolo.");
         }
         Storia storia = storiaFactory.createStoria(titolo, username);
         Scenario scenarioIniziale = scenarioFactory.createScenarioIniziale(storia, descrizioneIniziale);
 
-        try{
-            storiaRepository.save(storia);
-            scenarioService.salvaScenario(scenarioIniziale);
-            System.out.println("Storia salvata");
-            session.setAttribute("storiaCorrente", storia);
-            return ResponseEntity.ok("Storia salvata con successo");
-        } catch(Exception e){
-            System.out.println("Storia non salvata");
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("C'è stato un errore con il salvataggio della tua storia, ritenta.");
-        }
+        storiaRepository.save(storia);
+        scenarioService.salvaScenario(scenarioIniziale);
+        System.out.println("Storia salvata");
+        return storia;
+
     }
 
     public Map<String, Object> responseFetchStorie() {
         Map<String, Object> responseData = new HashMap<>();
         List<Storia> listaStorie = listaStorie();
-        if(listaStorie.isEmpty()){
+        if (listaStorie.isEmpty()) {
             System.out.println("Storie non trovate");
             throw new RuntimeException("Storie non trovate");
         }
         //debug
-        System.out.println("storie trovate: "+ listaStorie.size());
-        for(int i = 0; i<listaStorie.size(); i++){
+        System.out.println("storie trovate: " + listaStorie.size());
+        for (int i = 0; i < listaStorie.size(); i++) {
             System.out.println(listaStorie.get(i).toString());
         }
 
         List<StoriaCompletaDTO> storiaCompletaDTOS = new ArrayList<>();
-        for(Storia storia : listaStorie){
+        for (Storia storia : listaStorie) {
             String descrizioneIniziale = scenarioRepository.findByStoriaAndInizialeTrue(storia).getTesto();
             StoriaDTO storiaDTO = new StoriaDTO(storia.getTitolo(), descrizioneIniziale);
             StoriaCompletaDTO storiaCompletaDTO = new StoriaCompletaDTO(storiaDTO, storia.getAutore().getUsername());
@@ -100,7 +94,7 @@ public class StoriaService {
         return responseData;
     }
 
-    public List<Storia> listaStorie(){
+    public List<Storia> listaStorie() {
         return storiaRepository.findAll();
     }
 
@@ -130,8 +124,8 @@ public class StoriaService {
         Map<String, Object> responseData = new HashMap<>();
         List<Storia> listaStorie = listaStorie();
 
-        if(listaStorie == null || listaStorie.isEmpty()){
-            throw new IllegalArgumentException("Storie non trovate") ;
+        if (listaStorie == null || listaStorie.isEmpty()) {
+            throw new IllegalArgumentException("Storie non trovate");
         }
 
         // Rimuove le virgolette e spazi bianchi dal titolo cercato
@@ -141,7 +135,7 @@ public class StoriaService {
 
         List<StoriaCompletaDTO> listaFiltrataStoria = new ArrayList<>();
 
-        for(Storia storia : listaStorie){
+        for (Storia storia : listaStorie) {
             if (storia.getTitolo().toLowerCase().contains(titolo.toLowerCase())) {
                 String descrizioneIniziale = scenarioRepository.findByStoriaAndInizialeTrue(storia).getTesto();
 
@@ -157,8 +151,7 @@ public class StoriaService {
     }
 
 
-
-    public Storia getStoria(String titolo){
+    public Storia getStoria(String titolo) {
         return storiaRepository.findStoriaByTitolo(titolo);
     }
 
@@ -168,7 +161,7 @@ public class StoriaService {
 
         //oggetto storia
         Storia storia = storiaRepository.findStoriaByTitolo(titolo);
-        responseData.put("storia",storia);
+        responseData.put("storia", storia);
 
         //scenari
         List<Scenario> scenari = scenarioService.findByStoria(storia);

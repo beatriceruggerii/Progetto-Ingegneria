@@ -3,6 +3,7 @@ package OmisFax.OmiStories.Controllers;
 import static org.mockito.Mockito.*;
 
 import OmisFax.OmiStories.DTOs.ScenarioDTO;
+import OmisFax.OmiStories.Entities.Storia;
 import OmisFax.OmiStories.Services.ScenarioService;
 import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,7 +39,8 @@ public class ScenarioControllerTest {
     @Test
     void testSalvaScenario() {
         ScenarioDTO mockScenarioDTO = new ScenarioDTO();
-        when(scenarioService.salvaScenario(mockScenarioDTO, session)).thenReturn(new ResponseEntity<>("Scenario salvato con successo", HttpStatus.OK));
+        Storia storia = (Storia) session.getAttribute("storiaCorrente");
+        when(scenarioService.salvaScenario(mockScenarioDTO, storia)).thenReturn("Scenario salvato con successo");
 
         ResponseEntity<String> response = scenarioController.salvaScenario(mockScenarioDTO, session);
         assert response.getStatusCode() == HttpStatus.OK;
@@ -49,7 +51,8 @@ public class ScenarioControllerTest {
     void testFetchScenari() {
         Map<String, Object> mockResponse = new HashMap<>();
         mockResponse.put("scenari", "lista di scenari");
-        when(scenarioService.fetchScenari(session)).thenReturn(new ResponseEntity<>(mockResponse, HttpStatus.OK));
+        Storia storia = (Storia) session.getAttribute("storiaCorrente");
+        when(scenarioService.fetchScenari(storia)).thenReturn(mockResponse);
 
         ResponseEntity<Map<String, Object>> response = scenariController.fetchScenari(session);
         assert response.getStatusCode() == HttpStatus.OK;

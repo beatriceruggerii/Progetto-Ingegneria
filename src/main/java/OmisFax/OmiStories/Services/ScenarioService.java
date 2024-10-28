@@ -28,45 +28,30 @@ public class ScenarioService {
     private StoriaRepository storiaRepository;
 
 
-    public ResponseEntity<String> salvaScenario(ScenarioDTO scenariodto, HttpSession session) {
+    public String salvaScenario(ScenarioDTO scenariodto, Storia storia) {
         System.out.println("richiesta ricevuta");
-        Storia storia = (Storia) session.getAttribute("storiaCorrente");
 
         Scenario scenario = scenarioFactory.createScenario(storia, scenariodto.getTitolo().trim(), scenariodto.getTesto().trim());
+        scenarioRepository.save(scenario);
+        System.out.println("Scenario salvato");
+        return "Scenario salvato con successo";
 
-        try {
-            scenarioRepository.save(scenario);
-            System.out.println("Scenario salvato");
-            session.setAttribute("storiaCorrente", storia);
-            return ResponseEntity.ok("Scenario salvato con successo");
-        } catch(Exception e){
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Impossibile salvare lo scenario, prova a cambiare titolo.");
-        }
     }
 
-    public ResponseEntity<Map<String, Object>> fetchScenari(HttpSession session) {
+    public Map<String, Object> fetchScenari(Storia storia) {
         System.out.println("richiesta di fetch scenari ricevuta");
-        Storia storia = (Storia) session.getAttribute("storiaCorrente");
         if (storia == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+            throw new IllegalArgumentException("Storia non trovata");
         }
         Map<String, Object> responseData = new HashMap<>();
         List<Scenario> listaScenari = new ArrayList<>();
         listaScenari = scenarioRepository.findByStoria(storia);
-        if (listaScenari.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-        }
-        //debud
-        System.out.println("scenari trovati: " + listaScenari.size());
-        for (int i = 0; i < listaScenari.size(); i++) {
-            System.out.println(listaScenari.get(i).toString());
-        }
+
         responseData.put("listaScenari", listaScenari);
-        return ResponseEntity.ok(responseData);
+        return responseData;
     }
 
-    public boolean salvaScenario(Scenario scenario){
+    public boolean salvaScenario(Scenario scenario) {
         if (scenarioRepository.findByTitoloAndStoria(scenario.getTitolo(), scenario.getStoria()) != null) {
             return false;
         }
@@ -85,14 +70,14 @@ public class ScenarioService {
 
     public Scenario findById(long id) {
         Optional<Scenario> scenarioOptional = scenarioRepository.findById(id);
-        if(scenarioOptional.isPresent()){
+        if (scenarioOptional.isPresent()) {
             return scenarioOptional.get();
-        } else{
+        } else {
             return null;
         }
     }
 
-    public Scenario findByTitoloAndStoria(String titolo, Storia storia){
+    public Scenario findByTitoloAndStoria(String titolo, Storia storia) {
         return scenarioRepository.findByTitoloAndStoria(titolo, storia);
     }
 
@@ -113,21 +98,13 @@ public class ScenarioService {
         }
     }
 
-    public ResponseEntity<Map<String, Object>> fetchScenaroFiglio(Long idScelta, HttpSession session) {
-        HashMap<String,Object> responseData = new HashMap<>();
-        Scelta scelta = sceltaRepository.findById(Long.parseLong(String.valueOf(idScelta)));
-        Scenario scenario = scelta.getScenarioFiglio();
-        responseData.put("scenarioFiglio",scenario);
-        return ResponseEntity.ok(responseData);
-    }
-
-    public ResponseEntity<Map<String, Object>> fetchScenario(Long idScenario) {
+    public Map<String, Object> fetchScenario(Long idScenario) {
         long id = idScenario;
         Scenario scenario = findById(id);
-        HashMap<String,Object> responseData = new HashMap<>();
-        responseData.put("scenario",scenario);
+        HashMap<String, Object> responseData = new HashMap<>();
+        responseData.put("scenario", scenario);
         System.out.println("Scenario ottenuto: " + scenario.toString());
-        return ResponseEntity.ok(responseData);
+        return responseData;
     }
 
     public Map<String, Object> responseScenarioIniziale(String titolo) {

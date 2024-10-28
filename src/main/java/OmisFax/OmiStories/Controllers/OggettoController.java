@@ -40,8 +40,8 @@ public class OggettoController {
     public ResponseEntity<String> salvaOggetto(@RequestBody OggettoDTO payload, HttpSession session) {
         System.out.println("----\n richiesta di salvataggio oggeetto ricevuta");
         Storia storia = (Storia) session.getAttribute("storiaCorrente");
-
-        return oggettoService.salvaOggetto(payload, storia);
+        String message = oggettoService.salvaOggetto(payload, storia);
+        return ResponseEntity.ok(message);
     }
 
 }

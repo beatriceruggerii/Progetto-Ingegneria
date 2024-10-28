@@ -36,7 +36,7 @@ public class UtenteControllerTest {
         Map<String, Object> mockResponse = new HashMap<>();
         mockResponse.put("author", "testAuthor");
 
-        when(utenteService.responseFetchAutori(session)).thenReturn(new ResponseEntity<>(mockResponse, HttpStatus.OK));
+        when(utenteService.responseFetchAutori()).thenReturn(mockResponse);
 
         ResponseEntity<Map<String, Object>> response = utenteController.fetchAutori(session);
         assert response.getStatusCode() == HttpStatus.OK;

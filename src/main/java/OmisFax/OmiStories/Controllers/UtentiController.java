@@ -20,6 +20,7 @@ public class UtentiController {
     @GetMapping("/autori")
     public ResponseEntity<Map<String, Object>> fetchAutori(HttpSession session) {
         System.out.println("richiesta di fetch storie ricevuta");
-        return utenteService.responseFetchAutori(session);
+        Map<String, Object> responseData = utenteService.responseFetchAutori();
+        return ResponseEntity.ok(responseData);
     }
 }

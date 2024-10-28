@@ -13,10 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class OggettoService {
@@ -36,45 +33,32 @@ public class OggettoService {
     private PartitaRepository partitaRepository;
 
 
-
-
-    public ResponseEntity<String> salvaOggetto(OggettoDTO payload, Storia storia) {
+    public String salvaOggetto(OggettoDTO payload, Storia storia) {
         String nomeOggetto = payload.getNomeOggetto();
         long idMadre = payload.getScenarioMadreOggetto();
         long idControllore = payload.getScenarioControlloreOggetto();
-
-
         Oggetto oggetto = oggettoFactory.createOggetto(nomeOggetto, idMadre, idControllore, storia);
-        try {
-            oggettoRepository.save(oggetto);
-            return ResponseEntity.ok("Oggetto salvato con successo: " + payload.getNomeOggetto());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Impossibile salvare l'oggetto.");
-        }
-
+        oggettoRepository.save(oggetto);
+        return "Oggetto salvato con successo.";
     }
 
-    public ResponseEntity<Map<String, Object>> fetchOggettiStoria(Storia storia) {
+    public Map<String, Object> fetchOggettiStoria(Storia storia) {
 
         if (storia == null) {
             System.out.println("storia non trovata");
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+            throw new IllegalArgumentException("Storia non trovata");
         }
         Map<String, Object> responseData = new HashMap<>();
         List<Oggetto> listaOggetti = oggettoRepository.findAllByStoria(storia);
         if (listaOggetti.isEmpty()) {
             System.out.println("nessun oggetto trovato");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-        for (int i = 0; i < listaOggetti.size(); i++) {
-            System.out.println(listaOggetti.get(i).toString());
+            throw new NoSuchElementException("Nessun oggetto trovato");
         }
         responseData.put("listaOggetti", listaOggetti);
-        return ResponseEntity.ok(responseData);
+        return responseData;
     }
 
-    public List<Oggetto> findByStoria(Storia storia){
+    public List<Oggetto> findByStoria(Storia storia) {
         return oggettoRepository.findAllByStoria(storia);
     }
 

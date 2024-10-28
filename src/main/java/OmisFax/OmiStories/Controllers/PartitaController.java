@@ -38,7 +38,7 @@ public class PartitaController {
             System.out.println("Salvataggio partita: " + username + " storia: " + titoloStoria);
             if (username == null) {
                 System.out.println("Utente non trovato"+username);
-                throw new RuntimeException("Utente non loggato");
+                throw new IllegalArgumentException("Utente non loggato.");
             }
             titoloStoria = titoloStoria.trim();
             if(partitaRepository.findByGiocatoreUsernameAndStoriaTitolo(username, titoloStoria) == null){

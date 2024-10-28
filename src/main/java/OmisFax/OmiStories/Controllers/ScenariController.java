@@ -1,5 +1,6 @@
 package OmisFax.OmiStories.Controllers;
 
+import OmisFax.OmiStories.Entities.Storia;
 import OmisFax.OmiStories.Services.ScenarioService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,9 @@ public class ScenariController {
     @GetMapping("/")
     //restituisce tutti gli scenari della storia corrente
     public ResponseEntity<Map<String, Object>> fetchScenari(HttpSession session) {
+        Storia storia = (Storia) session.getAttribute("storiaCorrente");
         System.out.println("richiesta di fetch scenari ricevuta");
-        return scenarioService.fetchScenari(session);
+        Map<String, Object> responseData = scenarioService.fetchScenari(storia);
+        return ResponseEntity.ok(responseData);
     }
 }

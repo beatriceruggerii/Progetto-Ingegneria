@@ -24,7 +24,7 @@ public class SceltaService {
     @Autowired
     private ScenarioService scenarioService;
 
-    public void responseSalvaScelta(SceltaDTO infoScelta, HttpSession session){
+    public Scelta responseSalvaScelta(SceltaDTO infoScelta){
         String testoScelta = infoScelta.getTesto();
         long idMadre = infoScelta.getIdMadre();
         long idFiglio = infoScelta.getIdFiglio();
@@ -40,7 +40,7 @@ public class SceltaService {
         if (idFiglio!=idMadre) {
             if (registraScelta(scelta)) {
                 System.out.println("scelta salvata");
-                session.setAttribute("sceltaCorrente", scelta);
+                return scelta;
             }
         } else {
             throw new IllegalArgumentException("Errore: Lo scenario di partenza e quello di destinazione non possono combaciare!");

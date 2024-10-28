@@ -3,6 +3,7 @@ package OmisFax.OmiStories.Controllers;
 import static org.mockito.Mockito.*;
 
 import OmisFax.OmiStories.DTOs.StoriaDTO;
+import OmisFax.OmiStories.Entities.Storia;
 import OmisFax.OmiStories.Services.StoriaService;
 import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,7 +39,8 @@ public class StoriaControllerTest {
     @Test
     void testSalvaStoria() {
         StoriaDTO mockPayload = new StoriaDTO("Titolo", "Descrizione");
-        when(storiaService.salvaStoria(mockPayload, session)).thenReturn(new ResponseEntity<>("Storia salvata con successo", HttpStatus.OK));
+        String username = (String) session.getAttribute("loggedUsername");
+        when(storiaService.salvaStoria(mockPayload, username)).thenReturn(new Storia()); //FIXME: chiedi a thomas
 
         ResponseEntity<String> response = storiaController.salvaStoria(mockPayload, session);
         assert response.getStatusCode() == HttpStatus.OK;

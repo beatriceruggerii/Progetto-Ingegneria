@@ -37,6 +37,6 @@ public class IndovinelliController {
     public ResponseEntity<Map<String, Object>> fetchIndovinelli(HttpSession session) {
         Storia storia = (Storia) session.getAttribute("storiaCorrente");
         System.out.println("richiesta di fetch indovinelli ricevuta");
-        return indovinelloService.responseFetchIndovinelli(storia);
+        return ResponseEntity.ok(indovinelloService.responseFetchIndovinelli(storia));
     }
 }
