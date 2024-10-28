@@ -24,7 +24,7 @@ public class SceltaService {
     @Autowired
     private ScenarioService scenarioService;
 
-    public ResponseEntity<String> responseSalvaScelta(SceltaDTO infoScelta, HttpSession session){
+    public void responseSalvaScelta(SceltaDTO infoScelta, HttpSession session){
         String testoScelta = infoScelta.getTesto();
         long idMadre = infoScelta.getIdMadre();
         long idFiglio = infoScelta.getIdFiglio();
@@ -35,38 +35,35 @@ public class SceltaService {
         Scelta scelta = new Scelta(testoScelta, scenarioMadre, scenarioFiglio);
 
         if (scenarioMadre == null || scenarioFiglio == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Errore: scenario madre o figlio mancante");
+            throw new IllegalArgumentException("Errore: scenario madre o figlio mancante");
         }
         if (idFiglio!=idMadre) {
             if (registraScelta(scelta)) {
                 System.out.println("scelta salvata");
                 session.setAttribute("sceltaCorrente", scelta);
-                return ResponseEntity.ok("Scelta salvata");
             }
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Errore: Lo scenario di partenza e quello di destinazione non possono combaciare!");
+            throw new IllegalArgumentException("Errore: Lo scenario di partenza e quello di destinazione non possono combaciare!");
         }
         System.out.println("errore generico");
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Something went wrong");
+        throw new IllegalArgumentException("Something went wrong");
     }
 
-    public ResponseEntity<Map<String, Object>> responseFetchScelte(Storia storia) {
+    public Map<String, Object> responseFetchScelte(Storia storia){
         if (storia == null) {
-            System.out.println("Storia non trovata");
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+            throw new IllegalArgumentException("Storia non trovata");
         }
         Map<String, Object> responseData = new HashMap<>();
         List<Scelta> listaScelte = findByStoria(storia);
         if(listaScelte.isEmpty()){
-            System.out.println("Scelte non trovate");
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+            throw new IllegalArgumentException("Scelte non trovate");
         }
         System.out.println("scelte trovate: "+ listaScelte.size());
         for(int i = 0; i<listaScelte.size(); i++){
             System.out.println(listaScelte.get(i).toString());
         }
         responseData.put("listaScelte", listaScelte);
-        return ResponseEntity.ok(responseData);
+        return responseData;
     }
 
     public boolean registraScelta(Scelta scelta) {
@@ -92,11 +89,11 @@ public class SceltaService {
         return registraScelta(sceltaEsistente);
     }
 
-    public ResponseEntity<Map<String, Object>> responseFetchScelteScenario(Long idScenario, HttpSession session) {
+    public Map<String, Object> fetchScelteScenario(Long idScenario) {
         Scenario scenario = scenarioService.findById(idScenario);
         List<Scelta> scelte = sceltaRepository.findByScenarioMadre(scenario);
         Map<String, Object> responseData = new HashMap<>();
         responseData.put("scelte", scelte);
-        return ResponseEntity.ok(responseData);
+        return responseData;
     }
 }

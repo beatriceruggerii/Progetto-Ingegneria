@@ -112,7 +112,7 @@ function showData(data) {
 
 async function fetchScelte(idScenario) {
     try {
-        const response = await fetch(`fetch_scelte/${idScenario}`);
+        const response = await fetch(`scelte/${idScenario}`);
         if (!response.ok) {
             const errorMessage = await response.text();
             document.getElementById("errorMessage").textContent = errorMessage;

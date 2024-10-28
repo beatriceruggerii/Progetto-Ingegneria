@@ -1,10 +1,14 @@
 package OmisFax.OmiStories.Controllers;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.Mockito.*;
 
 import OmisFax.OmiStories.DTOs.SceltaDTO;
+import OmisFax.OmiStories.Entities.Scelta;
+import OmisFax.OmiStories.Entities.Scenario;
 import OmisFax.OmiStories.Entities.Storia;
 import OmisFax.OmiStories.Services.SceltaService;
+import OmisFax.OmiStories.Services.ScenarioService;
 import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,6 +28,8 @@ public class SceltaControllerTest {
 
     @InjectMocks
     private ScelteController scelteController;
+    @Mock
+    private ScenarioService scenarioService;
 
     @Mock
     private SceltaService sceltaService;
@@ -38,20 +44,37 @@ public class SceltaControllerTest {
 
     @Test
     void testSalvaScelta() {
+        // Configura un DTO di esempio
         SceltaDTO mockSceltaDTO = new SceltaDTO();
-        when(sceltaService.responseSalvaScelta(mockSceltaDTO, session)).thenReturn(new ResponseEntity<>("Scelta salvata con successo", HttpStatus.OK));
+        mockSceltaDTO.setTesto("Testo scelta");
+        mockSceltaDTO.setIdMadre(1L);
+        mockSceltaDTO.setIdFiglio(2L);
 
-        ResponseEntity<String> response = sceltaController.salvaScelta(mockSceltaDTO, session);
-        assert response.getStatusCode() == HttpStatus.OK;
-        assert response.getBody().equals("Scelta salvata con successo");
+        // Mock delle dipendenze
+        Scenario scenarioMadre = new Scenario(); // Crea scenario madre simulato
+        Scenario scenarioFiglio = new Scenario(); // Crea scenario figlio simulato
+
+        when(scenarioService.findById(1L)).thenReturn(scenarioMadre);
+        when(scenarioService.findById(2L)).thenReturn(scenarioFiglio);
+        doNothing().when(sceltaService).responseSalvaScelta(mockSceltaDTO, session);  // Mock del metodo void
+
+        // Chiama il metodo da testare
+        sceltaController.salvaScelta(mockSceltaDTO, session);
+
+        // Verifica che la scelta sia stata salvata nella sessione
+        verify(session).setAttribute(eq("sceltaCorrente"), any(Scelta.class));
+
+        // Verifica che non siano state lanciate eccezioni non gestite
+        assertDoesNotThrow(() -> sceltaController.salvaScelta(mockSceltaDTO, session));
     }
+
 
     @Test
     void testFetchScelte() {
         Map<String, Object> mockResponse = new HashMap<>();
         mockResponse.put("scelte", "lista di scelte");
         Storia storia = (Storia) session.getAttribute("storiaCorrente");
-        when(sceltaService.responseFetchScelte(storia)).thenReturn(new ResponseEntity<>(mockResponse, HttpStatus.OK));
+        when(sceltaService.responseFetchScelte(storia)).thenReturn(mockResponse);
 
         ResponseEntity<Map<String, Object>> response = scelteController.fetchScelte(session);
         assert response.getStatusCode() == HttpStatus.OK;

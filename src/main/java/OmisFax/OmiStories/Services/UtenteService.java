@@ -3,6 +3,7 @@ package OmisFax.OmiStories.Services;
 import OmisFax.OmiStories.Entities.Scelta;
 import OmisFax.OmiStories.Entities.Storia;
 import OmisFax.OmiStories.Entities.Utente;
+import OmisFax.OmiStories.Repositories.StoriaRepository;
 import OmisFax.OmiStories.Repositories.UtenteRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,8 @@ import java.util.Map;
 public class UtenteService {
     @Autowired
     private UtenteRepository utenteRepository;
+    @Autowired
+    private StoriaRepository storiaRepository;
 
     private boolean trovaUsername(String uname) {
         Utente utente = utenteRepository.findByUsername(uname);
@@ -76,7 +79,7 @@ public class UtenteService {
     }
 
     public List<Utente> listaAutori(HttpSession session){
-        List<Storia> listaStorie = (List<Storia>)session.getAttribute("listaStorie");
+        List<Storia> listaStorie = storiaRepository.findAll();
         List<Utente> listaAutori = new ArrayList<>();
 
         if (listaStorie != null) {  // Controlla che la lista delle storie non sia null

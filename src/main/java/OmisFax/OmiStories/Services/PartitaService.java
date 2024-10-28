@@ -84,7 +84,7 @@ public class PartitaService {
                     partita.getUltimoScenario().getTesto()
             );
 
-            PartitaDTO partitaDTO = new PartitaDTO(storiaDTO, scenarioDTO, username, partita.getId());
+            PartitaDTO partitaDTO = new PartitaDTO(storiaDTO, scenarioDTO, partita.getStoria().getAutore().getUsername(), partita.getId());
             partiteDTOs.add(partitaDTO);
         }
 
