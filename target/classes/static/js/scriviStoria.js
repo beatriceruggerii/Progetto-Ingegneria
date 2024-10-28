@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 descrizioneIniziale: descrizione
             }
 
-            fetch('http://localhost:8080/salva_storia', {
+            fetch('http://localhost:8080/storia/salva', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

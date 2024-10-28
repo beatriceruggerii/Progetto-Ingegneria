@@ -6,6 +6,7 @@ import OmisFax.OmiStories.Entities.Scenario;
 import OmisFax.OmiStories.Entities.Storia;
 import OmisFax.OmiStories.Repositories.SceltaRepository;
 import OmisFax.OmiStories.Repositories.ScenarioRepository;
+import OmisFax.OmiStories.Repositories.StoriaRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,12 +20,13 @@ import java.util.*;
 public class ScenarioService {
     @Autowired
     private ScenarioRepository scenarioRepository;
-
     @Autowired
     private ScenarioFactory scenarioFactory;
-
     @Autowired
     private SceltaRepository sceltaRepository;
+    @Autowired
+    private StoriaRepository storiaRepository;
+
 
     public ResponseEntity<String> salvaScenario(ScenarioDTO scenariodto, HttpSession session) {
         System.out.println("richiesta ricevuta");
@@ -126,6 +128,15 @@ public class ScenarioService {
         responseData.put("scenario",scenario);
         System.out.println("Scenario ottenuto: " + scenario.toString());
         return ResponseEntity.ok(responseData);
+    }
+
+    public Map<String, Object> responseScenarioIniziale(String titolo) {
+        Map<String, Object> responseData = new HashMap<>();
+        Storia storia = storiaRepository.findStoriaByTitolo(titolo);
+        Scenario scenario = scenarioRepository.findByStoriaAndInizialeTrue(storia);
+        responseData.put("scenario", scenario);
+        System.out.println("Scenario trovato: " + scenario.toString());
+        return responseData;
     }
 }
 

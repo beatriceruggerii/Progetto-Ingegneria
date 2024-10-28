@@ -24,7 +24,6 @@ public class ScelteController {
 
     private final SceltaService sceltaService;
 
-
     @Autowired
     public ScelteController(SceltaService sceltaService) {
         this.sceltaService = sceltaService;
@@ -39,7 +38,7 @@ public class ScelteController {
     }
 
     //ritorna tutte le scelte che hanno scenario iniziale con idScenario passato nel path
-    @GetMapping("/scelte/{idScenario}")
+    @GetMapping("/{idScenario}")
     public ResponseEntity<Map<String, Object>> fetchScelteScenario(@PathVariable Long idScenario, HttpSession session) {
         System.out.println("richiesta di fetch scelte dello scenarioricevuta");
         return sceltaService.responseFetchScelteScenario(idScenario,session);

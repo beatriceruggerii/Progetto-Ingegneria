@@ -14,7 +14,7 @@ document.getElementById('nuovoIndovinello').addEventListener('submit', function 
             idFiglio: idFiglio
         };
 
-        fetch('http://localhost:8080/salva_indovinello', {
+        fetch('http://localhost:8080/indovinello/salva', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

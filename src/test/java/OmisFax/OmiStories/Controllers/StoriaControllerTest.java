@@ -21,6 +21,9 @@ public class StoriaControllerTest {
     @InjectMocks
     private StoriaController storiaController;
 
+    @InjectMocks
+    private StorieController storieController;
+
     @Mock
     private StoriaService storiaService;
 
@@ -46,9 +49,9 @@ public class StoriaControllerTest {
     void testFetchStorie() {
         Map<String, Object> mockResponse = new HashMap<>();
         mockResponse.put("storie", "lista di storie");
-        when(storiaService.responseFetchStorie(session)).thenReturn(new ResponseEntity<>(mockResponse, HttpStatus.OK));
+        when(storiaService.responseFetchStorie()).thenReturn(mockResponse);
 
-        ResponseEntity<Map<String, Object>> response = storiaController.fetchStorie(session);
+        ResponseEntity<Map<String, Object>> response = storieController.fetchStorie();
         assert response.getStatusCode() == HttpStatus.OK;
         assert response.getBody().equals(mockResponse);
     }
@@ -58,9 +61,9 @@ public class StoriaControllerTest {
         String username = "testUser";
         Map<String, Object> mockResponse = new HashMap<>();
         mockResponse.put("storie", "lista di storie filtrate per autore");
-        when(storiaService.responseFiltroAutore(username, session)).thenReturn(new ResponseEntity<>(mockResponse, HttpStatus.OK));
+        when(storiaService.responseStorieAutore(username)).thenReturn(mockResponse);
 
-        ResponseEntity<Map<String, Object>> response = storiaController.filtroAutore(username, session);
+        ResponseEntity<Map<String, Object>> response = storieController.filtroAutore(username);
         assert response.getStatusCode() == HttpStatus.OK;
         assert response.getBody().equals(mockResponse);
     }
@@ -70,9 +73,9 @@ public class StoriaControllerTest {
         String titolo = "Titolo di prova";
         Map<String, Object> mockResponse = new HashMap<>();
         mockResponse.put("storie", "lista di storie filtrate per titolo");
-        when(storiaService.responseFiltroTitolo(titolo, session)).thenReturn(new ResponseEntity<>(mockResponse, HttpStatus.OK));
+        when(storiaService.responseFiltroTitolo(titolo)).thenReturn(mockResponse);
 
-        ResponseEntity<Map<String, Object>> response = storiaController.filtroRicerca(titolo, session);
+        ResponseEntity<Map<String, Object>> response = storieController.filtroRicerca(titolo, session);
         assert response.getStatusCode() == HttpStatus.OK;
         assert response.getBody().equals(mockResponse);
     }
@@ -81,9 +84,10 @@ public class StoriaControllerTest {
     void testFetchStorieUtente() {
         Map<String, Object> mockResponse = new HashMap<>();
         mockResponse.put("storie", "lista di storie dell'utente");
-        when(storiaService.responseStorieAutore(session)).thenReturn(new ResponseEntity<>(mockResponse, HttpStatus.OK));
+        String username = (String)session.getAttribute("loggedUsername");
+        when(storiaService.responseStorieAutore(username)).thenReturn(mockResponse);
 
-        ResponseEntity<Map<String, Object>> response = storiaController.fetchStorieUtente(session);
+        ResponseEntity<Map<String, Object>> response = storieController.filtroAutoreInSessione(session);
         assert response.getStatusCode() == HttpStatus.OK;
         assert response.getBody().equals(mockResponse);
     }
@@ -93,9 +97,9 @@ public class StoriaControllerTest {
         String titolo = "Titolo di prova";
         Map<String, Object> mockResponse = new HashMap<>();
         mockResponse.put("dati", "dati della storia");
-        when(storiaService.responseDatiStoria(titolo, session)).thenReturn(new ResponseEntity<>(mockResponse, HttpStatus.OK));
+        when(storiaService.responseDatiStoria(titolo)).thenReturn(mockResponse);
 
-        ResponseEntity<Map<String, Object>> response = storiaController.fetchDatiStoria(titolo, session);
+        ResponseEntity<Map<String, Object>> response = storiaController.fetchDatiStoria(titolo);
         assert response.getStatusCode() == HttpStatus.OK;
         assert response.getBody().equals(mockResponse);
     }

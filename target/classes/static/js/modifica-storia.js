@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         const titoloStoria = decodeURIComponent(urlParams.get('titoloStoria'));
 
         if (titoloStoria) {
-            fetch(`fetch_dati_storia/${titoloStoria}`)
+            fetch(`http://localhost:8080/storia/${titoloStoria}`)
                 .then(response => {
                     if (!response.ok) {
                         return response.text().then(errorMessage => {
@@ -135,7 +135,7 @@ function modificaScenario(idScenario, event) {
 
 
     // Esegui la richiesta PUT al server per modificare lo scenario
-    fetch(`/modifica_scenario/${idScenario}`, {
+    fetch(`/modifica/${idScenario}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -167,7 +167,7 @@ function modificaScelta(idScelta, event) {
         testo: formData.get('nuovaDescrizione')
     };
 
-    fetch(`/modifica_scelta/${idScelta}`, {
+    fetch(`/scelta/modifica/${idScelta}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -206,7 +206,7 @@ function modificaIndovinello(idIndovinello, event) {
     console.log(formData.get('nuovaDescrizione'));
     console.log(formData.get('nuovaRispostaCorretta'));
 
-    fetch(`/modifica_indovinello/${idIndovinello}`, {
+    fetch(`indovinello/modifica/${idIndovinello}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'

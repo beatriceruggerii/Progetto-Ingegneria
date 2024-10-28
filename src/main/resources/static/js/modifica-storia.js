@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         const titoloStoria = decodeURIComponent(urlParams.get('titoloStoria'));
 
         if (titoloStoria) {
-            fetch(`fetch_dati_storia/${titoloStoria}`)
+            fetch(`http://localhost:8080/storia/${titoloStoria}`)
                 .then(response => {
                     if (!response.ok) {
                         return response.text().then(errorMessage => {

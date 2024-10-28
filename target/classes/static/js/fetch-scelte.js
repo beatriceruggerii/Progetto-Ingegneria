@@ -1,4 +1,4 @@
-fetch('http://localhost:8080/fetch_scelte')
+fetch('http://localhost:8080/scelte/')
     .then(response => {
         if (!response.ok) {
             throw new Error('Errore nella richiesta');

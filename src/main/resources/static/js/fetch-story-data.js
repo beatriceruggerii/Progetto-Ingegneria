@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             fetchScenario(idScenario);
         } else { // se non c'è l'id allora la partita è in fase iniziale
             console.log("Partita da iniziare"); // debug
-            fetch(`fetch_scenario_iniziale/${titoloStoria}`)
+            fetch(`scenario/iniziale/${titoloStoria}`)
                 .then(response => {
                     if (!response.ok) {
                         return response.text().then(errorMessage => {
@@ -112,7 +112,7 @@ function showData(data) {
 
 async function fetchScelte(idScenario) {
     try {
-        const response = await fetch(`fetch_scelte/${idScenario}`);
+        const response = await fetch(`scelte/${idScenario}`);
         if (!response.ok) {
             const errorMessage = await response.text();
             document.getElementById("errorMessage").textContent = errorMessage;

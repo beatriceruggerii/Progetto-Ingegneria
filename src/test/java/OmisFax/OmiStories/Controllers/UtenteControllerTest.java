@@ -18,7 +18,7 @@ import java.util.Map;
 public class UtenteControllerTest {
 
     @InjectMocks
-    private UtenteController utenteController;
+    private UtentiController utenteController;
 
     @Mock
     private UtenteService utenteService;

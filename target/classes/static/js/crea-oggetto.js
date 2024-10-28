@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
 
         if(validateScenari(oggetto["scenarioMadreOggetto"],oggetto["scenarioControlloreOggetto"])) {
-            fetch('http://localhost:8080/salva_oggetto', {
+            fetch('http://localhost:8080/oggetto/salva', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
