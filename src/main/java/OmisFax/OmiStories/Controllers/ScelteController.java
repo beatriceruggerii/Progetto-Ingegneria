@@ -33,16 +33,16 @@ public class ScelteController {
     public ResponseEntity<Map<String, Object>> fetchScelte(HttpSession session) {
         Storia storia = (Storia) session.getAttribute("storiaCorrente");
         System.out.println("richiesta di fetch scelte ricevuta");
-        return sceltaService.responseFetchScelte(storia);
-        //TODO: le responseentities devono essere generate nel controller
+        Map<String,Object> stringObjectMap = sceltaService.responseFetchScelte(storia);
+        return ResponseEntity.ok(stringObjectMap);
     }
 
     //ritorna tutte le scelte che hanno scenario iniziale con idScenario passato nel path
     @GetMapping("/{idScenario}")
     public ResponseEntity<Map<String, Object>> fetchScelteScenario(@PathVariable Long idScenario, HttpSession session) {
         System.out.println("richiesta di fetch scelte dello scenarioricevuta");
-        return sceltaService.responseFetchScelteScenario(idScenario,session);
-        //TODO: le responseentities devono essere generate nel controller
+        Map<String,Object> stringObjectMap = sceltaService.fetchScelteScenario(idScenario);
+        return ResponseEntity.ok(stringObjectMap);
     }
 
 
