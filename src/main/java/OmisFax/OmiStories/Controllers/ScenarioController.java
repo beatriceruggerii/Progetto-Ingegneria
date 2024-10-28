@@ -33,6 +33,12 @@ public class ScenarioController {
         return scenarioService.fetchScenario(idScenario);
     }
 
+    @GetMapping("/iniziale/{titoloStoria}")
+    public ResponseEntity<Map<String, Object>> fetchScenarioIniziale(@PathVariable String titoloStoria, HttpSession session) {
+        System.out.println("richiesta scenario Iniziale ricevutw");
+        return ResponseEntity.ok(scenarioService.responseScenarioIniziale(titoloStoria));
+    }
+
     @PostMapping("/salva")
     public ResponseEntity<String> salvaScenario(@RequestBody ScenarioDTO scenariodto, HttpSession session) {
         System.out.println("richiesta ricevuta");

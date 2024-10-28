@@ -6,15 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
-@Controller
-public class UtenteController {
+@RestController
+@RequestMapping("/utenti")
+public class UtentiController {
     @Autowired
     private UtenteService utenteService;
 
-    @GetMapping("/fetch_autori")
+    @GetMapping("/autori")
     public ResponseEntity<Map<String, Object>> fetchAutori(HttpSession session) {
         System.out.println("richiesta di fetch storie ricevuta");
         return utenteService.responseFetchAutori(session);

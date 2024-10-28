@@ -6,13 +6,11 @@ document.addEventListener('DOMContentLoaded', function () {
         event.preventDefault();
 
         const autore = searchInput.value;
-
-        fetch('http://localhost:8080/filtro-autore', {
-            method: 'POST',
+        fetch(`http://localhost:8080/storie/autore/${autore}`, {
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(autore)
+            }
         })
             .then(response => {
                 if (!response.ok) {
@@ -22,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .then(data => {
                 console.log("Dati ricevuti:", data);
-                const listaFiltrataAutore = data.listaFiltrataStoria;
+                const listaFiltrataAutore = data.listaStorieUtenteDTOs;
                 mostraStorie(listaFiltrataAutore);
             })
             .catch(error => {

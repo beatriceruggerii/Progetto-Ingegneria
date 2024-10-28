@@ -24,7 +24,6 @@ public class ScelteController {
 
     private final SceltaService sceltaService;
 
-
     @Autowired
     public ScelteController(SceltaService sceltaService) {
         this.sceltaService = sceltaService;

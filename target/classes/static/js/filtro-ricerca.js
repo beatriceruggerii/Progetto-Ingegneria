@@ -7,12 +7,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const titolo = searchInput.value;
 
-        fetch('http://localhost:8080/filtro-titolo', {
-            method: 'POST',
+        fetch(`http://localhost:8080/storie/titolo/${titolo}`, {
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(titolo)
         })
             .then(response => {
                 if (!response.ok) {

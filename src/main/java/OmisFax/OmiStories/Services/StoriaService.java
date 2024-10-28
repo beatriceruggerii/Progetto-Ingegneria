@@ -75,15 +75,14 @@ public class StoriaService {
         }
     }
 
-    public ResponseEntity<Map<String, Object>> responseFetchStorie(HttpSession session) {
+    public Map<String, Object> responseFetchStorie() {
         Map<String, Object> responseData = new HashMap<>();
         List<Storia> listaStorie = listaStorie();
-        session.setAttribute("listaStorie", listaStorie);
         if(listaStorie.isEmpty()){
             System.out.println("Storie non trovate");
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+            throw new RuntimeException("Storie non trovate");
         }
-
+        //debug
         System.out.println("storie trovate: "+ listaStorie.size());
         for(int i = 0; i<listaStorie.size(); i++){
             System.out.println(listaStorie.get(i).toString());
@@ -98,51 +97,41 @@ public class StoriaService {
         }
 
         responseData.put("storiaCompletaDTOS", storiaCompletaDTOS);
-        return ResponseEntity.ok(responseData);
+        return responseData;
     }
 
     public List<Storia> listaStorie(){
         return storiaRepository.findAll();
     }
 
-
-    public ResponseEntity<Map<String, Object>> responseFiltroAutore(String username, HttpSession session) {
+    public Map<String, Object> responseStorieAutore(String username) {
         Map<String, Object> responseData = new HashMap<>();
-        List<Storia> listaStorie = listaStorie();
+        Utente user = utenteRepository.findByUsername(username);
+        System.out.println("Utente: " + user.getUsername());
 
-        if(listaStorie.isEmpty()){
-            System.out.println("Storie non trovate");
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        List<Storia> listaStorieUtente = storiaRepository.findByAutore(user);
+        List<StoriaCompletaDTO> listaStorieUtenteDTOs = new ArrayList<>();
+
+        for (Storia storia : listaStorieUtente) {
+            System.out.println("Storia: " + storia.getTitolo());
+            String descrizioneIniziale = scenarioRepository.findByStoriaAndInizialeTrue(storia).getTesto();
+
+            StoriaDTO storiaDTO = new StoriaDTO(storia.getTitolo(), descrizioneIniziale);
+            StoriaCompletaDTO storiaCompletaDTO = new StoriaCompletaDTO(storiaDTO, username);
+            listaStorieUtenteDTOs.add(storiaCompletaDTO);
         }
 
-        username = username.replace("\"", "").trim();
+        responseData.put("listaStorieUtenteDTOs", listaStorieUtenteDTOs);
 
-        System.out.println(username);
-
-        List<StoriaCompletaDTO> listaFiltrataStoria = new ArrayList<>();
-
-        for(Storia storia : listaStorie){
-            if(storia.getAutore().getUsername().equals(username)){
-                String descrizioneIniziale = scenarioRepository.findByStoriaAndInizialeTrue(storia).getTesto();
-
-                StoriaDTO storiaDTO = new StoriaDTO(storia.getTitolo(), descrizioneIniziale);
-                StoriaCompletaDTO storiaCompletaDTO = new StoriaCompletaDTO(storiaDTO, username);
-                listaFiltrataStoria.add(storiaCompletaDTO);
-            }
-        }
-
-        responseData.put("listaFiltrataStoria", listaFiltrataStoria);
-        return ResponseEntity.ok(responseData);
-
+        return responseData;
     }
 
-    public ResponseEntity<Map<String, Object>> responseFiltroTitolo(String titolo, HttpSession session){
+    public Map<String, Object> responseFiltroTitolo(String titolo) {
         Map<String, Object> responseData = new HashMap<>();
         List<Storia> listaStorie = listaStorie();
 
         if(listaStorie == null || listaStorie.isEmpty()){
-            System.out.println("Storie non trovate");
-            return  ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+            throw new IllegalArgumentException("Storie non trovate") ;
         }
 
         // Rimuove le virgolette e spazi bianchi dal titolo cercato
@@ -164,38 +153,16 @@ public class StoriaService {
         }
 
         responseData.put("listaFiltrataStoria", listaFiltrataStoria);
-        return ResponseEntity.ok(responseData);
+        return responseData;
     }
 
-    public ResponseEntity<Map<String, Object>> responseStorieAutore(HttpSession session) {
-        Map<String, Object> responseData = new HashMap<>();
-        String username = (String)session.getAttribute("loggedUsername");
-        Utente user = utenteRepository.findByUsername(username);
 
-        System.out.println("Utente: " + user.getUsername());
-        List<Storia> listaStorieUtente = storiaRepository.findByAutore(user);
-        List<StoriaCompletaDTO> listaStorieUtenteDTOs = new ArrayList<>();
-
-        for (Storia storia : listaStorieUtente) {
-            System.out.println("Storia: " + storia.getTitolo());
-            String descrizioneIniziale = scenarioRepository.findByStoriaAndInizialeTrue(storia).getTesto();
-
-            StoriaDTO storiaDTO = new StoriaDTO(storia.getTitolo(), descrizioneIniziale);
-            StoriaCompletaDTO storiaCompletaDTO = new StoriaCompletaDTO(storiaDTO, username);
-            listaStorieUtenteDTOs.add(storiaCompletaDTO);
-        }
-
-        responseData.put("listaStorieUtenteDTOs", listaStorieUtenteDTOs);
-
-        return ResponseEntity.ok(responseData);
-
-    }
 
     public Storia getStoria(String titolo){
         return storiaRepository.findStoriaByTitolo(titolo);
     }
 
-    public ResponseEntity<Map<String, Object>> responseDatiStoria(String titolo, HttpSession session) {
+    public Map<String, Object> responseDatiStoria(String titolo) {
         //recupero tutti i dati relativi a quella storia
         Map<String, Object> responseData = new HashMap<>();
 
@@ -219,16 +186,8 @@ public class StoriaService {
         List<Oggetto> oggetti = oggettoService.findByStoria(storia);
         responseData.put("oggetti", oggetti);
 
-        return ResponseEntity.ok(responseData);
+        return responseData;
 
     }
 
-    public ResponseEntity<Map<String, Object>> responseScenarioIniziale(String titolo, HttpSession session) {
-        Map<String, Object> responseData = new HashMap<>();
-        Storia storia = storiaRepository.findStoriaByTitolo(titolo);
-        Scenario scenario = scenarioRepository.findByStoriaAndInizialeTrue(storia);
-        responseData.put("scenario", scenario);
-        System.out.println("Scenario trovato: " + scenario.toString());
-        return ResponseEntity.ok(responseData);
-    }
 }

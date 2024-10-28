@@ -1,4 +1,4 @@
-fetch('http://localhost:8080/fetch_storie_utente')
+fetch('http://localhost:8080/storie/autoreInSessione')
     .then(response => {
         if (!response.ok) {
             throw new Error('Errore nella richiesta');

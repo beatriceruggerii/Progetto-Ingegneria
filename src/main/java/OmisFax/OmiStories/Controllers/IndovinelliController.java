@@ -3,7 +3,6 @@ package OmisFax.OmiStories.Controllers;
 import OmisFax.OmiStories.Entities.Indovinello;
 import OmisFax.OmiStories.Entities.Storia;
 import OmisFax.OmiStories.Services.IndovinelloService;
-import OmisFax.OmiStories.Services.OggettoService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

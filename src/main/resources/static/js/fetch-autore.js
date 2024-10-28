@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     fetchAutori();
 
     function fetchAutori() {
-        fetch('http://localhost:8080/fetch_autori')
+        fetch('http://localhost:8080/utenti/autori')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Errore nella richiesta');

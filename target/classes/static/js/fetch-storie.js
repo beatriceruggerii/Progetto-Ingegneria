@@ -1,6 +1,6 @@
 //script eseguito da catalogo.html
 
-fetch('http://localhost:8080/fetch_storie')
+fetch('http://localhost:8080/storie/')
     .then(response => {
         if (!response.ok) {
             throw new Error('Errore nella richiesta');

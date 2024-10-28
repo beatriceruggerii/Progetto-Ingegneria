@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             fetchScenario(idScenario);
         } else { // se non c'è l'id allora la partita è in fase iniziale
             console.log("Partita da iniziare"); // debug
-            fetch(`fetch_scenario_iniziale/${titoloStoria}`)
+            fetch(`scenario/iniziale/${titoloStoria}`)
                 .then(response => {
                     if (!response.ok) {
                         return response.text().then(errorMessage => {
