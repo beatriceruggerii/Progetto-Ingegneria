@@ -1,4 +1,4 @@
-fetch('http://localhost:8080/fetch_indovinelli')
+fetch('http://localhost:8080/indovinelli/')
     .then(response => {
         if (!response.ok) {
             throw new Error('Errore nella richiesta');
