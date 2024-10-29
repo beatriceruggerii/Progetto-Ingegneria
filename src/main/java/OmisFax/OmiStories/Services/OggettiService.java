@@ -5,7 +5,6 @@ import OmisFax.OmiStories.Repositories.InventarioRepository;
 import OmisFax.OmiStories.Repositories.OggettoRepository;
 import OmisFax.OmiStories.Repositories.PartitaRepository;
 import OmisFax.OmiStories.Repositories.ScenarioRepository;
-import OmisFax.OmiStories.Services.interfaces.IOggettiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,13 +16,12 @@ public class OggettiService implements IOggettiService {
     private OggettoRepository oggettoRepository;
 
     @Autowired
-    private PartitaRepository partitaRepository;
+    private ScenarioService scenarioService;
 
     @Autowired
-    private ScenarioRepository scenarioRepository;
-
+    private InventarioService inventarioService;
     @Autowired
-    private InventarioRepository inventarioRepository;
+    private PartitaService partitaService;
 
     public Map<String, Object> fetchOggettiStoria(Storia storia) {
 
@@ -47,7 +45,7 @@ public class OggettiService implements IOggettiService {
 
 
     public Map<String, Object> getOggetti(long idScenario) {
-        Scenario scenario = scenarioRepository.findById(idScenario).get();
+        Scenario scenario = scenarioService.findById(idScenario);
         List<Oggetto> oggetti = oggettoRepository.findByScenarioMadre(scenario);
         Map<String, Object> responseData = new HashMap<>();
         responseData.put("oggetti", oggetti);
@@ -55,12 +53,12 @@ public class OggettiService implements IOggettiService {
     }
 
     public Map<String, Object> getOggettiControllori(long idScenario, long idPartita) {
-        Scenario scenario = scenarioRepository.findById(idScenario).get();
+        Scenario scenario = scenarioService.findById(idScenario);
         List<Oggetto> oggettiNecessari = oggettoRepository.findByScenarioControllore(scenario);
 
         //controllo che l'oggetto sia presente nell'inventario della partita
-        Partita partita = partitaRepository.findById(idPartita);
-        List<Inventario> inventario = inventarioRepository.findAllByPartita(partita);
+        Partita partita = partitaService.findById(idPartita).get();
+        List<Inventario> inventario = inventarioService.findAllByPartita(partita);
 
         // Creo una lista per gli oggetti mancanti nell'inventario
         List<Oggetto> oggettiMancanti = new ArrayList<>();

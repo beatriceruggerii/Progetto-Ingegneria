@@ -101,4 +101,12 @@ public class StoriaService {
 
     }
 
+    public Storia findStoriaByTitolo(String titolo) {
+        return storiaRepository.findStoriaByTitolo(titolo);
+    }
+
+    public List<Storia> findAll(){
+        return storiaRepository.findAll();
+    }
+
 }

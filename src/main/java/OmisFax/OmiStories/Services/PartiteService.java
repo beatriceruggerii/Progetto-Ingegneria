@@ -5,9 +5,6 @@ import OmisFax.OmiStories.DTOs.ScenarioDTO;
 import OmisFax.OmiStories.DTOs.StoriaDTO;
 import OmisFax.OmiStories.Entities.Partita;
 import OmisFax.OmiStories.Repositories.PartitaRepository;
-import OmisFax.OmiStories.Repositories.ScenarioRepository;
-import OmisFax.OmiStories.Repositories.StoriaRepository;
-import OmisFax.OmiStories.Repositories.UtenteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,14 +16,14 @@ public class PartiteService {
     @Autowired
     private PartitaRepository partitaRepository;
     @Autowired
-    private ScenarioRepository scenarioRepository;
+    private ScenarioService scenarioService;
 
     public List<PartitaDTO> trovaPartitePerUtente(String username) {
         List<Partita> partite = partitaRepository.findByGiocatoreUsername(username);
         List<PartitaDTO> partiteDTOs = new ArrayList<>();
 
         for (Partita partita : partite) {
-            String descrizioneIniziale = scenarioRepository.findByStoriaAndInizialeTrue(partita.getStoria()).getTesto();
+            String descrizioneIniziale = scenarioService.findByStoriaAndInizialeTrue(partita.getStoria()).getTesto();
 
             StoriaDTO storiaDTO = new StoriaDTO(
                     partita.getStoria().getTitolo(),

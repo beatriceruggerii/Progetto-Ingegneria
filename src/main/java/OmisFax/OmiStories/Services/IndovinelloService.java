@@ -3,7 +3,6 @@ package OmisFax.OmiStories.Services;
 import OmisFax.OmiStories.DTOs.IndovinelloDTO;
 import OmisFax.OmiStories.Entities.Indovinello;
 import OmisFax.OmiStories.Entities.Scenario;
-import OmisFax.OmiStories.Entities.Storia;
 import OmisFax.OmiStories.Repositories.IndovinelloRepository;
 import OmisFax.OmiStories.Services.interfaces.IIndovinelloService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,14 +1,11 @@
 package OmisFax.OmiStories.Services;
 
 import OmisFax.OmiStories.DTOs.ScenarioDTO;
-import OmisFax.OmiStories.Entities.Scelta;
 import OmisFax.OmiStories.Entities.Scenario;
 import OmisFax.OmiStories.Entities.Storia;
-import OmisFax.OmiStories.Repositories.SceltaRepository;
 import OmisFax.OmiStories.Repositories.ScenarioRepository;
-import OmisFax.OmiStories.Repositories.StoriaRepository;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -22,8 +19,9 @@ public class ScenarioService {
     private ScenarioRepository scenarioRepository;
     @Autowired
     private ScenarioFactory scenarioFactory;
+    @Lazy
     @Autowired
-    private StoriaRepository storiaRepository;
+    private StoriaService storiaService;
 
 
     public String salvaScenario(ScenarioDTO scenariodto, Storia storia) {
@@ -88,7 +86,7 @@ public class ScenarioService {
 
     public Map<String, Object> responseScenarioIniziale(String titolo) {
         Map<String, Object> responseData = new HashMap<>();
-        Storia storia = storiaRepository.findStoriaByTitolo(titolo);
+        Storia storia = storiaService.findStoriaByTitolo(titolo);
         Scenario scenario = scenarioRepository.findByStoriaAndInizialeTrue(storia);
         responseData.put("scenario", scenario);
         System.out.println("Scenario trovato: " + scenario.toString());
