@@ -35,8 +35,9 @@ public class StoriaFactory {
             throw new IllegalArgumentException("Esiste già una storia con questo titolo.");
         }
         Storia storia = createStoria(titolo, username);
-        scenarioFactory.createScenarioIniziale(storia, descrizioneIniziale);
         storiaRepository.save(storia);
+
+        scenarioFactory.createScenarioIniziale(storia, descrizioneIniziale);
         System.out.println("Storia salvata");
         return storia;
 
