@@ -3,7 +3,6 @@ package OmisFax.OmiStories.Services;
 import OmisFax.OmiStories.Entities.Scenario;
 import OmisFax.OmiStories.Entities.Storia;
 import OmisFax.OmiStories.Repositories.ScenarioRepository;
-import OmisFax.OmiStories.Repositories.StoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +15,6 @@ import java.util.Map;
 public class ScenariService {
     @Autowired
     private ScenarioRepository scenarioRepository;
-    @Autowired
-    private ScenarioFactory scenarioFactory;
-    @Autowired
-    private StoriaRepository storiaRepository;
 
     public Map<String, Object> fetchScenari(Storia storia) {
         System.out.println("richiesta di fetch scenari ricevuta");

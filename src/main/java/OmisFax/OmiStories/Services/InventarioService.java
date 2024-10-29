@@ -55,5 +55,9 @@ public class InventarioService {
         Partita partita = partitaService.findById(idPartita).get();
         return inventarioRepository.findAllByPartita(partita);
     }
+
+    public List<Inventario> findAllByPartita(Partita partita){
+        return inventarioRepository.findAllByPartita(partita);
+    }
 }
 

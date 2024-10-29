@@ -6,7 +6,6 @@ import OmisFax.OmiStories.Entities.Scenario;
 import OmisFax.OmiStories.Entities.Storia;
 import OmisFax.OmiStories.Entities.Utente;
 import OmisFax.OmiStories.Repositories.SceltaRepository;
-import OmisFax.OmiStories.Repositories.ScenarioRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
