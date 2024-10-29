@@ -3,6 +3,7 @@ package OmisFax.OmiStories.Services;
 import OmisFax.OmiStories.Entities.Storia;
 import OmisFax.OmiStories.Entities.Utente;
 import OmisFax.OmiStories.Services.interfaces.IStoriaService;
+import OmisFax.OmiStories.Services.interfaces.IStorieService;
 import OmisFax.OmiStories.Services.interfaces.IUtenteService;
 import OmisFax.OmiStories.Services.interfaces.IUtentiService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ import java.util.Map;
 @Service
 public class UtentiService implements IUtentiService {
     @Autowired
-    private IStoriaService storiaService;
+    private IStorieService storieService;
 
     public Map<String, Object> responseFetchAutori() {
         Map<String, Object> responseData = new HashMap<>();
@@ -33,7 +34,7 @@ public class UtentiService implements IUtentiService {
     }
 
     public List<Utente> listaAutori(){
-        List<Storia> listaStorie = storiaService.findAll();
+        List<Storia> listaStorie = storieService.findAll();
         List<Utente> listaAutori = new ArrayList<>();
 
         if (listaStorie != null) {  // Controlla che la lista delle storie non sia null

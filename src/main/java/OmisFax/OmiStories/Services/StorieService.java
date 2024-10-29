@@ -105,4 +105,8 @@ public class StorieService implements IStorieService {
         responseData.put("listaFiltrataStoria", listaFiltrataStoria);
         return responseData;
     }
+
+    public List<Storia> findAll(){
+        return storiaRepository.findAll();
+    }
 }

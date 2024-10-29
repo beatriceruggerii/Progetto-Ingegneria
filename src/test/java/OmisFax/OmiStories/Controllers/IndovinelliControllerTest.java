@@ -4,6 +4,7 @@ import OmisFax.OmiStories.Entities.Indovinello;
 import OmisFax.OmiStories.Entities.Storia;
 import OmisFax.OmiStories.Services.IndovinelliService;
 import OmisFax.OmiStories.Services.IndovinelloService;
+import OmisFax.OmiStories.Services.interfaces.IIndovinelliService;
 import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,13 +12,16 @@ import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+@ExtendWith(MockitoExtension.class)
 public class IndovinelliControllerTest {
     @InjectMocks
     private IndovinelliController controllerIndovinelli;

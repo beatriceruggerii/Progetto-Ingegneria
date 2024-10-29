@@ -2,6 +2,8 @@ package OmisFax.OmiStories.Controllers;
 import OmisFax.OmiStories.DTOs.StoriaDTO;
 import OmisFax.OmiStories.Entities.Storia;
 import OmisFax.OmiStories.Services.StoriaService;
+import OmisFax.OmiStories.Services.StoryDataService;
+import OmisFax.OmiStories.Services.interfaces.IStoriaService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,9 +16,12 @@ import java.util.Map;
 @RequestMapping("/storia")
 public class StoriaController {
     private StoriaService storiaService;
+
+    private StoryDataService storyDataService;
     @Autowired
-    public StoriaController(StoriaService storiaService) {
+    public StoriaController(StoriaService storiaService, StoryDataService storyDataService) {
         this.storiaService = storiaService;
+        this.storyDataService = storyDataService;
     }
 
 
@@ -32,8 +37,7 @@ public class StoriaController {
     @GetMapping("/{titoloStoria}")
     public ResponseEntity<Map<String, Object>> fetchDatiStoria(@PathVariable String titoloStoria) {
         System.out.println("richiesta dei dati della storia ricevuti");
-        return ResponseEntity.ok(storiaService.responseDatiStoria(titoloStoria));
+        return ResponseEntity.ok(storyDataService.getCompleteStoriaData(titoloStoria));
     }
-
 
 }

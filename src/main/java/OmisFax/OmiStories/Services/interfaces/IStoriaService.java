@@ -13,8 +13,6 @@ import java.util.Map;
 public interface IStoriaService {
     Storia salvaStoria(StoriaDTO payload, String username);
     Storia getStoria(String titolo);
-    Map<String, Object> responseDatiStoria(String titolo);
     Storia findStoriaByTitolo(String titolo);
-    List<Storia> findAll();
 }
 
