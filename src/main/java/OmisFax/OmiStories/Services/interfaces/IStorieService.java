@@ -10,5 +10,6 @@ public interface IStorieService {
     Map<String, Object> responseFetchStorie();
     Map<String, Object> responseStorieAutore(String username);
     Map<String, Object> responseFiltroTitolo(String titolo);
+    List<Storia> findAll();
 }
 

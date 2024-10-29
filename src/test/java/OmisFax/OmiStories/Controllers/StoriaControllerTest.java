@@ -6,18 +6,23 @@ import static org.mockito.Mockito.*;
 import OmisFax.OmiStories.DTOs.StoriaDTO;
 import OmisFax.OmiStories.Entities.Storia;
 import OmisFax.OmiStories.Services.StoriaService;
+import OmisFax.OmiStories.Services.StoryDataService;
+import OmisFax.OmiStories.Services.interfaces.IStoriaService;
 import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@ExtendWith(MockitoExtension.class)
 public class StoriaControllerTest {
 
     @InjectMocks
@@ -25,6 +30,9 @@ public class StoriaControllerTest {
 
     @Mock
     private StoriaService storiaService;
+
+    @Mock
+    private StoryDataService storyDataService;
 
     @Mock
     private HttpSession session;
@@ -62,7 +70,7 @@ public class StoriaControllerTest {
         mockResponse.put("dati", "dati della storia");
 
         // Simula la risposta del servizio
-        when(storiaService.responseDatiStoria(titolo)).thenReturn(mockResponse);
+        when(storyDataService.getCompleteStoriaData(titolo)).thenReturn(mockResponse);
 
         ResponseEntity<Map<String, Object>> response = storiaController.fetchDatiStoria(titolo);
 

@@ -17,7 +17,9 @@ public class ScenarioFactory {
     }
 
     public Scenario createScenarioIniziale(Storia storia, String testo){
-        return createScenario(storia, "Scenario Iniziale", testo, true);
+        Scenario scenario = createScenario(storia, "Scenario Iniziale", testo, true);
+        scenarioRepository.save(scenario);
+        return scenario;
     }
 
     public Scenario createScenario(Storia storia, String titolo, String testo){

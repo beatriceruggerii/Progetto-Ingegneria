@@ -2,6 +2,7 @@ package OmisFax.OmiStories.Controllers;
 
 import OmisFax.OmiStories.Entities.Inventario;
 import OmisFax.OmiStories.Services.InventarioService;
+import OmisFax.OmiStories.Services.interfaces.IInventarioService;
 import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,13 +10,16 @@ import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+@ExtendWith(MockitoExtension.class)
 public class InventarioControllerTest {
     @InjectMocks
     private InventarioController controllerInventario;
