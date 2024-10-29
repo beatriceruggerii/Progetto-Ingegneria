@@ -39,9 +39,9 @@ public class IndovinelloControllerTest {
     @Test
     void testSalvaIndovinello() {
         IndovinelloDTO mockIndovinelloDTO = new IndovinelloDTO();
-        when(indovinelloService.responseSalvaIndovinello(mockIndovinelloDTO, session)).thenReturn(new ResponseEntity<>("Indovinello salvato con successo", HttpStatus.OK));
+        when(indovinelloService.responseSalvaIndovinello(mockIndovinelloDTO)).thenReturn("Indovinello salvato con successo");
 
-        ResponseEntity<String> response = indovinelloController.salvaIndovinello(mockIndovinelloDTO, session);
+        ResponseEntity<String> response = indovinelloController.salvaIndovinello(mockIndovinelloDTO);
         assert response.getStatusCode() == HttpStatus.OK;
         assert response.getBody().equals("Indovinello salvato con successo");
     }
@@ -51,7 +51,7 @@ public class IndovinelloControllerTest {
         Storia storia = (Storia) session.getAttribute("storiaCorrente");
         Map<String, Object> mockResponse = new HashMap<>();
         mockResponse.put("indovinelli", "lista di indovinelli");
-        when(indovinelloService.responseFetchIndovinelli(storia)).thenReturn(new ResponseEntity<>(mockResponse, HttpStatus.OK));
+        when(indovinelloService.responseFetchIndovinelli(storia)).thenReturn(mockResponse);
 
         ResponseEntity<Map<String, Object>> response = indovinelliController.fetchIndovinelli(session);
         assert response.getStatusCode() == HttpStatus.OK;

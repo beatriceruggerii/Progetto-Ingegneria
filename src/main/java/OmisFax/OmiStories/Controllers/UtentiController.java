@@ -1,6 +1,7 @@
 package OmisFax.OmiStories.Controllers;
 
 import OmisFax.OmiStories.Services.UtenteService;
+import OmisFax.OmiStories.Services.UtentiService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +16,12 @@ import java.util.Map;
 @RequestMapping("/utenti")
 public class UtentiController {
     @Autowired
-    private UtenteService utenteService;
+    private UtentiService utentiService;
 
     @GetMapping("/autori")
     public ResponseEntity<Map<String, Object>> fetchAutori(HttpSession session) {
         System.out.println("richiesta di fetch storie ricevuta");
-        return utenteService.responseFetchAutori(session);
+        Map<String, Object> responseData = utentiService.responseFetchAutori();
+        return ResponseEntity.ok(responseData);
     }
 }

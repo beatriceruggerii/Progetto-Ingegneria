@@ -45,7 +45,7 @@ public class OggettoControllerTest {
         OggettoDTO mockOggettoDTO = new OggettoDTO();
         Storia mockStoria = new Storia();
         when(session.getAttribute("storiaCorrente")).thenReturn(mockStoria);
-        when(oggettoService.salvaOggetto(mockOggettoDTO, mockStoria)).thenReturn(new ResponseEntity<>("Oggetto salvato con successo", HttpStatus.OK));
+        when(oggettoService.salvaOggetto(mockOggettoDTO, mockStoria)).thenReturn("Oggetto salvato con successo");
 
         ResponseEntity<String> response = oggettoController.salvaOggetto(mockOggettoDTO, session);
         assert response.getStatusCode() == HttpStatus.OK;
@@ -58,7 +58,7 @@ public class OggettoControllerTest {
         Map<String, Object> mockResponse = new HashMap<>();
         mockResponse.put("oggetti", "lista di oggetti");
         when(session.getAttribute("storiaCorrente")).thenReturn(mockStoria);
-        when(oggettoService.fetchOggettiStoria(mockStoria)).thenReturn(new ResponseEntity<>(mockResponse, HttpStatus.OK));
+        when(oggettoService.fetchOggettiStoria(mockStoria)).thenReturn(mockResponse);
 
         ResponseEntity<Map<String, Object>> response = oggettiController.fetchOggettiStoria(session);
         assert response.getStatusCode() == HttpStatus.OK;

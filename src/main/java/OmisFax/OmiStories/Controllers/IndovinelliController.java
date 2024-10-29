@@ -2,6 +2,7 @@ package OmisFax.OmiStories.Controllers;
 
 import OmisFax.OmiStories.Entities.Indovinello;
 import OmisFax.OmiStories.Entities.Storia;
+import OmisFax.OmiStories.Services.IndovinelliService;
 import OmisFax.OmiStories.Services.IndovinelloService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +21,12 @@ import java.util.Map;
 @RequestMapping("/indovinelli")
 public class IndovinelliController {
     @Autowired
-    private IndovinelloService indovinelloService;
+    private IndovinelliService indovinelliService;
 
     @GetMapping("/{idScenario}")
     public ResponseEntity<Map<String, Object>> getIndovinelli(@PathVariable long idScenario, HttpSession session) {
         System.out.println("Richiesta di fetch indovinelli ricevuta. Scenario madre: " + idScenario);
-        List<Indovinello> indovinelli = indovinelloService.findByScenarioMadre(idScenario);
+        List<Indovinello> indovinelli = indovinelliService.findByScenarioMadre(idScenario);
         HashMap<String, Object> responseData = new HashMap<>();
         responseData.put("indovinelli", indovinelli);
         System.out.println(responseData.toString()); //debug
@@ -37,6 +38,6 @@ public class IndovinelliController {
     public ResponseEntity<Map<String, Object>> fetchIndovinelli(HttpSession session) {
         Storia storia = (Storia) session.getAttribute("storiaCorrente");
         System.out.println("richiesta di fetch indovinelli ricevuta");
-        return indovinelloService.responseFetchIndovinelli(storia);
+        return ResponseEntity.ok(indovinelliService.responseFetchIndovinelli(storia));
     }
 }

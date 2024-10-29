@@ -32,9 +32,10 @@ public class IndovinelloController {
     }
 
     @PostMapping("/salva")
-    public ResponseEntity<String> salvaIndovinello(@RequestBody IndovinelloDTO infoIndovinello, HttpSession session) {
+    public ResponseEntity<String> salvaIndovinello(@RequestBody IndovinelloDTO infoIndovinello) {
         System.out.println("Richiesta ricevuta");
-        return indovinelloService.responseSalvaIndovinello(infoIndovinello, session);
+        String message = indovinelloService.responseSalvaIndovinello(infoIndovinello);
+        return ResponseEntity.ok(message);
     }
 
 

@@ -2,6 +2,7 @@ package OmisFax.OmiStories.Controllers;
 
 import OmisFax.OmiStories.DTOs.PartitaDTO;
 import OmisFax.OmiStories.Services.PartitaService;
+import OmisFax.OmiStories.Services.PartiteService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,7 +16,7 @@ import java.util.List;
 public class PartiteController {
 
     @Autowired
-    private PartitaService partitaService;
+    private PartiteService partiteService;
 
     @GetMapping("/")
     public ResponseEntity<List<PartitaDTO>> getPartite(HttpSession session) {
@@ -24,15 +25,10 @@ public class PartiteController {
             System.out.println("username: "+username);
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
-        List<PartitaDTO> partite = partitaService.trovaPartitePerUtente(username);
+        List<PartitaDTO> partite = partiteService.trovaPartitePerUtente(username);
         System.out.println("partite: "+partite);
         return new ResponseEntity<>(partite, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{idPartita}")
-    public ResponseEntity<Void> eliminaPartita(@PathVariable long idPartita) {
-        partitaService.deleteById(idPartita);
-        return ResponseEntity.noContent().build();
-    }
 
 }

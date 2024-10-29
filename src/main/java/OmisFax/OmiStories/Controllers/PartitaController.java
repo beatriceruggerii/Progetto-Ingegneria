@@ -38,7 +38,7 @@ public class PartitaController {
             System.out.println("Salvataggio partita: " + username + " storia: " + titoloStoria);
             if (username == null) {
                 System.out.println("Utente non trovato"+username);
-                throw new RuntimeException("Utente non loggato");
+                throw new IllegalArgumentException("Utente non loggato.");
             }
             titoloStoria = titoloStoria.trim();
             if(partitaRepository.findByGiocatoreUsernameAndStoriaTitolo(username, titoloStoria) == null){
@@ -68,5 +68,11 @@ public class PartitaController {
             System.out.println("NOn è stato possibile aggiornare la partita: "+ idScenarioFiglio);
             return ResponseEntity.status((HttpStatus.UNAUTHORIZED)).body("partita corrente non recuperata.");
         }
+    }
+
+    @DeleteMapping("/{idPartita}")
+    public ResponseEntity<Void> eliminaPartita(@PathVariable long idPartita) {
+        partitaService.deleteById(idPartita);
+        return ResponseEntity.noContent().build();
     }
 }

@@ -30,7 +30,8 @@ public class ScenarioController {
     @GetMapping("/{idScenario}")
     public ResponseEntity<Map<String, Object>> fetchScenario(@PathVariable Long idScenario) {
         System.out.println("richiesta di fetch scenario ricevuta");
-        return scenarioService.fetchScenario(idScenario);
+        Map<String, Object> responsedata = scenarioService.fetchScenario(idScenario);
+        return ResponseEntity.ok(responsedata);
     }
 
     @GetMapping("/iniziale/{titoloStoria}")
@@ -42,7 +43,9 @@ public class ScenarioController {
     @PostMapping("/salva")
     public ResponseEntity<String> salvaScenario(@RequestBody ScenarioDTO scenariodto, HttpSession session) {
         System.out.println("richiesta ricevuta");
-        return scenarioService.salvaScenario(scenariodto,session);
+        Storia storia = (Storia) session.getAttribute("storiaCorrente");
+        String message = scenarioService.salvaScenario(scenariodto,storia);
+        return ResponseEntity.ok(message);
     }
 
 
@@ -55,15 +58,6 @@ public class ScenarioController {
         return ResponseEntity.ok("Modifica avvenuta con successo.");
     }
 
-    //FIXME: NON VIENE USATO?
-    /*
-    @GetMapping("/fetch_scenario_figlio/{idScelta}")
-    public ResponseEntity<Map<String, Object>> fetchScenaroFiglio(@PathVariable Long idScelta, HttpSession session) {
-        System.out.println("richiesta di fetch scenaro da scelta ricevuta");
-        return scenarioService.fetchScenaroFiglio(idScelta, session);
-    }
-
-     */
 
 
 }
