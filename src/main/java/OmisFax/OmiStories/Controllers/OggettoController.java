@@ -26,8 +26,8 @@ import java.util.Map;
 @Controller
 @RequestMapping("/oggetto")
 public class OggettoController {
-    private final OggettoService oggettoService;
-    private final ScenarioService scenarioService;
+    private OggettoService oggettoService;
+    private ScenarioService scenarioService;
 
     @Autowired
     public OggettoController(OggettoService oggettoService, ScenarioService scenarioService) {

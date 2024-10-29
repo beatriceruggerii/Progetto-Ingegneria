@@ -5,6 +5,7 @@ import static org.mockito.Mockito.*;
 import OmisFax.OmiStories.Controllers.PartiteController;
 import OmisFax.OmiStories.DTOs.PartitaDTO;
 import OmisFax.OmiStories.Services.PartitaService;
+import OmisFax.OmiStories.Services.PartiteService;
 import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,7 +24,7 @@ public class PartiteControllerTest {
     private PartiteController controllerPartite;
 
     @Mock
-    private PartitaService servizioPartita;
+    private PartiteService partiteService;
 
     @Mock
     private HttpSession sessione;
@@ -40,7 +41,7 @@ public class PartiteControllerTest {
         partiteMock.add(new PartitaDTO());
 
         when(sessione.getAttribute("loggedUsername")).thenReturn(nomeUtente);
-        when(servizioPartita.trovaPartitePerUtente(nomeUtente)).thenReturn(partiteMock);
+        when(partiteService.trovaPartitePerUtente(nomeUtente)).thenReturn(partiteMock);
 
         ResponseEntity<List<PartitaDTO>> risposta = controllerPartite.getPartite(sessione);
         assert risposta.getStatusCode() == HttpStatus.OK;

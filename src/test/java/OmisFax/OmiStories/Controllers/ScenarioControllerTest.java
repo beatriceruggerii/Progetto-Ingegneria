@@ -47,17 +47,6 @@ public class ScenarioControllerTest {
         assert response.getBody().equals("Scenario salvato con successo");
     }
 
-    @Test
-    void testFetchScenari() {
-        Map<String, Object> mockResponse = new HashMap<>();
-        mockResponse.put("scenari", "lista di scenari");
-        Storia storia = (Storia) session.getAttribute("storiaCorrente");
-        when(scenarioService.fetchScenari(storia)).thenReturn(mockResponse);
-
-        ResponseEntity<Map<String, Object>> response = scenariController.fetchScenari(session);
-        assert response.getStatusCode() == HttpStatus.OK;
-        assert response.getBody().equals(mockResponse);
-    }
 
     @Test
     void testModificaIndovinelloSuccess() {

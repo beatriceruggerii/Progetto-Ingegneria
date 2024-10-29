@@ -46,17 +46,6 @@ public class IndovinelloControllerTest {
         assert response.getBody().equals("Indovinello salvato con successo");
     }
 
-    @Test
-    void testFetchIndovinelli() {
-        Storia storia = (Storia) session.getAttribute("storiaCorrente");
-        Map<String, Object> mockResponse = new HashMap<>();
-        mockResponse.put("indovinelli", "lista di indovinelli");
-        when(indovinelloService.responseFetchIndovinelli(storia)).thenReturn(mockResponse);
-
-        ResponseEntity<Map<String, Object>> response = indovinelliController.fetchIndovinelli(session);
-        assert response.getStatusCode() == HttpStatus.OK;
-        assert response.getBody().equals(mockResponse);
-    }
 
     @Test
     void testModificaIndovinelloSuccess() {

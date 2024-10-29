@@ -24,7 +24,7 @@ import java.util.Map;
 @RequestMapping("/indovinello")
 public class IndovinelloController {
 
-    private final IndovinelloService indovinelloService;
+    private IndovinelloService indovinelloService;
 
     @Autowired
     public IndovinelloController(IndovinelloService indovinelloService) {

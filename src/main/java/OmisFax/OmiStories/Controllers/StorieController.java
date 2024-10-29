@@ -14,7 +14,7 @@ import java.util.Map;
 @RequestMapping("/storie")
 public class StorieController {
 
-    private final StorieService storieService;
+    private StorieService storieService;
     @Autowired
     public StorieController(StorieService storieService) {
         this.storieService = storieService;

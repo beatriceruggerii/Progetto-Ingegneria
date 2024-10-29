@@ -1,6 +1,8 @@
+version: '3.8'
+
 services:
   db:
-    container_name: sweng
+    container_name: sweng_db
     image: postgres:16
     environment:
       POSTGRES_USER: user
@@ -12,11 +14,43 @@ services:
     ports:
       - "5332:5432"
     networks:
+      - backend
+    restart: unless-stopped
+
+  app:
+    container_name: omistories_app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/omistories
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: password
+      PAYMENT_SERVICE_URL: http://payment:8080/pay
+    ports:
+      - "8080:8080"
+    networks:
+      - backend
+    depends_on:
       - db
+      - payment
+    restart: unless-stopped
+
+  payment:
+    container_name: payment_server
+    image: openjdk:17
+    volumes:
+      - ./payment/NaivePaymentProvider-1.1.0.jar:/app/NaivePaymentProvider.jar
+    working_dir: /app
+    entrypoint: [ "java", "-jar", "NaivePaymentProvider.jar" ]
+    ports:
+      - "6789:8080"
+    networks:
+      - backend
     restart: unless-stopped
 
 networks:
-  db:
+  backend:
     driver: bridge
 
 volumes:

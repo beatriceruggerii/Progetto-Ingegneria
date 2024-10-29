@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 public class RegisterController {
-    private final UtenteService userService;
+    private UtenteService userService;
 
     @Autowired
     public RegisterController(UtenteService userService) {

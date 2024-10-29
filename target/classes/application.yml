@@ -9,7 +9,6 @@ spring:
     username: user
     password: password
 
-
   jpa:
     hibernate:
       ddl-auto: update
@@ -23,3 +22,7 @@ spring:
     init:
       mode: always
       schema-locations: classpath:schema.sql
+
+payment:
+  service:
+    url: http://localhost:6789/pay
