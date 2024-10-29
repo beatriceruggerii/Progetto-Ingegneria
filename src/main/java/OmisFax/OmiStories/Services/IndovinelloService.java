@@ -16,7 +16,7 @@ import java.util.Map;
 @Service
 public class IndovinelloService {
     @Autowired
-    private  IndovinelloRepository indovinelloRepository;
+    private IndovinelloRepository indovinelloRepository;
     @Autowired
     private ScenarioService scenarioService;
 
@@ -34,7 +34,7 @@ public class IndovinelloService {
         if (scenarioMadre == null || scenarioFiglio == null) {
             throw new IllegalArgumentException("Scenario madre o figlio mancante");
         }
-        if (idFiglio!=idMadre) {
+        if (idFiglio != idMadre) {
             if (registraIndovinello(indovinello)) {
                 System.out.println("indovinello salvato");
                 return "indovinello salvato con successo";
@@ -47,29 +47,8 @@ public class IndovinelloService {
         throw new IllegalArgumentException("Something went wrong");
     }
 
-    public Map<String, Object> responseFetchIndovinelli(Storia storia) {
-        if (storia == null) {
-            System.out.println("storia non trovata");
-            throw new IllegalArgumentException("Storia non trovata.");
-        }
-        Map<String, Object> responseData = new HashMap<>();
-        List<Indovinello> listaIndovinelli = new ArrayList<>();
-        listaIndovinelli = findByStoria(storia);
-        if(listaIndovinelli.isEmpty()){
-            System.out.println("nessun indovinello trovato");
-            responseData.put("errorMessage","Nessun indovinello trovato.");
-        }
-        //debug
-        System.out.println("Indovinelli trovati: "+ listaIndovinelli.size());
-        for(int i = 0; i<listaIndovinelli.size(); i++){
-            System.out.println(listaIndovinelli.get(i).toString());
-        }
-        responseData.put("listaIndovinelli", listaIndovinelli);
-        return responseData;
-    }
 
-
-        public boolean registraIndovinello(Indovinello indovinello) {
+    public boolean registraIndovinello(Indovinello indovinello) {
         try {
             indovinelloRepository.save(indovinello);
             return true;
@@ -79,9 +58,6 @@ public class IndovinelloService {
         }
     }
 
-    public List<Indovinello> findByStoria(Storia storia){
-        return indovinelloRepository.findByStoria(storia);
-    }
     public boolean modificaIndovinello(Long idIndovinello, IndovinelloDTO nuovoIndovinello) {
         Indovinello indovinelloEsistente = indovinelloRepository.findById(nuovoIndovinello.getId());
         if (indovinelloEsistente == null) {
@@ -91,12 +67,6 @@ public class IndovinelloService {
         indovinelloEsistente.setRispostaCorretta(nuovoIndovinello.getSoluzione());
         return registraIndovinello(indovinelloEsistente);
     }
-
-    public List<Indovinello> findByScenarioMadre(long idScenario){
-        Scenario scenario = scenarioService.findById(idScenario);
-        return indovinelloRepository.findByScenarioMadre(scenario);
-    }
-
 
 
 

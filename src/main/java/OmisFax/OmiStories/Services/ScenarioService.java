@@ -23,8 +23,6 @@ public class ScenarioService {
     @Autowired
     private ScenarioFactory scenarioFactory;
     @Autowired
-    private SceltaRepository sceltaRepository;
-    @Autowired
     private StoriaRepository storiaRepository;
 
 
@@ -36,19 +34,6 @@ public class ScenarioService {
         System.out.println("Scenario salvato");
         return "Scenario salvato con successo";
 
-    }
-
-    public Map<String, Object> fetchScenari(Storia storia) {
-        System.out.println("richiesta di fetch scenari ricevuta");
-        if (storia == null) {
-            throw new IllegalArgumentException("Storia non trovata");
-        }
-        Map<String, Object> responseData = new HashMap<>();
-        List<Scenario> listaScenari = new ArrayList<>();
-        listaScenari = scenarioRepository.findByStoria(storia);
-
-        responseData.put("listaScenari", listaScenari);
-        return responseData;
     }
 
     public boolean salvaScenario(Scenario scenario) {
@@ -64,9 +49,6 @@ public class ScenarioService {
         }
     }
 
-    public List<Scenario> findByStoria(Storia storia) {
-        return scenarioRepository.findByStoria(storia);
-    }
 
     public Scenario findById(long id) {
         Optional<Scenario> scenarioOptional = scenarioRepository.findById(id);
@@ -77,9 +59,6 @@ public class ScenarioService {
         }
     }
 
-    public Scenario findByTitoloAndStoria(String titolo, Storia storia) {
-        return scenarioRepository.findByTitoloAndStoria(titolo, storia);
-    }
 
     public boolean modificaScenario(long idScenario, ScenarioDTO nuovoScenario) {
         System.out.println("-------");
@@ -114,6 +93,10 @@ public class ScenarioService {
         responseData.put("scenario", scenario);
         System.out.println("Scenario trovato: " + scenario.toString());
         return responseData;
+    }
+
+    public Scenario findByStoriaAndInizialeTrue(Storia storia) {
+        return scenarioRepository.findByStoriaAndInizialeTrue(storia);
     }
 }
 

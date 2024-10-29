@@ -4,6 +4,7 @@ package OmisFax.OmiStories.Controllers;
 import OmisFax.OmiStories.DTOs.PartitaDTO;
 import OmisFax.OmiStories.Entities.Oggetto;
 import OmisFax.OmiStories.Entities.Storia;
+import OmisFax.OmiStories.Services.OggettiService;
 import OmisFax.OmiStories.Services.OggettoService;
 import OmisFax.OmiStories.Services.PartitaService;
 import jakarta.servlet.http.HttpSession;
@@ -19,18 +20,18 @@ import java.util.Map;
 @RequestMapping("/oggetti")
 public class OggettiController {
     @Autowired
-    private OggettoService oggettoService;
+    private OggettiService oggettiService;
 
     @GetMapping("/{idScenario}")
     public ResponseEntity<Map<String, Object>> getOggetti(@PathVariable long idScenario, HttpSession session) {
-        Map<String, Object> oggetti = oggettoService.getOggetti(idScenario);
+        Map<String, Object> oggetti = oggettiService.getOggetti(idScenario);
         return new ResponseEntity<>(oggetti, HttpStatus.OK);
     }
 
     @GetMapping("/controllori/{idScenario}")
     public ResponseEntity<Map<String, Object>> getOggettiContollori(@PathVariable long idScenario, HttpSession session) {
         long idPartita = (long) session.getAttribute("idPartitaInCorso");
-        Map<String, Object> oggetti = oggettoService.getOggettiControllori(idScenario, idPartita);
+        Map<String, Object> oggetti = oggettiService.getOggettiControllori(idScenario, idPartita);
         return new ResponseEntity<>(oggetti, HttpStatus.OK);
     }
 
@@ -39,7 +40,7 @@ public class OggettiController {
     public ResponseEntity<Map<String, Object>> fetchOggettiStoria(HttpSession session) {
         System.out.println("richiesta di fetch oggetti ricevuta");
         Storia storia = (Storia) session.getAttribute("storiaCorrente");
-        Map<String, Object> responseData = oggettoService.fetchOggettiStoria(storia);
+        Map<String, Object> responseData = oggettiService.fetchOggettiStoria(storia);
         return ResponseEntity.ok(responseData);
     }
 }

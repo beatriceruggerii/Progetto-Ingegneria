@@ -49,22 +49,6 @@ public class SceltaService {
         throw new IllegalArgumentException("Something went wrong");
     }
 
-    public Map<String, Object> responseFetchScelte(Storia storia){
-        if (storia == null) {
-            throw new IllegalArgumentException("Storia non trovata");
-        }
-        Map<String, Object> responseData = new HashMap<>();
-        List<Scelta> listaScelte = findByStoria(storia);
-        if(listaScelte.isEmpty()){
-            throw new IllegalArgumentException("Scelte non trovate");
-        }
-        System.out.println("scelte trovate: "+ listaScelte.size());
-        for(int i = 0; i<listaScelte.size(); i++){
-            System.out.println(listaScelte.get(i).toString());
-        }
-        responseData.put("listaScelte", listaScelte);
-        return responseData;
-    }
 
     public boolean registraScelta(Scelta scelta) {
         try {
@@ -76,10 +60,6 @@ public class SceltaService {
         }
     }
 
-    public List<Scelta> findByStoria(Storia storia){
-        return sceltaRepository.findScelteByStoria(storia);
-    }
-
     public boolean modificaScelta(SceltaDTO nuovaScelta) {
         Scelta sceltaEsistente = sceltaRepository.findById(nuovaScelta.getId());
         if (sceltaEsistente == null) {
@@ -89,11 +69,4 @@ public class SceltaService {
         return registraScelta(sceltaEsistente);
     }
 
-    public Map<String, Object> fetchScelteScenario(Long idScenario) {
-        Scenario scenario = scenarioService.findById(idScenario);
-        List<Scelta> scelte = sceltaRepository.findByScenarioMadre(scenario);
-        Map<String, Object> responseData = new HashMap<>();
-        responseData.put("scelte", scelte);
-        return responseData;
-    }
 }

@@ -19,10 +19,10 @@ public class InventarioService {
     private InventarioRepository inventarioRepository;
 
     @Autowired
-    private OggettoRepository oggettoRepository;
+    private OggettoService oggettoService;
 
     @Autowired
-    private PartitaRepository partitaRepository;
+    private PartitaService partitaService;
 
     /**
      * Aggiunge un oggetto all'inventario di una partita.
@@ -33,12 +33,9 @@ public class InventarioService {
      */
     public Inventario aggiungiOggettoAInventario(Long idPartita, Long idOggetto) {
         // Recupera la partita dal database
-        Partita partita = partitaRepository.findById(idPartita)
-                .orElseThrow(() -> new IllegalArgumentException("Partita non trovata con ID: " + idPartita));
+        Partita partita = partitaService.findById(idPartita).get();
 
-        // Recupera l'oggetto dal database
-        Oggetto oggetto = oggettoRepository.findById(idOggetto)
-                .orElseThrow(() -> new IllegalArgumentException("Oggetto non trovato con ID: " + idOggetto));
+        Oggetto oggetto = oggettoService.findById(idOggetto).get();
 
         Optional<Inventario> inventarioOptional = inventarioRepository.findByPartitaAndOggetto(partita, oggetto);
 
@@ -55,7 +52,7 @@ public class InventarioService {
 
 
     public List<Inventario> getInventarioPartita(long idPartita){
-        Partita partita = partitaRepository.findById(idPartita);
+        Partita partita = partitaService.findById(idPartita).get();
         return inventarioRepository.findAllByPartita(partita);
     }
 }

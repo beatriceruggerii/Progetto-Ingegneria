@@ -69,4 +69,10 @@ public class PartitaController {
             return ResponseEntity.status((HttpStatus.UNAUTHORIZED)).body("partita corrente non recuperata.");
         }
     }
+
+    @DeleteMapping("/{idPartita}")
+    public ResponseEntity<Void> eliminaPartita(@PathVariable long idPartita) {
+        partitaService.deleteById(idPartita);
+        return ResponseEntity.noContent().build();
+    }
 }

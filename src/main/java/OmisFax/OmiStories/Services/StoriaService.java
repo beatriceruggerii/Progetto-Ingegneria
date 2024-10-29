@@ -22,11 +22,6 @@ import java.util.Map;
 public class StoriaService {
     @Autowired
     private StoriaRepository storiaRepository;
-    @Autowired
-    private UtenteRepository utenteRepository;
-
-    @Autowired
-    private ScenarioRepository scenarioRepository;
 
     @Autowired
     private StoriaFactory storiaFactory;
@@ -38,13 +33,16 @@ public class StoriaService {
     private ScenarioService scenarioService;
 
     @Autowired
-    private SceltaService sceltaService;
+    private ScenariService scenariService;
 
     @Autowired
-    private OggettoService oggettoService;
+    private ScelteService scelteService;
 
     @Autowired
-    private IndovinelloService indovinelloService;
+    private IndovinelliService indovinelliService;
+
+    @Autowired
+    private OggettiService oggettiService;
 
     public Storia salvaStoria(StoriaDTO payload, String username) {
         String titolo = payload.getTitolo().trim();
@@ -69,86 +67,6 @@ public class StoriaService {
 
     }
 
-    public Map<String, Object> responseFetchStorie() {
-        Map<String, Object> responseData = new HashMap<>();
-        List<Storia> listaStorie = listaStorie();
-        if (listaStorie.isEmpty()) {
-            System.out.println("Storie non trovate");
-            throw new RuntimeException("Storie non trovate");
-        }
-        //debug
-        System.out.println("storie trovate: " + listaStorie.size());
-        for (int i = 0; i < listaStorie.size(); i++) {
-            System.out.println(listaStorie.get(i).toString());
-        }
-
-        List<StoriaCompletaDTO> storiaCompletaDTOS = new ArrayList<>();
-        for (Storia storia : listaStorie) {
-            String descrizioneIniziale = scenarioRepository.findByStoriaAndInizialeTrue(storia).getTesto();
-            StoriaDTO storiaDTO = new StoriaDTO(storia.getTitolo(), descrizioneIniziale);
-            StoriaCompletaDTO storiaCompletaDTO = new StoriaCompletaDTO(storiaDTO, storia.getAutore().getUsername());
-            storiaCompletaDTOS.add(storiaCompletaDTO);
-        }
-
-        responseData.put("storiaCompletaDTOS", storiaCompletaDTOS);
-        return responseData;
-    }
-
-    public List<Storia> listaStorie() {
-        return storiaRepository.findAll();
-    }
-
-    public Map<String, Object> responseStorieAutore(String username) {
-        Map<String, Object> responseData = new HashMap<>();
-        Utente user = utenteRepository.findByUsername(username);
-        System.out.println("Utente: " + user.getUsername());
-
-        List<Storia> listaStorieUtente = storiaRepository.findByAutore(user);
-        List<StoriaCompletaDTO> listaStorieUtenteDTOs = new ArrayList<>();
-
-        for (Storia storia : listaStorieUtente) {
-            System.out.println("Storia: " + storia.getTitolo());
-            String descrizioneIniziale = scenarioRepository.findByStoriaAndInizialeTrue(storia).getTesto();
-
-            StoriaDTO storiaDTO = new StoriaDTO(storia.getTitolo(), descrizioneIniziale);
-            StoriaCompletaDTO storiaCompletaDTO = new StoriaCompletaDTO(storiaDTO, username);
-            listaStorieUtenteDTOs.add(storiaCompletaDTO);
-        }
-
-        responseData.put("listaStorieUtenteDTOs", listaStorieUtenteDTOs);
-
-        return responseData;
-    }
-
-    public Map<String, Object> responseFiltroTitolo(String titolo) {
-        Map<String, Object> responseData = new HashMap<>();
-        List<Storia> listaStorie = listaStorie();
-
-        if (listaStorie == null || listaStorie.isEmpty()) {
-            throw new IllegalArgumentException("Storie non trovate");
-        }
-
-        // Rimuove le virgolette e spazi bianchi dal titolo cercato
-        titolo = titolo.replace("\"", "").trim();
-
-        System.out.println(titolo);
-
-        List<StoriaCompletaDTO> listaFiltrataStoria = new ArrayList<>();
-
-        for (Storia storia : listaStorie) {
-            if (storia.getTitolo().toLowerCase().contains(titolo.toLowerCase())) {
-                String descrizioneIniziale = scenarioRepository.findByStoriaAndInizialeTrue(storia).getTesto();
-
-                StoriaDTO storiaDTO = new StoriaDTO(storia.getTitolo(), descrizioneIniziale);
-                StoriaCompletaDTO storiaCompletaDTO = new StoriaCompletaDTO(storiaDTO, storia.getAutore().getUsername());
-
-                listaFiltrataStoria.add(storiaCompletaDTO);
-            }
-        }
-
-        responseData.put("listaFiltrataStoria", listaFiltrataStoria);
-        return responseData;
-    }
 
 
     public Storia getStoria(String titolo) {
@@ -164,19 +82,19 @@ public class StoriaService {
         responseData.put("storia", storia);
 
         //scenari
-        List<Scenario> scenari = scenarioService.findByStoria(storia);
+        List<Scenario> scenari = scenariService.findByStoria(storia);
         responseData.put("scenari", scenari);
 
         //scelte
-        List<Scelta> scelte = sceltaService.findByStoria(storia);
+        List<Scelta> scelte = scelteService.findByStoria(storia);
         responseData.put("scelte", scelte);
 
         //indovinelli
-        List<Indovinello> indovinelli = indovinelloService.findByStoria(storia);
+        List<Indovinello> indovinelli = indovinelliService.findByStoria(storia);
         responseData.put("indovinelli", indovinelli);
 
         //oggetti
-        List<Oggetto> oggetti = oggettoService.findByStoria(storia);
+        List<Oggetto> oggetti = oggettiService.findByStoria(storia);
         responseData.put("oggetti", oggetti);
 
         return responseData;

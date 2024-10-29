@@ -66,36 +66,16 @@ public class PartitaService {
             return false;
         }
     }
-    public List<PartitaDTO> trovaPartitePerUtente(String username) {
-        List<Partita> partite = partitaRepository.findByGiocatoreUsername(username);
-        List<PartitaDTO> partiteDTOs = new ArrayList<>();
-
-        for (Partita partita : partite) {
-            String descrizioneIniziale = scenarioRepository.findByStoriaAndInizialeTrue(partita.getStoria()).getTesto();
-
-            StoriaDTO storiaDTO = new StoriaDTO(
-                    partita.getStoria().getTitolo(),
-                    descrizioneIniziale
-            );
-
-            ScenarioDTO scenarioDTO = new ScenarioDTO(
-                    partita.getUltimoScenario().getId(),
-                    partita.getUltimoScenario().getTitolo(),
-                    partita.getUltimoScenario().getTesto()
-            );
-
-            PartitaDTO partitaDTO = new PartitaDTO(storiaDTO, scenarioDTO, partita.getStoria().getAutore().getUsername(), partita.getId());
-            partiteDTOs.add(partitaDTO);
-        }
-
-        return partiteDTOs;
-    }
 
     public void deleteById(long idPartita) {
         partitaRepository.deleteById(idPartita);
     }
 
     public Partita getPartita(long idPartita) {
+        return partitaRepository.findById(idPartita);
+    }
+
+    public Optional<Partita> findById(Long idPartita) {
         return partitaRepository.findById(idPartita);
     }
 }

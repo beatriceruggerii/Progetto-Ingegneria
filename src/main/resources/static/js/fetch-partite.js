@@ -79,7 +79,7 @@ function riprendiPartita(titoloStoria, idPartita, idScenario) {
 
 function eliminaPartita(idPartita) {
     if (confirm("Sei sicuro di voler eliminare questa partita?")) {
-        fetch(`http://localhost:8080/partite/${idPartita}`, {
+        fetch(`http://localhost:8080/partita/${idPartita}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'

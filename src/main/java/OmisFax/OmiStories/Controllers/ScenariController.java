@@ -1,6 +1,7 @@
 package OmisFax.OmiStories.Controllers;
 
 import OmisFax.OmiStories.Entities.Storia;
+import OmisFax.OmiStories.Services.ScenariService;
 import OmisFax.OmiStories.Services.ScenarioService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +16,11 @@ import java.util.Map;
 @RequestMapping("/scenari")
 public class ScenariController {
 
-    private ScenarioService scenarioService;
+    private ScenariService scenariService;
 
     @Autowired
-    public ScenariController(ScenarioService scenarioService) {
-        this.scenarioService = scenarioService;
+    public ScenariController(ScenariService scenariService) {
+        this.scenariService = scenariService;
     }
 
     @GetMapping("/")
@@ -27,7 +28,7 @@ public class ScenariController {
     public ResponseEntity<Map<String, Object>> fetchScenari(HttpSession session) {
         Storia storia = (Storia) session.getAttribute("storiaCorrente");
         System.out.println("richiesta di fetch scenari ricevuta");
-        Map<String, Object> responseData = scenarioService.fetchScenari(storia);
+        Map<String, Object> responseData = scenariService.fetchScenari(storia);
         return ResponseEntity.ok(responseData);
     }
 }
