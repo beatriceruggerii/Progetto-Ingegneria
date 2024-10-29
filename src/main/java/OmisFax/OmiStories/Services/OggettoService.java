@@ -6,6 +6,7 @@ import OmisFax.OmiStories.Repositories.InventarioRepository;
 import OmisFax.OmiStories.Repositories.OggettoRepository;
 import OmisFax.OmiStories.Repositories.PartitaRepository;
 import OmisFax.OmiStories.Repositories.ScenarioRepository;
+import OmisFax.OmiStories.Services.interfaces.IOggettoService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,15 +17,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.util.*;
 
 @Service
-public class OggettoService {
+public class OggettoService implements IOggettoService {
     @Autowired
     private OggettoRepository oggettoRepository;
 
     @Autowired
     private OggettoFactory oggettoFactory;
-
-
-
 
     public String salvaOggetto(OggettoDTO payload, Storia storia) {
         String nomeOggetto = payload.getNomeOggetto();
@@ -34,7 +32,6 @@ public class OggettoService {
         oggettoRepository.save(oggetto);
         return "Oggetto salvato con successo.";
     }
-
 
     public Optional<Oggetto> findById(Long idOggetto) {
         // Recupera l'oggetto dal database

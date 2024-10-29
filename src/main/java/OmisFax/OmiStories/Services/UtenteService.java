@@ -2,6 +2,7 @@ package OmisFax.OmiStories.Services;
 
 import OmisFax.OmiStories.Entities.Utente;
 import OmisFax.OmiStories.Repositories.UtenteRepository;
+import OmisFax.OmiStories.Services.interfaces.IUtenteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,7 @@ import java.util.Map;
 
 
 @Service
-public class UtenteService {
+public class UtenteService implements IUtenteService {
     @Autowired
     private UtenteRepository utenteRepository;
 

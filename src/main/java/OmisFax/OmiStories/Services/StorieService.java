@@ -5,6 +5,9 @@ import OmisFax.OmiStories.DTOs.StoriaDTO;
 import OmisFax.OmiStories.Entities.Storia;
 import OmisFax.OmiStories.Entities.Utente;
 import OmisFax.OmiStories.Repositories.StoriaRepository;
+import OmisFax.OmiStories.Services.interfaces.IScenarioService;
+import OmisFax.OmiStories.Services.interfaces.IStorieService;
+import OmisFax.OmiStories.Services.interfaces.IUtenteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,14 +17,13 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class StorieService {
+public class StorieService implements IStorieService {
     @Autowired
     private StoriaRepository storiaRepository;
     @Autowired
-    private UtenteService utenteService;
-
+    private IUtenteService utenteService;
     @Autowired
-    private ScenarioService scenarioService;
+    private IScenarioService scenarioService;
 
     public List<Storia> listaStorie() {
         return storiaRepository.findAll();

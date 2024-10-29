@@ -5,21 +5,25 @@ import OmisFax.OmiStories.Entities.Scenario;
 import OmisFax.OmiStories.Entities.Storia;
 import OmisFax.OmiStories.Entities.Utente;
 import OmisFax.OmiStories.Repositories.PartitaRepository;
+import OmisFax.OmiStories.Services.interfaces.IPartitaService;
+import OmisFax.OmiStories.Services.interfaces.IScenarioService;
+import OmisFax.OmiStories.Services.interfaces.IStoriaService;
+import OmisFax.OmiStories.Services.interfaces.IUtenteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-public class PartitaService {
+public class PartitaService implements IPartitaService {
     @Autowired
     private PartitaRepository partitaRepository;
     @Autowired
-    private StoriaService storiaService;
+    private IStoriaService storiaService;
     @Autowired
-    private UtenteService utenteService;
+    private IUtenteService utenteService;
     @Autowired
-    private ScenarioService scenarioService;
+    private IScenarioService scenarioService;
 
     public Partita salvaPartita(String titoloStoria, String username) {
         titoloStoria = titoloStoria.replace("\"", "").trim();

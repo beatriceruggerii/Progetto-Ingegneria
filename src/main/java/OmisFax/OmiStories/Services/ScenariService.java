@@ -3,6 +3,7 @@ package OmisFax.OmiStories.Services;
 import OmisFax.OmiStories.Entities.Scenario;
 import OmisFax.OmiStories.Entities.Storia;
 import OmisFax.OmiStories.Repositories.ScenarioRepository;
+import OmisFax.OmiStories.Services.interfaces.IScenariService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class ScenariService {
+public class ScenariService implements IScenariService {
     @Autowired
     private ScenarioRepository scenarioRepository;
 

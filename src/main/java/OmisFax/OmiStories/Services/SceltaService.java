@@ -6,6 +6,8 @@ import OmisFax.OmiStories.Entities.Scenario;
 import OmisFax.OmiStories.Entities.Storia;
 import OmisFax.OmiStories.Entities.Utente;
 import OmisFax.OmiStories.Repositories.SceltaRepository;
+import OmisFax.OmiStories.Services.interfaces.ISceltaService;
+import OmisFax.OmiStories.Services.interfaces.IScenarioService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,11 +19,11 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class SceltaService {
+public class SceltaService implements ISceltaService {
     @Autowired
     private SceltaRepository sceltaRepository;
     @Autowired
-    private ScenarioService scenarioService;
+    private IScenarioService scenarioService;
 
     public Scelta responseSalvaScelta(SceltaDTO infoScelta){
         String testoScelta = infoScelta.getTesto();

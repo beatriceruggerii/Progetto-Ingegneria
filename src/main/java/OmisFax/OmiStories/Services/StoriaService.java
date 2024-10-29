@@ -6,6 +6,7 @@ import OmisFax.OmiStories.Entities.*;
 import OmisFax.OmiStories.Repositories.ScenarioRepository;
 import OmisFax.OmiStories.Repositories.StoriaRepository;
 import OmisFax.OmiStories.Repositories.UtenteRepository;
+import OmisFax.OmiStories.Services.interfaces.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class StoriaService {
+public class StoriaService implements IStoriaService {
     @Autowired
     private StoriaRepository storiaRepository;
 
@@ -30,19 +31,19 @@ public class StoriaService {
     private ScenarioFactory scenarioFactory;
 
     @Autowired
-    private ScenarioService scenarioService;
+    private IScenarioService scenarioService;
 
     @Autowired
-    private ScenariService scenariService;
+    private IScenariService scenariService;
 
     @Autowired
-    private ScelteService scelteService;
+    private IScelteService scelteService;
 
     @Autowired
-    private IndovinelliService indovinelliService;
+    private IIndovinelliService indovinelliService;
 
     @Autowired
-    private OggettiService oggettiService;
+    private IOggettiService oggettiService;
 
     public Storia salvaStoria(StoriaDTO payload, String username) {
         String titolo = payload.getTitolo().trim();

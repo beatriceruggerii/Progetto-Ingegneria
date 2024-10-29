@@ -2,6 +2,9 @@ package OmisFax.OmiStories.Services;
 
 import OmisFax.OmiStories.Entities.Storia;
 import OmisFax.OmiStories.Entities.Utente;
+import OmisFax.OmiStories.Services.interfaces.IStoriaService;
+import OmisFax.OmiStories.Services.interfaces.IUtenteService;
+import OmisFax.OmiStories.Services.interfaces.IUtentiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +14,9 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class UtentiService {
+public class UtentiService implements IUtentiService {
     @Autowired
-    private StoriaService storiaService;
+    private IStoriaService storiaService;
 
     public Map<String, Object> responseFetchAutori() {
         Map<String, Object> responseData = new HashMap<>();

@@ -4,6 +4,8 @@ import OmisFax.OmiStories.DTOs.ScenarioDTO;
 import OmisFax.OmiStories.Entities.Scenario;
 import OmisFax.OmiStories.Entities.Storia;
 import OmisFax.OmiStories.Repositories.ScenarioRepository;
+import OmisFax.OmiStories.Services.interfaces.IScenarioService;
+import OmisFax.OmiStories.Services.interfaces.IStoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
@@ -14,14 +16,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.*;
 
 @Service
-public class ScenarioService {
+public class ScenarioService implements IScenarioService {
     @Autowired
     private ScenarioRepository scenarioRepository;
     @Autowired
     private ScenarioFactory scenarioFactory;
-    @Lazy
     @Autowired
-    private StoriaService storiaService;
+    private IStoriaService storiaService;
 
 
     public String salvaScenario(ScenarioDTO scenariodto, Storia storia) {

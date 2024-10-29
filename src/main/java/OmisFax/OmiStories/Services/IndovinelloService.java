@@ -5,6 +5,7 @@ import OmisFax.OmiStories.Entities.Indovinello;
 import OmisFax.OmiStories.Entities.Scenario;
 import OmisFax.OmiStories.Repositories.IndovinelloRepository;
 import OmisFax.OmiStories.Services.interfaces.IIndovinelloService;
+import OmisFax.OmiStories.Services.interfaces.IScenarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

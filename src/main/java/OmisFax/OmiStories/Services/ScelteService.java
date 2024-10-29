@@ -4,6 +4,8 @@ import OmisFax.OmiStories.Entities.Scelta;
 import OmisFax.OmiStories.Entities.Scenario;
 import OmisFax.OmiStories.Entities.Storia;
 import OmisFax.OmiStories.Repositories.SceltaRepository;
+import OmisFax.OmiStories.Services.interfaces.IScelteService;
+import OmisFax.OmiStories.Services.interfaces.IScenarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,11 +14,11 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class ScelteService {
+public class ScelteService implements IScelteService {
     @Autowired
     private SceltaRepository sceltaRepository;
     @Autowired
-    private ScenarioService scenarioService;
+    private IScenarioService scenarioService;
 
     public Map<String, Object> responseFetchScelte(Storia storia){
         if (storia == null) {

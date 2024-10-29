@@ -5,6 +5,10 @@ import OmisFax.OmiStories.Repositories.InventarioRepository;
 import OmisFax.OmiStories.Repositories.OggettoRepository;
 import OmisFax.OmiStories.Repositories.PartitaRepository;
 import OmisFax.OmiStories.Repositories.ScenarioRepository;
+import OmisFax.OmiStories.Services.interfaces.IInventarioService;
+import OmisFax.OmiStories.Services.interfaces.IOggettiService;
+import OmisFax.OmiStories.Services.interfaces.IPartitaService;
+import OmisFax.OmiStories.Services.interfaces.IScenarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,12 +20,11 @@ public class OggettiService implements IOggettiService {
     private OggettoRepository oggettoRepository;
 
     @Autowired
-    private ScenarioService scenarioService;
-
+    private IScenarioService scenarioService;
     @Autowired
-    private InventarioService inventarioService;
+    private IInventarioService inventarioService;
     @Autowired
-    private PartitaService partitaService;
+    private IPartitaService partitaService;
 
     public Map<String, Object> fetchOggettiStoria(Storia storia) {
 
