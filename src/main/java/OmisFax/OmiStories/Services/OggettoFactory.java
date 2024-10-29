@@ -4,6 +4,7 @@ import OmisFax.OmiStories.Entities.Oggetto;
 import OmisFax.OmiStories.Entities.Scenario;
 import OmisFax.OmiStories.Entities.Storia;
 import OmisFax.OmiStories.Repositories.ScenarioRepository;
+import OmisFax.OmiStories.Services.interfaces.IOggettoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

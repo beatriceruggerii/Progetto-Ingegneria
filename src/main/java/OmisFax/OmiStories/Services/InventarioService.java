@@ -6,6 +6,7 @@ import OmisFax.OmiStories.Entities.Partita;
 import OmisFax.OmiStories.Repositories.InventarioRepository;
 import OmisFax.OmiStories.Repositories.OggettoRepository;
 import OmisFax.OmiStories.Repositories.PartitaRepository;
+import OmisFax.OmiStories.Services.interfaces.IInventarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class InventarioService {
+public class InventarioService implements IInventarioService {
 
     @Autowired
     private InventarioRepository inventarioRepository;

@@ -5,6 +5,7 @@ import OmisFax.OmiStories.Entities.Indovinello;
 import OmisFax.OmiStories.Entities.Scenario;
 import OmisFax.OmiStories.Entities.Storia;
 import OmisFax.OmiStories.Repositories.IndovinelloRepository;
+import OmisFax.OmiStories.Services.interfaces.IIndovinelloService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,11 +15,11 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class IndovinelloService {
+public class IndovinelloService implements IIndovinelloService {
     @Autowired
     private IndovinelloRepository indovinelloRepository;
     @Autowired
-    private ScenarioService scenarioService;
+    private IScenarioService scenarioService;
 
     public String responseSalvaIndovinello(IndovinelloDTO infoIndovinello) {
         String testoIndovinello = infoIndovinello.getTesto();

@@ -5,13 +5,14 @@ import OmisFax.OmiStories.Repositories.InventarioRepository;
 import OmisFax.OmiStories.Repositories.OggettoRepository;
 import OmisFax.OmiStories.Repositories.PartitaRepository;
 import OmisFax.OmiStories.Repositories.ScenarioRepository;
+import OmisFax.OmiStories.Services.interfaces.IOggettiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
-public class OggettiService {
+public class OggettiService implements IOggettiService {
     @Autowired
     private OggettoRepository oggettoRepository;
 
