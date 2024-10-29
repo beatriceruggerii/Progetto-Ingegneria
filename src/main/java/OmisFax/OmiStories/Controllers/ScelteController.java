@@ -23,7 +23,7 @@ import java.util.Map;
 @RequestMapping("/scelte")
 public class ScelteController {
 
-    private final ScelteService scelteService;
+    private ScelteService scelteService;
 
     @Autowired
     public ScelteController(ScelteService scelteService) {

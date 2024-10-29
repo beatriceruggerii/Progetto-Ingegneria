@@ -52,16 +52,4 @@ public class OggettoControllerTest {
         assert response.getBody().equals("Oggetto salvato con successo");
     }
 
-    @Test
-    void testFetchOggetti() {
-        Storia mockStoria = new Storia();
-        Map<String, Object> mockResponse = new HashMap<>();
-        mockResponse.put("oggetti", "lista di oggetti");
-        when(session.getAttribute("storiaCorrente")).thenReturn(mockStoria);
-        when(oggettoService.fetchOggettiStoria(mockStoria)).thenReturn(mockResponse);
-
-        ResponseEntity<Map<String, Object>> response = oggettiController.fetchOggettiStoria(session);
-        assert response.getStatusCode() == HttpStatus.OK;
-        assert response.getBody().equals(mockResponse);
-    }
 }

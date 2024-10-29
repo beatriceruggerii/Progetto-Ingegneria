@@ -13,7 +13,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/storia")
 public class StoriaController {
-    private final StoriaService storiaService;
+    private StoriaService storiaService;
     @Autowired
     public StoriaController(StoriaService storiaService) {
         this.storiaService = storiaService;

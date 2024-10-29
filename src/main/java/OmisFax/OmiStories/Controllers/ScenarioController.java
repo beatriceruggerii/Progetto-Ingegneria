@@ -20,7 +20,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/scenario")
 public class ScenarioController {
-    private final ScenarioService scenarioService;
+    private ScenarioService scenarioService;
 
     @Autowired
     public ScenarioController(ScenarioService scenarioService) {

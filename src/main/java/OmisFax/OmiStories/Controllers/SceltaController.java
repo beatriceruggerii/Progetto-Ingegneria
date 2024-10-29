@@ -22,7 +22,7 @@ import java.util.Map;
 @RequestMapping("/scelta")
 public class SceltaController {
 
-    private final SceltaService sceltaService;
+    private SceltaService sceltaService;
 
 
     @Autowired
@@ -39,7 +39,7 @@ public class SceltaController {
     }
 
     @PutMapping("/modifica/{idScelta}")
-    public ResponseEntity<String> modificaIndovinello(@PathVariable Long idScelta, @RequestBody SceltaDTO nuovaScelta) {
+    public ResponseEntity<String> modificaScelta(@PathVariable Long idScelta, @RequestBody SceltaDTO nuovaScelta) {
         boolean successo = sceltaService.modificaScelta(nuovaScelta);
         if (!successo) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Modifica fallita: Scelta non trovata.");

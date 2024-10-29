@@ -25,7 +25,7 @@ import java.util.Map;
 public class ProxyController {
     @Autowired
     private UtenteService utenteService;
-    private final RestTemplate restTemplate = new RestTemplate();
+    private RestTemplate restTemplate = new RestTemplate();
 
     @PostMapping("/proxy/pay")
     public ResponseEntity<String> proxyPay(@RequestBody String paymentData, HttpSession session) {

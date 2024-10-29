@@ -3,6 +3,8 @@ package OmisFax.OmiStories.Controllers;
 import static org.mockito.Mockito.*;
 
 import OmisFax.OmiStories.Controllers.OggettiController;
+import OmisFax.OmiStories.Entities.Storia;
+import OmisFax.OmiStories.Services.OggettiService;
 import OmisFax.OmiStories.Services.OggettoService;
 import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,7 +24,7 @@ public class OggettiControllerTest {
     private OggettiController controllerOggetti;
 
     @Mock
-    private OggettoService servizioOggetto;
+    private OggettiService oggettiService;
 
     @Mock
     private HttpSession sessione;
@@ -38,7 +40,7 @@ public class OggettiControllerTest {
         Map<String, Object> rispostaMock = new HashMap<>();
         rispostaMock.put("oggetti", "lista di oggetti");
 
-        when(servizioOggetto.getOggetti(idScenario)).thenReturn(rispostaMock);
+        when(oggettiService.getOggetti(idScenario)).thenReturn(rispostaMock);
 
         ResponseEntity<Map<String, Object>> risposta = controllerOggetti.getOggetti(idScenario, sessione);
         assert risposta.getStatusCode() == HttpStatus.OK;
@@ -53,10 +55,25 @@ public class OggettiControllerTest {
         rispostaMock.put("oggettiControllori", "lista di oggetti controllori");
 
         when(sessione.getAttribute("idPartitaInCorso")).thenReturn(idPartita);
-        when(servizioOggetto.getOggettiControllori(idScenario, idPartita)).thenReturn(rispostaMock);
+        when(oggettiService.getOggettiControllori(idScenario, idPartita)).thenReturn(rispostaMock);
 
         ResponseEntity<Map<String, Object>> risposta = controllerOggetti.getOggettiContollori(idScenario, sessione);
         assert risposta.getStatusCode() == HttpStatus.OK;
         assert risposta.getBody().equals(rispostaMock);
     }
+
+    @Test
+    void testFetchOggettiStoria() {
+        Storia storiaMock = new Storia(); // Creazione di una storia fittizia
+        Map<String, Object> rispostaMock = new HashMap<>();
+        rispostaMock.put("oggettiStoria", "lista di oggetti della storia");
+
+        when(sessione.getAttribute("storiaCorrente")).thenReturn(storiaMock);
+        when(oggettiService.fetchOggettiStoria(storiaMock)).thenReturn(rispostaMock);
+
+        ResponseEntity<Map<String, Object>> risposta = controllerOggetti.fetchOggettiStoria(sessione);
+        assert risposta.getStatusCode() == HttpStatus.OK;
+        assert risposta.getBody().equals(rispostaMock);
+    }
+
 }
