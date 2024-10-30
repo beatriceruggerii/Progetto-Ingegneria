@@ -8,6 +8,8 @@ import OmisFax.OmiStories.Repositories.InventarioRepository;
 import OmisFax.OmiStories.Repositories.PartitaRepository;
 import OmisFax.OmiStories.Services.interfaces.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -26,23 +28,29 @@ public class PartitaService implements IPartitaService {
     private InventarioRepository inventarioRepository;
 
     public Partita salvaPartita(String titoloStoria, String username) {
-        titoloStoria = titoloStoria.replace("\"", "").trim();
-        System.out.println("Username recuperato: " + username);
-        System.out.println("Titolo storia: " + titoloStoria);
+        if (partitaRepository.findByGiocatoreUsernameAndStoriaTitolo(username, titoloStoria) == null) {
 
-        Utente giocatore = utenteService.findByUsername(username);
-        System.out.println("Giocatore: " + giocatore.toString());
+            titoloStoria = titoloStoria.replace("\"", "").trim();
+            System.out.println("Username recuperato: " + username);
+            System.out.println("Titolo storia: " + titoloStoria);
 
-        Storia storia = storiaService.findStoriaByTitolo(titoloStoria);
-        System.out.println("Giocatore: " + giocatore.getUsername());
-        System.out.println("Storia: " + storia.getTitolo());
+            Utente giocatore = utenteService.findByUsername(username);
+            System.out.println("Giocatore: " + giocatore.toString());
 
-        Scenario scenarioIniziale = scenarioService.findByStoriaAndInizialeTrue(storia);
-        System.out.println("Scenario iniziale " + scenarioIniziale.toString());
+            Storia storia = storiaService.findStoriaByTitolo(titoloStoria);
+            System.out.println("Giocatore: " + giocatore.getUsername());
+            System.out.println("Storia: " + storia.getTitolo());
 
-        Partita partita = new Partita(giocatore, storia, scenarioIniziale);
-        partitaRepository.save(partita);
-        return partita;
+            Scenario scenarioIniziale = scenarioService.findByStoriaAndInizialeTrue(storia);
+            System.out.println("Scenario iniziale " + scenarioIniziale.toString());
+
+            Partita partita = new Partita(giocatore, storia, scenarioIniziale);
+            partitaRepository.save(partita);
+            return partita;
+        }
+        else {
+           throw new IllegalArgumentException("Hai già avviato questa partita");
+        }
     }
 
     public boolean aggiornaPartita(long idPartita, long idScenarioFiglio){

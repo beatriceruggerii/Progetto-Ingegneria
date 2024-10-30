@@ -8,6 +8,7 @@ import OmisFax.OmiStories.Entities.Storia;
 import OmisFax.OmiStories.Services.IndovinelloService;
 import OmisFax.OmiStories.Services.OggettoService;
 import OmisFax.OmiStories.Services.ScenarioService;
+import OmisFax.OmiStories.Services.interfaces.IIndovinelloService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,7 +25,7 @@ import java.util.Map;
 @RequestMapping("/indovinello")
 public class IndovinelloController {
 
-    private IndovinelloService indovinelloService;
+    private IIndovinelloService indovinelloService;
 
     @Autowired
     public IndovinelloController(IndovinelloService indovinelloService) {

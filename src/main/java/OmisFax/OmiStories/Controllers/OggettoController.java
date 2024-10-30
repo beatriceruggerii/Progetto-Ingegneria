@@ -8,6 +8,7 @@ import OmisFax.OmiStories.Repositories.OggettoRepository;
 import OmisFax.OmiStories.Repositories.ScenarioRepository;
 import OmisFax.OmiStories.Services.OggettoService;
 import OmisFax.OmiStories.Services.ScenarioService;
+import OmisFax.OmiStories.Services.interfaces.IOggettoService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,13 +27,11 @@ import java.util.Map;
 @Controller
 @RequestMapping("/oggetto")
 public class OggettoController {
-    private OggettoService oggettoService;
-    private ScenarioService scenarioService;
+    private IOggettoService oggettoService;
 
     @Autowired
-    public OggettoController(OggettoService oggettoService, ScenarioService scenarioService) {
+    public OggettoController(IOggettoService oggettoService) {
         this.oggettoService = oggettoService;
-        this.scenarioService = scenarioService;
     }
 
 

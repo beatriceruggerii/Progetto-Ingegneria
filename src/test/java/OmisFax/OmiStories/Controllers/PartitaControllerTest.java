@@ -1,8 +1,6 @@
 package OmisFax.OmiStories.Controllers;
 
 import OmisFax.OmiStories.Entities.Partita;
-import OmisFax.OmiStories.Repositories.PartitaRepository;
-import OmisFax.OmiStories.Services.PartitaService;
 import OmisFax.OmiStories.Services.interfaces.IPartitaService;
 import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,8 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class PartitaControllerTest {
 
@@ -23,10 +20,7 @@ public class PartitaControllerTest {
     private PartitaController partitaController;
 
     @Mock
-    private PartitaService partitaService;
-
-    @Mock
-    private PartitaRepository partitaRepository;
+    private IPartitaService partitaService;
 
     @Mock
     private HttpSession session;
@@ -70,8 +64,7 @@ public class PartitaControllerTest {
         partitaMock.setId(1L);
 
         when(session.getAttribute("loggedUsername")).thenReturn(username);
-        when(partitaRepository.findByGiocatoreUsernameAndStoriaTitolo(username, titoloStoria)).thenReturn(null);
-        when(partitaService.salvaPartita(titoloStoria, username)).thenReturn(partitaMock);
+        when(partitaService.salvaPartita(titoloStoria.trim(), username)).thenReturn(partitaMock);
 
         ResponseEntity<String> response = partitaController.salvaPartita(titoloStoria, session);
 
@@ -93,18 +86,17 @@ public class PartitaControllerTest {
     }
 
     @Test
-    void testSalvaPartitaEsistente() {
+    void testSalvaPartitaErroreSalvataggio() {
         String username = "testUser";
         String titoloStoria = "Storia di prova";
-        Partita partitaMock = new Partita();
 
         when(session.getAttribute("loggedUsername")).thenReturn(username);
-        when(partitaRepository.findByGiocatoreUsernameAndStoriaTitolo(username, titoloStoria)).thenReturn(partitaMock);
+        when(partitaService.salvaPartita(titoloStoria.trim(), username)).thenThrow(new RuntimeException());
 
         ResponseEntity<String> response = partitaController.salvaPartita(titoloStoria, session);
 
-        assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
-        assertEquals("Hai già avviato questa partita", response.getBody());
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+        assertEquals("Errore durante il salvataggio della partita", response.getBody());
     }
 
     @Test
@@ -153,5 +145,16 @@ public class PartitaControllerTest {
 
         assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
         verify(partitaService).deleteById(idPartita);
+    }
+
+    @Test
+    void testEliminaPartitaFailure() {
+        long idPartita = 1L;
+
+        doThrow(new RuntimeException()).when(partitaService).deleteById(idPartita);
+
+        ResponseEntity<Void> response = partitaController.eliminaPartita(idPartita);
+
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     }
 }

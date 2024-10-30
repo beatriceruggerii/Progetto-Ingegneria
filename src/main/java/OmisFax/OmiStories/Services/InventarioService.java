@@ -62,8 +62,8 @@ public class InventarioService implements IInventarioService {
         return inventarioRepository.findAllByPartita(partita);
     }
 
-    public void deleteById(long idPartita){
-        inventarioRepository.deleteById(idPartita);
+    public void deleteByPartitaId(long idPartita){
+        inventarioRepository.deleteByPartitaId(idPartita);
     }
 }
 

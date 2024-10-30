@@ -3,6 +3,7 @@ package OmisFax.OmiStories.Controllers;
 import OmisFax.OmiStories.Entities.Storia;
 import OmisFax.OmiStories.Services.ScenariService;
 import OmisFax.OmiStories.Services.ScenarioService;
+import OmisFax.OmiStories.Services.interfaces.IScenariService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,7 @@ import java.util.Map;
 @RequestMapping("/scenari")
 public class ScenariController {
 
-    private ScenariService scenariService;
+    private IScenariService scenariService;
 
     @Autowired
     public ScenariController(ScenariService scenariService) {

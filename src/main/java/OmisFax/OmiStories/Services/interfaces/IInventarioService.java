@@ -8,7 +8,7 @@ import java.util.List;
 public interface IInventarioService {
     Inventario aggiungiOggettoAInventario(Long idPartita, Long idOggetto);
     List<Inventario> getInventarioPartita(long idPartita);
-    public List<Inventario> findAllByPartita(Partita partita);
-    public void deleteById(long idPartita);
+    List<Inventario> findAllByPartita(Partita partita);
+    void deleteByPartitaId(long idPartita);
 }
 

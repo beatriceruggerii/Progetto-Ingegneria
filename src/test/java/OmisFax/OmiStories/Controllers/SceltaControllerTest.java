@@ -28,7 +28,7 @@ public class SceltaControllerTest {
     private SceltaController sceltaController;
 
     @Mock
-    private ScenarioService scenarioService;
+    private IScenarioService scenarioService;
 
     @Mock
     private SceltaService sceltaService;

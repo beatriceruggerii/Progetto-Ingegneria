@@ -3,6 +3,7 @@ package OmisFax.OmiStories.Controllers;
 
 import OmisFax.OmiStories.Services.StoriaService;
 import OmisFax.OmiStories.Services.StorieService;
+import OmisFax.OmiStories.Services.interfaces.IStorieService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,8 +14,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/storie")
 public class StorieController {
-
-    private StorieService storieService;
+    private IStorieService storieService;
     @Autowired
     public StorieController(StorieService storieService) {
         this.storieService = storieService;

@@ -7,6 +7,7 @@ import OmisFax.OmiStories.Entities.Storia;
 import OmisFax.OmiStories.Services.SceltaService;
 import OmisFax.OmiStories.Services.ScelteService;
 import OmisFax.OmiStories.Services.ScenarioService;
+import OmisFax.OmiStories.Services.interfaces.IScelteService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,8 +23,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/scelte")
 public class ScelteController {
-
-    private ScelteService scelteService;
+    private IScelteService scelteService;
 
     @Autowired
     public ScelteController(ScelteService scelteService) {

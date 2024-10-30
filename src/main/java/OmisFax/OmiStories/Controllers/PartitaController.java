@@ -4,6 +4,7 @@ import OmisFax.OmiStories.Entities.Partita;
 import OmisFax.OmiStories.Entities.Utente;
 import OmisFax.OmiStories.Repositories.PartitaRepository;
 import OmisFax.OmiStories.Services.PartitaService;
+import OmisFax.OmiStories.Services.interfaces.IPartitaService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,9 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class PartitaController {
 
     @Autowired
-    private PartitaService partitaService;
-    @Autowired
-    private PartitaRepository partitaRepository;
+    private IPartitaService partitaService;
 
     @PutMapping("/riprendi/{idPartita}")
     public ResponseEntity<String> riprendiPartita(@PathVariable long idPartita, HttpSession session) {
@@ -40,13 +39,9 @@ public class PartitaController {
         }
         titoloStoria = titoloStoria.trim();
         try {
-            if (partitaRepository.findByGiocatoreUsernameAndStoriaTitolo(username, titoloStoria) == null) {
-                Partita partita = partitaService.salvaPartita(titoloStoria, username);
-                session.setAttribute("idPartitaInCorso", partita.getId());
-                return ResponseEntity.ok("Partita salvata con successo");
-            } else {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Hai già avviato questa partita");
-            }
+            Partita partita = partitaService.salvaPartita(titoloStoria, username);
+            session.setAttribute("idPartitaInCorso", partita.getId());
+            return ResponseEntity.ok("Partita salvata con successo");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Errore durante il salvataggio della partita");
         }

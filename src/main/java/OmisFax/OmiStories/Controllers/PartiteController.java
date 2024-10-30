@@ -3,6 +3,7 @@ package OmisFax.OmiStories.Controllers;
 import OmisFax.OmiStories.DTOs.PartitaDTO;
 import OmisFax.OmiStories.Services.PartitaService;
 import OmisFax.OmiStories.Services.PartiteService;
+import OmisFax.OmiStories.Services.interfaces.IPartiteService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +17,7 @@ import java.util.List;
 public class PartiteController {
 
     @Autowired
-    private PartiteService partiteService;
+    private IPartiteService partiteService;
 
     @GetMapping("/")
     public ResponseEntity<List<PartitaDTO>> getPartite(HttpSession session) {
