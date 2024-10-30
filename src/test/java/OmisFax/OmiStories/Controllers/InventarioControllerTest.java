@@ -2,7 +2,6 @@ package OmisFax.OmiStories.Controllers;
 
 import OmisFax.OmiStories.Entities.Inventario;
 import OmisFax.OmiStories.Services.InventarioService;
-import OmisFax.OmiStories.Services.interfaces.IInventarioService;
 import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;

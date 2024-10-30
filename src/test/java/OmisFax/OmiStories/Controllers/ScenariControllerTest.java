@@ -4,7 +4,6 @@ import static org.mockito.Mockito.*;
 
 import OmisFax.OmiStories.Entities.Storia;
 import OmisFax.OmiStories.Services.ScenariService;
-import OmisFax.OmiStories.Services.interfaces.IScenariService;
 import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

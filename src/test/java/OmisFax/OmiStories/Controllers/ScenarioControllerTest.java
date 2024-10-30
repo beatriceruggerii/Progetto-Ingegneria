@@ -5,7 +5,6 @@ import static org.mockito.Mockito.*;
 import OmisFax.OmiStories.DTOs.ScenarioDTO;
 import OmisFax.OmiStories.Entities.Storia;
 import OmisFax.OmiStories.Services.ScenarioService;
-import OmisFax.OmiStories.Services.interfaces.IScenarioService;
 import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,9 +13,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class ScenarioControllerTest {
 

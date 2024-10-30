@@ -2,11 +2,8 @@ package OmisFax.OmiStories.Controllers;
 
 import static org.mockito.Mockito.*;
 
-import OmisFax.OmiStories.Controllers.PartiteController;
 import OmisFax.OmiStories.DTOs.PartitaDTO;
-import OmisFax.OmiStories.Services.PartitaService;
 import OmisFax.OmiStories.Services.PartiteService;
-import OmisFax.OmiStories.Services.interfaces.IPartiteService;
 import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

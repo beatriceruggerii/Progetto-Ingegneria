@@ -2,10 +2,8 @@ package OmisFax.OmiStories.Controllers;
 
 import static org.mockito.Mockito.*;
 
-import OmisFax.OmiStories.Controllers.ScelteController;
 import OmisFax.OmiStories.Entities.Storia;
 import OmisFax.OmiStories.Services.ScelteService;
-import OmisFax.OmiStories.Services.interfaces.IScelteService;
 import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

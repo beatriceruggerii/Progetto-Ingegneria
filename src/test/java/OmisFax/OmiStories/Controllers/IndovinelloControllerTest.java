@@ -3,9 +3,7 @@ package OmisFax.OmiStories.Controllers;
 import static org.mockito.Mockito.*;
 
 import OmisFax.OmiStories.DTOs.IndovinelloDTO;
-import OmisFax.OmiStories.Entities.Storia;
 import OmisFax.OmiStories.Services.IndovinelloService;
-import OmisFax.OmiStories.Services.interfaces.IIndovinelloService;
 import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,9 +14,6 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @ExtendWith(MockitoExtension.class)
 public class IndovinelloControllerTest {

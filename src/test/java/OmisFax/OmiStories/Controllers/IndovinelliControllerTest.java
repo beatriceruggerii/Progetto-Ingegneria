@@ -3,8 +3,6 @@ package OmisFax.OmiStories.Controllers;
 import OmisFax.OmiStories.Entities.Indovinello;
 import OmisFax.OmiStories.Entities.Storia;
 import OmisFax.OmiStories.Services.IndovinelliService;
-import OmisFax.OmiStories.Services.IndovinelloService;
-import OmisFax.OmiStories.Services.interfaces.IIndovinelliService;
 import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;

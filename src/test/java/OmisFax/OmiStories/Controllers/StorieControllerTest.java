@@ -1,8 +1,6 @@
 package OmisFax.OmiStories.Controllers;
 
-import OmisFax.OmiStories.Services.StoriaService;
 import OmisFax.OmiStories.Services.StorieService;
-import OmisFax.OmiStories.Services.interfaces.IStorieService;
 import jakarta.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,8 +12,6 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
-import static org.mockito.Mockito.when;
 
 public class StorieControllerTest {
     @InjectMocks

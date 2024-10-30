@@ -5,9 +5,6 @@ import static org.mockito.Mockito.*;
 import OmisFax.OmiStories.DTOs.OggettoDTO;
 import OmisFax.OmiStories.Entities.Storia;
 import OmisFax.OmiStories.Services.OggettoService;
-import OmisFax.OmiStories.Services.ScenarioService;
-import OmisFax.OmiStories.Services.interfaces.IOggettoService;
-import OmisFax.OmiStories.Services.interfaces.IScenarioService;
 import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,9 +15,6 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @ExtendWith(MockitoExtension.class)
 public class OggettoControllerTest {
