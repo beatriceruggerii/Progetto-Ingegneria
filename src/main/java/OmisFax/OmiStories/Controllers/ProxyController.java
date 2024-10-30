@@ -8,10 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpSession;
 import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -29,7 +26,15 @@ public class ProxyController {
 
     @PostMapping("/proxy/pay")
     public ResponseEntity<String> proxyPay(@RequestBody String paymentData, HttpSession session) {
-        String targetUrl = "http://localhost:6789/pay";
+        //url raggiungibile quando il jar è eseguito manualmente
+        //String targetUrl = "http://localhost:6789/pay";
+
+        // URL raggiungibile quando il JAR è eseguito dal Docker
+        String targetUrl = "http://payment:6789/pay";
+
+        //debug
+        System.out.println("Richiesta id pagamento ricevuta. Reindirizzamento a: " + targetUrl);
+        System.out.println("Dati di pagamento inviati: " + paymentData);
 
         HttpHeaders headers = new HttpHeaders();
         headers.set("Content-Type", "application/json");
@@ -44,14 +49,22 @@ public class ProxyController {
         try {
             JsonNode body = objectMapper.readTree(response.getBody());
             String status = body.get("status").asText();
-            if(status.trim().equals("Autorizzato")){
+            if (status.trim().equals("Autorizzato")) {
+                System.out.println("Stato autorizzato ricevuto. Aggiornamento utente a premium.");
                 utenteService.upgradePremium(session.getAttribute("loggedUsername").toString());
                 session.setAttribute("isPremium", true);
             }
+            return ResponseEntity.status(response.getStatusCode()).body(response.getBody());
+
         } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("{\"error\": \"Errore di elaborazione JSON\"}");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("{\"error\": \"Si è verificato un errore interno durante il pagamento\"}");
         }
-        return ResponseEntity.status(response.getStatusCode()).body(response.getBody());
     }
 
     // Gestione delle eccezioni per la validazione direttamente nel controller

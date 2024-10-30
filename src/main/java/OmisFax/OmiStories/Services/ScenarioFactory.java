@@ -31,12 +31,12 @@ public class ScenarioFactory {
         if (iniziale) {
             Scenario scenarioInizialeEsistente = scenarioRepository.findByStoriaAndInizialeTrue(storia);
             if (scenarioInizialeEsistente != null) {
-                throw new RuntimeException("Esiste già uno scenario iniziale per questa storia");
+                throw new IllegalArgumentException("Esiste già uno scenario iniziale per questa storia");
             }
         }
         Scenario scenarioEsistente = scenarioRepository.findByTitoloAndStoria(titolo, storia);
         if(scenarioEsistente != null){
-            throw new RuntimeException("Esiste già uno scenario con lo stesso titolo");
+            throw new IllegalArgumentException("Esiste già uno scenario con lo stesso titolo");
         }
 
         // Crea e restituisci il nuovo Scenario

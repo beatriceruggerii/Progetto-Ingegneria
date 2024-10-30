@@ -26,25 +26,27 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/omistories
       SPRING_DATASOURCE_USERNAME: user
       SPRING_DATASOURCE_PASSWORD: password
-      PAYMENT_SERVICE_URL: http://payment:8080/pay
+      PAYMENT_SERVICE_URL: http://payment:6789/pay
     ports:
       - "8080:8080"
     networks:
       - backend
     depends_on:
-      - db
-      - payment
+      db:
+        condition: service_started
+      payment:
+        condition: service_started
     restart: unless-stopped
 
   payment:
-    container_name: payment_server
+    container_name: paymentserver
     image: openjdk:17
     volumes:
       - ./payment/NaivePaymentProvider-1.1.0.jar:/app/NaivePaymentProvider.jar
     working_dir: /app
     entrypoint: [ "java", "-jar", "NaivePaymentProvider.jar" ]
     ports:
-      - "6789:8080"
+      - "6789:6789"  # Porta 6789 esposta correttamente
     networks:
       - backend
     restart: unless-stopped

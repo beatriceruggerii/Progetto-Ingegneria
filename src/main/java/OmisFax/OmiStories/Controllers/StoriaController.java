@@ -16,7 +16,6 @@ import java.util.Map;
 @RequestMapping("/storia")
 public class StoriaController {
     private StoriaService storiaService;
-
     private StoryDataService storyDataService;
     @Autowired
     public StoriaController(StoriaService storiaService, StoryDataService storyDataService) {
