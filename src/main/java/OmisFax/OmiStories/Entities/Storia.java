@@ -6,7 +6,6 @@ import jakarta.persistence.ManyToOne;
 
 import java.util.Objects;
 
-
 @Entity
 public class Storia {
     //ID: titolo storia, non possono esistere due storie con lo stesso titolo

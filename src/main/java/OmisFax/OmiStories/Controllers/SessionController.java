@@ -36,8 +36,6 @@ public class SessionController {
         sessionData.put("username", username);
         sessionData.put("storyTitle", storyTitle);
         sessionData.put("isPremium", isPremium);
-
-        //debug:
         System.out.println(sessionData.get("loggedUsername"));
 
         return ResponseEntity.ok(sessionData);

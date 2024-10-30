@@ -6,7 +6,6 @@ import OmisFax.OmiStories.Services.interfaces.IUtenteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class UtenteService implements IUtenteService {
     @Autowired

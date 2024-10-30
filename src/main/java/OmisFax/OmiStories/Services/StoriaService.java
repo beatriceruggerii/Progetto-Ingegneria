@@ -7,7 +7,6 @@ import OmisFax.OmiStories.Services.interfaces.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class StoriaService implements IStoriaService {
     @Autowired
@@ -29,6 +28,5 @@ public class StoriaService implements IStoriaService {
     public Storia findStoriaByTitolo(String titolo) {
         return storiaRepository.findStoriaByTitolo(titolo);
     }
-
 
 }

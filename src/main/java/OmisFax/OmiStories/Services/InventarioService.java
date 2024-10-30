@@ -24,13 +24,7 @@ public class InventarioService implements IInventarioService {
     @Autowired
     private PartitaService partitaService;
 
-    /**
-     * Aggiunge un oggetto all'inventario di una partita.
-     *
-     * @param idPartita    L'ID della partita
-     * @param idOggetto    L'ID dell'oggetto da aggiungere
-     * @return L'inventario aggiornato
-     */
+
     public Inventario aggiungiOggettoAInventario(Long idPartita, Long idOggetto) {
         // Recupera la partita dal database
         Partita partita = partitaService.findById(idPartita).get();
@@ -49,7 +43,6 @@ public class InventarioService implements IInventarioService {
         // Salva l'istanza di Inventario nel database
         return inventarioRepository.save(inventario);
     }
-
 
     public List<Inventario> getInventarioPartita(long idPartita){
         Partita partita = partitaService.findById(idPartita).get();

@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: OmisFax.OmiStories.Controllers.IndovinelliControllerTest
 -------------------------------------------------------------------------------
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.023 s -- in OmisFax.OmiStories.Controllers.IndovinelliControllerTest
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.612 s -- in OmisFax.OmiStories.Controllers.IndovinelliControllerTest

@@ -34,7 +34,6 @@ public class IndovinelliService implements IIndovinelliService {
             System.out.println("nessun indovinello trovato");
             responseData.put("errorMessage","Nessun indovinello trovato.");
         }
-        //debug
         System.out.println("Indovinelli trovati: "+ listaIndovinelli.size());
         for(int i = 0; i<listaIndovinelli.size(); i++){
             System.out.println(listaIndovinelli.get(i).toString());

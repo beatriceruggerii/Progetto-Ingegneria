@@ -1,5 +1,5 @@
 package OmisFax.OmiStories.Entities;
-import jakarta.annotation.PostConstruct;
+
 import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;

@@ -1,7 +1,5 @@
 package OmisFax.OmiStories.DTOs;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 //Oggetto DATA TRANSFER OBJECT: formato in cui vengono passati gli oggetti da client a server
 public class OggettoDTO {
     private String nomeOggetto;

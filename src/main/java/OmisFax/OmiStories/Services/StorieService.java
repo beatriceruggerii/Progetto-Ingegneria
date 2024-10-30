@@ -36,7 +36,6 @@ public class StorieService implements IStorieService {
             System.out.println("Storie non trovate");
             throw new RuntimeException("Storie non trovate");
         }
-        //debug
         System.out.println("storie trovate: " + listaStorie.size());
         for (int i = 0; i < listaStorie.size(); i++) {
             System.out.println(listaStorie.get(i).toString());

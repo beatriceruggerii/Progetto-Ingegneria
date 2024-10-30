@@ -2,8 +2,6 @@ package OmisFax.OmiStories.Entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-
-import java.util.ArrayList;
 import java.util.Objects;
 
 @Entity

@@ -63,7 +63,4 @@ public class IndovinelloService implements IIndovinelloService {
         indovinelloEsistente.setRispostaCorretta(nuovoIndovinello.getSoluzione());
         return registraIndovinello(indovinelloEsistente);
     }
-
-
-
 }

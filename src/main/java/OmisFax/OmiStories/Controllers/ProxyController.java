@@ -29,7 +29,6 @@ public class ProxyController {
         // URL raggiungibile quando il JAR è eseguito dal Docker
         String targetUrl = "http://payment:6789/pay";
 
-        //debug
         System.out.println("Richiesta id pagamento ricevuta. Reindirizzamento a: " + targetUrl);
         System.out.println("Dati di pagamento inviati: " + paymentData);
 
