@@ -3,20 +3,11 @@ package OmisFax.OmiStories.Services;
 import OmisFax.OmiStories.DTOs.SceltaDTO;
 import OmisFax.OmiStories.Entities.Scelta;
 import OmisFax.OmiStories.Entities.Scenario;
-import OmisFax.OmiStories.Entities.Storia;
-import OmisFax.OmiStories.Entities.Utente;
 import OmisFax.OmiStories.Repositories.SceltaRepository;
 import OmisFax.OmiStories.Services.interfaces.ISceltaService;
 import OmisFax.OmiStories.Services.interfaces.IScenarioService;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Service
 public class SceltaService implements ISceltaService {

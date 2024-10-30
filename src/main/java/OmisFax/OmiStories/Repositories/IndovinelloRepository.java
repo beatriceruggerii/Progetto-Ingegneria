@@ -1,7 +1,6 @@
 package OmisFax.OmiStories.Repositories;
 
 import OmisFax.OmiStories.Entities.Indovinello;
-import OmisFax.OmiStories.Entities.Oggetto;
 import OmisFax.OmiStories.Entities.Scenario;
 import OmisFax.OmiStories.Entities.Storia;
 import org.springframework.data.jpa.repository.JpaRepository;

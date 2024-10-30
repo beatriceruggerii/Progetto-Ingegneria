@@ -4,8 +4,6 @@ import OmisFax.OmiStories.Entities.Inventario;
 import OmisFax.OmiStories.Entities.Oggetto;
 import OmisFax.OmiStories.Entities.Partita;
 import OmisFax.OmiStories.Repositories.InventarioRepository;
-import OmisFax.OmiStories.Repositories.OggettoRepository;
-import OmisFax.OmiStories.Repositories.PartitaRepository;
 import OmisFax.OmiStories.Services.interfaces.IInventarioService;
 import OmisFax.OmiStories.Services.interfaces.IOggettoService;
 import org.springframework.beans.factory.annotation.Autowired;

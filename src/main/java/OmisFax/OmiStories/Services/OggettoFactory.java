@@ -3,6 +3,7 @@ package OmisFax.OmiStories.Services;
 import OmisFax.OmiStories.Entities.Oggetto;
 import OmisFax.OmiStories.Entities.Scenario;
 import OmisFax.OmiStories.Entities.Storia;
+import OmisFax.OmiStories.Repositories.OggettoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Component;
 public class OggettoFactory {
     @Autowired
     private ScenarioService scenarioService;
+    @Autowired
+    private OggettoRepository oggettoRepository;
 
     public Oggetto createOggetto(String nomeOggetto, long idMadre, long idControllore, Storia storia) {
         if (idControllore == idMadre) {

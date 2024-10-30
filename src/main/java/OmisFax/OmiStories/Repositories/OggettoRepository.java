@@ -8,13 +8,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface OggettoRepository extends JpaRepository<Oggetto, Long> {
     Oggetto findOggettoById(Long id);
     List<Oggetto> findByScenarioControllore(Scenario s);
     List<Oggetto> findByScenarioMadre(Scenario s);
-
     @Query("SELECT o FROM Oggetto o WHERE o.scenarioMadre.storia = :storia")
     List<Oggetto> findAllByStoria(@Param("storia") Storia storia);
 }

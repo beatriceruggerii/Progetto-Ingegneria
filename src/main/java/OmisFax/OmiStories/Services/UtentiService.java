@@ -2,9 +2,7 @@ package OmisFax.OmiStories.Services;
 
 import OmisFax.OmiStories.Entities.Storia;
 import OmisFax.OmiStories.Entities.Utente;
-import OmisFax.OmiStories.Services.interfaces.IStoriaService;
 import OmisFax.OmiStories.Services.interfaces.IStorieService;
-import OmisFax.OmiStories.Services.interfaces.IUtenteService;
 import OmisFax.OmiStories.Services.interfaces.IUtentiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

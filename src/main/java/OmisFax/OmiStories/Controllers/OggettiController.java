@@ -1,12 +1,6 @@
 package OmisFax.OmiStories.Controllers;
 
-
-import OmisFax.OmiStories.DTOs.PartitaDTO;
-import OmisFax.OmiStories.Entities.Oggetto;
 import OmisFax.OmiStories.Entities.Storia;
-import OmisFax.OmiStories.Services.OggettiService;
-import OmisFax.OmiStories.Services.OggettoService;
-import OmisFax.OmiStories.Services.PartitaService;
 import OmisFax.OmiStories.Services.interfaces.IOggettiService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
 
 @RestController

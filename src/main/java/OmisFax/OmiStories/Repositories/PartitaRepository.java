@@ -17,8 +17,6 @@ public interface PartitaRepository extends JpaRepository<Partita, Long> {
     List<Partita> findByGiocatoreUsername(String username);
     @Query("SELECT p FROM Partita p WHERE p.giocatore.username = :username AND p.storia.titolo = :titoloStoria")
     Partita findByGiocatoreUsernameAndStoriaTitolo(@Param("username") String username, @Param("titoloStoria") String titoloStoria);
-
-
     void deleteById(long id);
     Partita findById(long id);
 

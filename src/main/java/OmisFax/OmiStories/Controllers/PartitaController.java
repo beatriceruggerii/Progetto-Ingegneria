@@ -1,9 +1,6 @@
 package OmisFax.OmiStories.Controllers;
 
 import OmisFax.OmiStories.Entities.Partita;
-import OmisFax.OmiStories.Entities.Utente;
-import OmisFax.OmiStories.Repositories.PartitaRepository;
-import OmisFax.OmiStories.Services.PartitaService;
 import OmisFax.OmiStories.Services.interfaces.IPartitaService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,10 +1,7 @@
 package OmisFax.OmiStories.Services;
 
 import OmisFax.OmiStories.Entities.*;
-import OmisFax.OmiStories.Repositories.InventarioRepository;
 import OmisFax.OmiStories.Repositories.OggettoRepository;
-import OmisFax.OmiStories.Repositories.PartitaRepository;
-import OmisFax.OmiStories.Repositories.ScenarioRepository;
 import OmisFax.OmiStories.Services.interfaces.IInventarioService;
 import OmisFax.OmiStories.Services.interfaces.IOggettiService;
 import OmisFax.OmiStories.Services.interfaces.IPartitaService;

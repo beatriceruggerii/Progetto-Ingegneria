@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "oggetto", uniqueConstraints = {@UniqueConstraint(columnNames = {"nomeOggetto", "scenario_madre_id"})})
 public class Oggetto {
 
     @Id

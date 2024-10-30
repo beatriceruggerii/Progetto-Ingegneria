@@ -1,25 +1,13 @@
 package OmisFax.OmiStories.Controllers;
 
 import OmisFax.OmiStories.DTOs.IndovinelloDTO;
-import OmisFax.OmiStories.Entities.Indovinello;
-import OmisFax.OmiStories.Entities.Oggetto;
-import OmisFax.OmiStories.Entities.Scenario;
-import OmisFax.OmiStories.Entities.Storia;
 import OmisFax.OmiStories.Services.IndovinelloService;
-import OmisFax.OmiStories.Services.OggettoService;
-import OmisFax.OmiStories.Services.ScenarioService;
 import OmisFax.OmiStories.Services.interfaces.IIndovinelloService;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/indovinello")
