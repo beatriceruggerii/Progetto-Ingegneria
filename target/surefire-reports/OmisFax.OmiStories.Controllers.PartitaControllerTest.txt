@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: OmisFax.OmiStories.Controllers.PartitaControllerTest
 -------------------------------------------------------------------------------
-Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.143 s -- in OmisFax.OmiStories.Controllers.PartitaControllerTest
+Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.079 s -- in OmisFax.OmiStories.Controllers.PartitaControllerTest
