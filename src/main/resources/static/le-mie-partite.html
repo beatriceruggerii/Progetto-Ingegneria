@@ -9,18 +9,7 @@
     <script src="js/securityHandler.js"></script>
     <script src="js/salva-partita.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        fetch('/session_data') // endpoint che ritorna i dati in sessione
-            .then(response => response.json())
-            .then(data => {
-                const premiumElements = document.getElementsByClassName("premiumOnly");
-                Array.from(premiumElements).forEach(element => {
-                    element.style.display = data.isPremium ? "inline" : "none";
-                });
-            })
-            .catch(error => console.error('Errore nel recupero dei dati di sessione:', error));
-    </script>
-
+    <script src="js/fetch-session-data.js"></script>
 </head>
 <body>
 <!-- Navbar -->
@@ -41,10 +30,24 @@
 
 <script>
     $(function () {
-        $("#navbar").load("navbar.html");
+        $("#navbar").load("navbar.html", function () {
+            // Controlla i dati di sessione dopo il caricamento della navbar
+            fetch('/session_data') // endpoint che ritorna i dati in sessione
+                .then(response => response.json())
+                .then(data => {
+                    const premiumElements = document.getElementsByClassName("premiumOnly");
+                    Array.from(premiumElements).forEach(element => {
+                        element.style.display = data.isPremium ? "inline" : "none";
+                    });
+                    // Nascondi il link "Passa a Premium" se l'utente è premium
+                    if (data.isPremium) {
+                        document.getElementById("toPremium").style.display = "none";
+                    }
+                })
+                .catch(error => console.error('Errore nel recupero dei dati di sessione:', error));
+        });
     });
 </script>
-<script src="js/fetch-session-data.js"></script>
 <script src="js/fetch-partite.js"></script>
 <script src="js/logout.js"></script>
 </body>

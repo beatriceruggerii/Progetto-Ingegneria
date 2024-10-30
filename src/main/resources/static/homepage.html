@@ -9,7 +9,6 @@
     <link href="css/style.css" rel="stylesheet">
     <script src="js/securityHandler.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-
 </head>
 <body>
 
@@ -46,7 +45,22 @@
 <!-- Js -->
 <script>
     $(function () {
-        $("#navbar").load("navbar.html");
+        $("#navbar").load("navbar.html", function () {
+            // Controlla i dati di sessione dopo il caricamento della navbar
+            fetch('/session_data') // endpoint che ritorna i dati in sessione
+                .then(response => response.json())
+                .then(data => {
+                    const premiumElements = document.getElementsByClassName("premiumOnly");
+                    Array.from(premiumElements).forEach(element => {
+                        element.style.display = data.isPremium ? "inline" : "none";
+                    });
+                    // Nascondi il link "Passa a Premium" se l'utente è premium
+                    if (data.isPremium) {
+                        document.getElementById("toPremium").style.display = "none";
+                    }
+                })
+                .catch(error => console.error('Errore nel recupero dei dati di sessione:', error));
+        });
     });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
